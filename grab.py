@@ -57,6 +57,8 @@ def getAdBlocks(text, url=''):
     from lxml import html
     if len(url)>0:
         BaseUrl = urlparse(url).netloc
+        tmp = BaseUrl.split('.')
+        BaseUrl = tmp[-2]+'.'+tmp[-1]
     tree = html.document_fromstring(text)
     # TODO return code?
     data = {}
@@ -75,7 +77,7 @@ def getAdBlocks(text, url=''):
                     if child.attrib.has_key('href'):
                         if child.attrib['href'].find('http://')!=-1 and child.attrib['href'].find(BaseUrl)==-1:
                             hasLink = True
-                            LinkCounter+=1
+                        LinkCounter+=1
         if hasLink and LinkCounter==1:
             AdText=''
             for text in element.itertext():
@@ -85,15 +87,25 @@ def getAdBlocks(text, url=''):
                 id+=1
     return data, items
 
-urls = 'lists\\women.txt'
+def file2list(file):
+    lines = []
+    f = open(file, 'rU')
+    #TODO file check?
+    for line in f:
+        if len(line)>0:
+            lines.append(line.strip())
+    f.close()
+    return lines
+
+urlsfile = 'lists\\women.txt'
 datadir = 'F:\\tmp\\py\\'
 
 import hashlib
 import os.path
-f = open(urls, 'rU')
-for line in f:
-    url = line.strip()
-    if len(url)==0: continue
+
+urls = file2list(urlsfile)
+
+for url in urls:
     url_id = hashlib.md5(url.encode('utf-8')).hexdigest()    
     path = datadir + url_id + '.html'
 
@@ -115,4 +127,4 @@ for line in f:
     del(ads)
     del(blocks)
     #break
-f.close()
+
