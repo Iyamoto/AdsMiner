@@ -47,8 +47,8 @@ def rebuild(id, items):
             print(child.text.strip())
         if child.tag=='img':
             print('Img found')
-            print(child.attrib)
-            assert False
+            print(child.attrib['src'])
+            #assert False
             #if child.attrib.has_key('href'):
              #   print(child.attrib['href'])            
     #items[id].text_content()
