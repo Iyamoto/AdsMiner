@@ -3,6 +3,8 @@
 
 import subprocess
 import configparser
+import hashlib
+import os.path
 
 def url2file(run, url, html, png=''):
     """PhantomJS wrapper
@@ -39,13 +41,17 @@ def rebuild(id, items):
         #print(child.attrib)
         if child.tag=='a':
             if child.attrib.has_key('href'):
-                print(child.attrib['href'])
+                #print(child.attrib['href'])
+                href = child.attrib['href']
             if child.attrib.has_key('title'):
-                print(child.attrib['title'])
+                #print(child.attrib['title'])
+                title = child.attrib['title']
         if child.text!=None:
-            print(child.text.strip())
+            #print(child.text.strip())
+            text = child.text.strip()
         if child.tag=='img':
-            print(child.attrib['src'])
+            #print(child.attrib['src'])
+            imgsrc = child.text.strip()
     print('End of:',id)
     print()
     return None
@@ -102,10 +108,6 @@ config.read('miner.conf')
 urlsfile = config['DEFAULT']['Urls']
 datadir = config['DEFAULT']['DataDir']
 run = config['DEFAULT']['Run']
-
-
-import hashlib
-import os.path
 
 urls = file2list(urlsfile)
 
