@@ -97,8 +97,12 @@ def file2list(file):
     f.close()
     return lines
 
-urlsfile = 'lists\\women.txt'
-datadir = 'F:\\tmp\\py\\'
+##urlsfile = 'lists\\women.txt'
+##datadir = 'F:\\tmp\\py\\'
+
+urlsfile = 'lists/women.txt'
+datadir = '/tmp/pantom'
+
 
 import hashlib
 import os.path

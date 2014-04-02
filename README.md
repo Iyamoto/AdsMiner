@@ -1,2 +1,4 @@
 AdsMiner
 ========
+
+mkdir /tmp/phantom
