@@ -1,4 +1,4 @@
-﻿var page = require('webpage').create(),
+var page = require('webpage').create(),
 	fs = require('fs'),
 	system = require('system'),
 	address, file;
