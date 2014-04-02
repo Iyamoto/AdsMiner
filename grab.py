@@ -6,7 +6,8 @@ def url2file(url, html, png=''):
     html - where to save page code (html)
     png - where to save rendered page (image)"""
     import subprocess
-    code = subprocess.call(['save.cmd', url, html, png])
+    #code = subprocess.call(['save.cmd', url, html, png])
+    code = subprocess.call(['save.sh', url, html, png])
     # TODO  check return code
     return code
 
