@@ -41,20 +41,31 @@ def rebuild(id, items):
         #print(child.attrib)
         if child.tag=='a':
             if child.attrib.has_key('href'):
-                #print(child.attrib['href'])
-                href = child.attrib['href']
+                print(child.attrib['href'])
             if child.attrib.has_key('title'):
-                #print(child.attrib['title'])
-                title = child.attrib['title']
+                print(child.attrib['title'])
         if child.text!=None:
-            #print(child.text.strip())
-            text = child.text.strip()
+            print(child.text.strip())
         if child.tag=='img':
-            #print(child.attrib['src'])
-            imgsrc = child.text.strip()
+            print(child.attrib['src'])
     print('End of:',id)
     print()
     return None
+
+def saveBlocks(id, items):
+    out = 'Start of:'+str(id)+'\n'
+    for child in items[id].getchildren():
+        if child.tag=='a':
+            if child.attrib.has_key('href'):
+                out = out + child.attrib['href'] +'\n'
+            if child.attrib.has_key('title'):
+                out = out + child.attrib['title'] +'\n'
+        if child.text!=None:
+            out = out + child.text.strip()+'\n'
+        if child.tag=='img':
+            out = out + child.text.strip()+'\n'
+    out = out + 'End of:' +str(id) +'\n'
+    return out
 
 def getAdBlocks(text, url=''):
     assert type(text)==str
@@ -127,8 +138,14 @@ for url in urls:
     
     #for k,v in data.items(): print(k,v)
 
+    f = open('log.txt','w')
+
     for id in ads.keys():
-        rebuild(id,blocks)
+        #rebuild(id,blocks)
+        out = saveBlocks(id,blocks)
+        f.write(out)
+
+    f.close()
 
     del(ads)
     del(blocks)
