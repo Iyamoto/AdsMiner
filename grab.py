@@ -2,15 +2,14 @@
 # TODO http://www.myjane.ru/articles/rubric/?id=54 =?
 
 import subprocess
+import configparser
 
-def url2file(url, html, png=''):
+def url2file(run, url, html, png=''):
     """PhantomJS wrapper
     url - http://name.tld
     html - where to save page code (html)
     png - where to save rendered page (image)"""
-    #code = subprocess.call(['save.cmd', url, html, png])
-    cmd = 'bash -k save.sh '+url+' '+html
-    #code = subprocess.call(['./save.sh', url, html, png], shell=True)
+    cmd = run+' '+url+' '+html
     code = subprocess.call(cmd, shell=True)
     # TODO  check return code
     return code
@@ -97,11 +96,12 @@ def file2list(file):
     f.close()
     return lines
 
-##urlsfile = 'lists\\women.txt'
-##datadir = 'F:\\tmp\\py\\'
+config = configparser.ConfigParser()
+config.read('miner.conf')
 
-urlsfile = 'lists/women.txt'
-datadir = '/tmp/phantom/'
+urlsfile = config['DEFAULT']['Urls']
+datadir = config['DEFAULT']['DataDir']
+run = config['DEFAULT']['Run']
 
 
 import hashlib
@@ -115,7 +115,7 @@ for url in urls:
 
     print(url, path)
     if os.path.isfile(path) == False:
-        code = url2file(url, path)    
+        code = url2file(run, url, path)    
     # TODO if bad return code?
     text = file2text(path)
     # TODO if bad return code?
