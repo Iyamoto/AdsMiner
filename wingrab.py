@@ -8,10 +8,10 @@ def url2file(url, html, png=''):
     url - http://name.tld
     html - where to save page code (html)
     png - where to save rendered page (image)"""
-    #code = subprocess.call(['save.cmd', url, html, png])
-    cmd = 'bash -k save.sh '+url+' '+html
+    code = subprocess.call(['save.cmd', url, html, png])
+    #cmd = './save.sh '+url+' '+html
     #code = subprocess.call(['./save.sh', url, html, png], shell=True)
-    code = subprocess.call(cmd, shell=True)
+    #code = subprocess.call(cmd, shell=True)
     # TODO  check return code
     return code
 
@@ -102,11 +102,11 @@ def file2list(file):
     f.close()
     return lines
 
-##urlsfile = 'lists\\women.txt'
-##datadir = 'F:\\tmp\\py\\'
+urlsfile = 'lists\\women.txt'
+datadir = 'F:\\tmp\\py\\'
 
-urlsfile = 'lists/women.txt'
-datadir = '/tmp/phantom/'
+##urlsfile = 'lists/women.txt'
+##datadir = '/tmp/phantom/'
 
 
 import hashlib
