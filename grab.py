@@ -102,7 +102,7 @@ def file2list(file):
 ##datadir = 'F:\\tmp\\py\\'
 
 urlsfile = 'lists/women.txt'
-datadir = '/tmp/pantom'
+datadir = '/tmp/pantom/'
 
 
 import hashlib
