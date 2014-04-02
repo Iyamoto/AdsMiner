@@ -1,11 +1,13 @@
 # AdsMiner:Grabber
 # TODO http://www.myjane.ru/articles/rubric/?id=54 =?
+
+import subprocess
+
 def url2file(url, html, png=''):
     """PhantomJS wrapper
     url - http://name.tld
     html - where to save page code (html)
     png - where to save rendered page (image)"""
-    import subprocess
     #code = subprocess.call(['save.cmd', url, html, png])
     code = subprocess.call(['save.sh', url, html, png], shell=True)
     # TODO  check return code
@@ -102,7 +104,7 @@ def file2list(file):
 ##datadir = 'F:\\tmp\\py\\'
 
 urlsfile = 'lists/women.txt'
-datadir = '/tmp/pantom/'
+datadir = '/tmp/phantom/'
 
 
 import hashlib
@@ -116,7 +118,8 @@ for url in urls:
 
     print(url, path)
     if os.path.isfile(path) == False:
-        code = url2file(url, path)
+        print('get page')
+        code = url2file(url, path)    
     # TODO if bad return code?
     text = file2text(path)
     # TODO if bad return code?
