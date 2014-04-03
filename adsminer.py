@@ -10,8 +10,9 @@ def clearUrl(url):
     """ Checking is string is an url """
     assert type(url)==str
     url = url.strip()
-    url = url.strip('\'"')
-    r = (scheme, netloc, path, params, query, fragment) = urlparse(url)
+    url = url.strip('\'" ')
+    assert url[0]!='#'
+    (scheme, netloc, path, params, query, fragment) = urlparse(url)
     if len(scheme)>0 and len(netloc)>0 and netloc.find('.')!=-1:
         return url
     print('Got a bad url: ', url)
