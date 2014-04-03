@@ -9,36 +9,46 @@ from urllib.parse import urlparse
 from lxml import html
 import codecs
 
-def url2file(run, url, html, png=''):
+def url2file(run, url, html):
     """PhantomJS wrapper
     url - http://name.tld
-    html - where to save page code (html)
-    png - where to save rendered page (image)"""
+    html - where to save page code (html)"""
     cmd = run+' '+url+' '+html
     try:
         code = subprocess.call(cmd, shell=True)
     except:
         print('Cant execute: '+cmd)
+        return False
     return code
 
 def file2text(path):
-    """Reads utf-8 file from path"""    
-    path = str(path)
-    f = codecs.open(path, 'r', encoding='utf-8')
+    """Reads utf-8 file from path"""
+    try:
+        f = codecs.open(path, 'r', encoding='utf-8')
+    except:
+        print('Cant read file: '+path)
+        return ''
     text = f.read()
     f.close()
     return text
 
 def file2list(path):
-    """Reads utf-8 file from path"""    
-    path = str(path)
-    f = codecs.open(path, 'r', encoding='utf-8')
-    # TODO if bad file?
-    text = f.read()
+    """Reads utf-8 file from path
+    Returns a list of lines"""
+    lines = []
+    try:
+        f = open(path, 'rU')
+    except:
+        print('Cant read file: '+path)
+        return lines
+    for line in f:
+        if len(line)>0:
+            lines.append(line.strip())
     f.close()
-    return text
+    return lines
 
 def showBlocks(id, items):
+    """ Block print """
     print('Start of:',id)
     for child in items[id].getchildren():
         #print(child.attrib)
@@ -85,6 +95,7 @@ def getAdBlocks(text, url=''):
         tree = html.document_fromstring(text)
     except:
         print('Cant render html')
+        return None # ????
     data = {}
     items = {}
     id=0
@@ -112,28 +123,22 @@ def getAdBlocks(text, url=''):
                 id+=1
     return data, items
 
-def file2list(file):
-    lines = []
-    try:
-        f = open(file, 'rU')
-    except:
-        print('Cant read file: '+file)
-        return lines
-    for line in f:
-        if len(line)>0:
-            lines.append(line.strip())
-    f.close()
-    return lines
-
 # Read config
 config = configparser.ConfigParser()
-config.read('miner.conf')
+try:
+    config.read('miner.conf')
+except:
+    print('Cant read config file')
+    assert False
 
 urlsfile = config['DEFAULT']['Urls']
 datadir = config['DEFAULT']['DataDir']
 run = config['DEFAULT']['Run']
 
 urls = file2list(urlsfile)
+if len(urls)==0:
+    print('No urls found')
+    assert False
 
 for url in urls:
     url_id = hashlib.md5(url.encode('utf-8')).hexdigest()    
@@ -141,8 +146,10 @@ for url in urls:
 
     print(url, path)
     if os.path.isfile(path) == False:
-        code = url2file(run, url, path)    
-    # TODO if bad return code?
+        code = url2file(run, url, path)
+        if code==False:
+            print('Cant get url: url')
+            continue      
     try:
         text = file2text(path)
     except:
@@ -153,15 +160,18 @@ for url in urls:
     print('Find ads:',len(ads))
     
     #for k,v in data.items(): print(k,v)
-
-    f = codecs.open('log.txt', 'a', encoding='utf-8')
-
-    for id in ads.keys():
-        #showBlocks(id,blocks)
-        out = saveBlocks(id,blocks)
-        f.write(out)
-
-    f.close()
+    
+    if len(ads)>0:
+        try:
+            f = codecs.open('log.txt', 'a', encoding='utf-8')
+        except:
+            print('Cant open log file')
+            continue
+        for id in ads.keys():
+            #showBlocks(id,blocks)
+            out = saveBlocks(id,blocks)
+            f.write(out)
+        f.close()
 
     del(ads)
     del(blocks)
