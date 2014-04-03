@@ -135,9 +135,12 @@ def getBlock(id, items):
 
 def parseBlocks(text, url='', block_complexity=2, minBlockSize=10, maxBlockSize=500, maxLinks=1):
     """ Get ad (tiser) blocks from html
-    A tiser is a block with less then maxLinks outer links,
-    Text size is between minBlockSize and maxBlockSize
-    Inner tag complexity is more then block_complexity
+    A tiser is a block with:
+    Outer links less then maxLinks,
+    Inner links is zero,
+    Text size is between minBlockSize and maxBlockSize,
+    Inner tag complexity is more then block_complexity,
+    Params:
     text is a html code of the page
     url is a url of the page, needed for outer links detection"""
     assert type(text)==str
