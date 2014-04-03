@@ -103,22 +103,18 @@ def getBlock(id, items):
         tags = tags + str(child.tag) + ' '
         if child.tag=='a':
             if child.attrib.has_key('href'):
-                out = out + child.attrib['href'] +'\n'
+                out = out + 'href: '+ child.attrib['href'] +'\n'
             if child.attrib.has_key('title'):
-                out = out + child.attrib['title'] +'\n'
-##            if child.text!=None:
-##                out = out + child.text.strip()+'\n'              
+                out = out + 'title: '+ child.attrib['title'] +'\n'
+                textLen = len(child.attrib['title'])
+                textSize += textLen              
         if child.tag=='img':
-            out = out + child.attrib['src']+'\n'
-##        try:
-##            for text in child.itertext():
-##                out = out + text.strip() + '\n'
-##        except:
-##            print(child.itertext())
-##            assert False
+            out = out + 'img src: ' +child.attrib['src']+'\n'
         if str(type(child))!='<class \'lxml.html.HtmlComment\'>':
-            textSize += len(child.text_content().strip())
-            out = out + child.text_content().strip() + '\n'
+            textLen = len(child.text_content().strip())
+            if textLen>0:
+                textSize += textLen
+                out = out + str(child.tag) +' text: '+child.text_content().strip() + '\n'
             
     out = out + 'Text size: ' +str(textSize)+'\n'            
     out = out + 'Tags structure: ' +tags+'\n'           
@@ -151,6 +147,9 @@ def parseBlocks(text, url='', block_complexity=2, minBlockSize=10, maxBlockSize=
         aTitles = ''
         LinkCounter=0
         for child in element.getchildren():
+            # Filter html comments
+            if str(type(child))=='<class \'lxml.html.HtmlComment\'>':
+                continue
             # Filter by amount of tags (block complexity)
             if len(element.getchildren())>block_complexity:
                 pool += (child.tag,)
@@ -162,10 +161,8 @@ def parseBlocks(text, url='', block_complexity=2, minBlockSize=10, maxBlockSize=
                     if child.attrib.has_key('title'):
                         aTitles = aTitles + child.attrib['title'].strip() + '\n'
         if hasLink and LinkCounter<=maxLinks:
-            AdText=aTitles
-            for text in element.itertext():
-                AdText += text.strip()
-            AdText = AdText.strip()    
+            AdText=aTitles.strip()
+            AdText+=element.text_content().strip()   
             AdSize = len(AdText)
             # print(AdSize)
             # Filter blocks without text and large blocks
