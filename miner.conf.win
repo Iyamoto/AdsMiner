@@ -1,4 +1,4 @@
-[DEFAULT]
+[GRABBER]
 Run = save.cmd
 Urls = lists\women.txt
 DataDir = F:\tmp\py\

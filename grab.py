@@ -33,14 +33,14 @@ except:
     assert False
 
 # Init
-urlsfile = config['DEFAULT']['Urls']
-datadir = config['DEFAULT']['DataDir']
-run = config['DEFAULT']['Run']
-block_complexity = int(config['DEFAULT']['BlockComplexity'])
-log_file = config['DEFAULT']['LogFile']
-maxBlockSize = int(config['DEFAULT']['MaxBlockSize'])
-minBlockSize = int(config['DEFAULT']['MinBlockSize'])
-maxLinks = int(config['DEFAULT']['MaxLinks'])
+urlsfile = config['GRABBER']['Urls']
+datadir = config['GRABBER']['DataDir']
+run = config['GRABBER']['Run']
+block_complexity = int(config['GRABBER']['BlockComplexity'])
+log_file = config['GRABBER']['LogFile']
+maxBlockSize = int(config['GRABBER']['MaxBlockSize'])
+minBlockSize = int(config['GRABBER']['MinBlockSize'])
+maxLinks = int(config['GRABBER']['MaxLinks'])
 
 isLogFile = adsminer.initLog(log_file)
 
