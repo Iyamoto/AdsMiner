@@ -5,6 +5,9 @@ import subprocess
 import configparser
 import hashlib
 import os.path
+from urllib.parse import urlparse
+from lxml import html
+import codecs
 
 def url2file(run, url, html, png=''):
     """PhantomJS wrapper
@@ -19,7 +22,6 @@ def url2file(run, url, html, png=''):
 def file2text(path):
     """Reads utf-8 file from path"""    
     path = str(path)
-    import codecs
     f = codecs.open(path, 'r', encoding='utf-8')
     text = f.read()
     f.close()
@@ -28,14 +30,13 @@ def file2text(path):
 def file2list(path):
     """Reads utf-8 file from path"""    
     path = str(path)
-    import codecs
     f = codecs.open(path, 'r', encoding='utf-8')
     # TODO if bad file?
     text = f.read()
     f.close()
     return text
 
-def rebuild(id, items):
+def showBlocks(id, items):
     print('Start of:',id)
     for child in items[id].getchildren():
         #print(child.attrib)
@@ -69,8 +70,6 @@ def saveBlocks(id, items):
 
 def getAdBlocks(text, url=''):
     assert type(text)==str
-    from urllib.parse import urlparse
-    from lxml import html
     if len(url)>0:
         BaseUrl = urlparse(url).netloc
         tmp = BaseUrl.split('.')
@@ -138,10 +137,10 @@ for url in urls:
     
     #for k,v in data.items(): print(k,v)
 
-    f = open('log.txt','w')
+    f = codecs.open('log.txt', 'w', encoding='utf-8')
 
     for id in ads.keys():
-        #rebuild(id,blocks)
+        #showBlocks(id,blocks)
         out = saveBlocks(id,blocks)
         f.write(out)
 
