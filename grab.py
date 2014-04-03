@@ -64,7 +64,7 @@ def saveBlocks(id, items):
         if child.text!=None:
             out = out + child.text.strip()+'\n'
         if child.tag=='img':
-            out = out + child.text.strip()+'\n'
+            out = out + child.attrib['src']+'\n'
     out = out + 'End of:' +str(id) +'\n'
     return out
 
@@ -104,14 +104,18 @@ def getAdBlocks(text, url=''):
 
 def file2list(file):
     lines = []
-    f = open(file, 'rU')
-    #TODO file check?
+    try:
+        f = open(file, 'rU')
+    except:
+        print('Cant read file: '+file)
+        return lines
     for line in f:
         if len(line)>0:
             lines.append(line.strip())
     f.close()
     return lines
 
+# Read config
 config = configparser.ConfigParser()
 config.read('miner.conf')
 
@@ -129,15 +133,18 @@ for url in urls:
     if os.path.isfile(path) == False:
         code = url2file(run, url, path)    
     # TODO if bad return code?
-    text = file2text(path)
-    # TODO if bad return code?
+    try:
+        text = file2text(path)
+    except:
+        print('Cant read file '+path)
+        continue
 
     ads, blocks = getAdBlocks(text, url)
     print('Find ads:',len(ads))
     
     #for k,v in data.items(): print(k,v)
 
-    f = codecs.open('log.txt', 'w', encoding='utf-8')
+    f = codecs.open('log.txt', 'a', encoding='utf-8')
 
     for id in ads.keys():
         #showBlocks(id,blocks)
