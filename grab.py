@@ -93,7 +93,7 @@ def showBlocks(id, items):
     print()
     return None
 
-def saveBlocks(id, items):
+def getBlock(id, items):
     """ Form human readable block """
     out = 'Start of:'+str(id)+'\n'
     for child in items[id].getchildren():
@@ -109,7 +109,7 @@ def saveBlocks(id, items):
     out = out + 'End of:' +str(id) +'\n'
     return out
 
-def getAdBlocks(text, url='', block_complexity=2):
+def parseBlocks(text, url='', block_complexity=2):
     """ Get ad (tiser) blocks from html
     A tiser is a block with 1 outer link, text and inner tag complexity
     text is a html code of the page
@@ -187,7 +187,7 @@ for url in urls:
         print('Cant read file '+path)
         continue
 
-    ads, blocks = getAdBlocks(text, url, block_complexity)
+    ads, blocks = parseBlocks(text, url, block_complexity)
     print('Find ads:',len(ads))
     
     #for k,v in data.items(): print(k,v)
@@ -196,7 +196,7 @@ for url in urls:
         for id in ads.keys():
             #showBlocks(id,blocks)
             if isLogFile:
-                out = saveBlocks(id,blocks)
+                out = getBlock(id,blocks)
                 writeLog(log_file, out, isLogFile)
 
     del(ads)
