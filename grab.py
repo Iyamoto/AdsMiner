@@ -81,7 +81,6 @@ for url in urls:
     
     if len(ads)>0:
         for id in ads.keys():
-            #showBlock(id,blocks)
             if isLogFile:
                 out = adsminer.getBlock(id,blocks)
                 adsminer.writeLog(log_file, out, isLogFile)
