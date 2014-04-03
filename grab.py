@@ -6,6 +6,24 @@ import hashlib
 import os.path
 import adsminer
 
+# Test Harness
+test_data = {}
+test_data['http://gotovim-doma.ru/']=9
+test_data['http://horo.tochka.net/']=0
+test_data['http://www.edimdoma.ru/retsepty']=4
+test_data['http://www.mycharm.ru/']=4
+test_data['http://onbeauty.ru/']=6
+test_data['http://yeswoman.ru/']=11
+test_data['http://www.astrocentr.ru/']=8
+test_data['http://astroscope.ru/']=13
+test_data['http://www.sonniki.net.ru/']=4
+
+def test_parseBlocks(url,num):
+    test_data[url] = test_data.get(url, 0)
+    msg = 'Testing! Should be: ' + str(test_data[url]) + ' Got: ' + str(num)
+    print(url,msg)
+    return
+
 # Read config
 config = configparser.ConfigParser()
 try:
@@ -50,8 +68,13 @@ for url in urls:
         continue
 
     ads, blocks = adsminer.parseBlocks(text, url, block_complexity, minBlockSize, maxBlockSize, maxLinks)
-    print('Find ads:',len(ads))
-    total_blocks +=len(ads)
+    ads_num = len(ads)
+    print('Find ads:',ads_num)
+    total_blocks +=ads_num
+    
+    # Test Harness
+    test_parseBlocks(url,ads_num)
+    
     adsminer.writeLog(log_file, 'Find ads: '+str(len(ads))+'\n', isLogFile)
     
     #for k,v in data.items(): print(k,v)
