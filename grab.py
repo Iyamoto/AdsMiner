@@ -15,11 +15,11 @@ def url2file(run, url, html):
     html - where to save page code (html)"""
     cmd = run+' '+url+' '+html
     try:
-        code = subprocess.call(cmd, shell=True)
+        subprocess.call(cmd, shell=True)
     except:
         print('Cant execute: '+cmd)
         return False
-    return code
+    return True
 
 def file2text(path):
     """Reads utf-8 file from path"""
