@@ -73,7 +73,8 @@ def writeLog(log_file, msg, isLogFile=True):
         return False
 
 def showBlock(id, items):
-    """ Block print """
+    """ Block print
+    No more in use"""
     print('Start of:',id)
     for child in items[id].getchildren():
         #print(child.attrib)
@@ -119,7 +120,9 @@ def getBlock(id, items):
 
 def parseBlocks(text, url='', block_complexity=2, minBlockSize=10, maxBlockSize=500, maxLinks=1):
     """ Get ad (tiser) blocks from html
-    A tiser is a block with 1 outer link, text and inner tag complexity
+    A tiser is a block with maxLinks outer links,
+    Text size is between minBlockSize and maxBlockSize
+    Inner tag complexity is more then block_complexity
     text is a html code of the page
     url is a url of the page, needed for outer links detection"""
     assert type(text)==str
