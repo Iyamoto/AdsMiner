@@ -47,6 +47,34 @@ def file2list(path):
     f.close()
     return lines
 
+def initLog(log_file):
+    """ Log file init """
+    try:
+        f = codecs.open(log_file, 'w', encoding='utf-8')
+    except:
+        print('Cant open log file: '+log_file)
+        return False
+    out = 'Grabber started\n'
+    # TODO add date and time
+    f.write(out)
+    f.close()
+    return True
+
+def writeLog(log_file, msg, isLogFile=True):
+    """ Log file init """
+    if isLogFile==True:
+        assert type(msg)==str
+        try:
+            f = codecs.open(log_file, 'a', encoding='utf-8')
+        except:
+            print('Cant open log file: '+log_file)
+            return False
+        f.write(msg)
+        f.close()
+        return True
+    else:
+        return False
+
 def showBlocks(id, items):
     """ Block print """
     print('Start of:',id)
@@ -135,6 +163,8 @@ urlsfile = config['DEFAULT']['Urls']
 datadir = config['DEFAULT']['DataDir']
 run = config['DEFAULT']['Run']
 block_complexity = int(config['DEFAULT']['BlockComplexity'])
+log_file = config['DEFAULT']['LogFile']
+isLogFile = initLog(log_file)
 
 urls = file2list(urlsfile)
 if len(urls)==0:
@@ -163,16 +193,11 @@ for url in urls:
     #for k,v in data.items(): print(k,v)
     
     if len(ads)>0:
-        try:
-            f = codecs.open('log.txt', 'a', encoding='utf-8')
-        except:
-            print('Cant open log file')
-            continue
         for id in ads.keys():
             #showBlocks(id,blocks)
-            out = saveBlocks(id,blocks)
-            f.write(out)
-        f.close()
+            if isLogFile:
+                out = saveBlocks(id,blocks)
+                writeLog(log_file, out, isLogFile)
 
     del(ads)
     del(blocks)
