@@ -111,7 +111,8 @@ def getBlock(id, items):
     tags=''
     textSize = 0
     out = '=====Start of:'+str(id)+'\n'
-    for child in items[id].getchildren():
+    #for child in items[id].iterchildren():
+    for child in items[id].iterdescendants():
         tags = tags + str(child.tag) + ' '
         if child.tag=='a':
             if child.attrib.has_key('href'):
@@ -157,45 +158,47 @@ def parseBlocks(text, url='', block_complexity=2, minBlockSize=10, maxBlockSize=
     items = {}
     id=0
     for element in tree.body.iter():
-        items[id] = element
         pool = ()
         hasLink = False
         hasText = False
-        aTitles = ''
+        textSize = 0
         LinkCounter=0
         InnerLinkCounter = 0
-        for child in element.getchildren():
+        Complexity = 0
+
+        for child in element.iterdescendants():
+            Complexity+=1
             # Filter html comments
             if str(type(child))=='<class \'lxml.html.HtmlComment\'>':
                 continue
-            # Filter by amount of tags (block complexity)
-            if len(element.getchildren())>block_complexity:
-                pool += (child.tag,)
-                if child.tag == 'a':# Filter by tag (a href)
-                    if child.attrib.has_key('href'):
-                        if child.attrib['href'].find('http://')!=-1 and child.attrib['href'].find(BaseUrl)==-1:
-                            hasLink = True
-                            LinkCounter+=1
-                        else:
-                            hasLink = False
-                            InnerLinkCounter+=1
-                    if child.attrib.has_key('title'):
-                        aTitles = aTitles + child.attrib['title'].strip() + '\n'
-        if hasLink and LinkCounter<=maxLinks and InnerLinkCounter==0:
-            AdText=aTitles.strip()
-            AdText+=element.text_content().strip()   
-            AdSize = len(AdText)
-            # print(AdSize)
+            pool += (child.tag,)
+            if child.tag == 'a':# Filter by tag (a href)
+                if child.attrib.has_key('href'):
+                    if child.attrib['href'].find('http://')!=-1 and child.attrib['href'].find(BaseUrl)==-1:
+                        hasLink = True
+                        LinkCounter+=1
+                    else:
+                        hasLink = False
+                        InnerLinkCounter+=1
+                if child.attrib.has_key('title'):
+                    textLen = len(child.attrib['title'])
+                    textSize += textLen 
+            textLen = len(child.text_content().strip())
+            if textLen>0:
+                textSize += textLen
+        # Filter by Links and amount of tags (block complexity)                
+        if hasLink and LinkCounter<=maxLinks and InnerLinkCounter==0 and Complexity>block_complexity:
             # Filter blocks without text and large blocks
-            if AdSize>=minBlockSize and AdSize<=maxBlockSize:
+            if textSize>=minBlockSize and textSize<=maxBlockSize:
                 # How to filter counters? Block size?          
                 # How to get rid of small blocks with only one link? No way
-                # Lets try to parse out http* and check text size - bad idea
-
-##                httpes = re.findall(r'http:[^:]+',AdText)
-##                print('httpes',httpes, AdText, AdSize)
 
                 # Finaly, block is good
+                print(pool)
+                print(textSize)
+                print(element.text_content())
                 data[id] = data.get(id,(element.tag,)) + pool
+                items[id] = element
                 id+=1
+                # TODO return only items?
     return data, items
