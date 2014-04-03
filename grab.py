@@ -157,6 +157,8 @@ def parseBlocks(text, url='', block_complexity=2, minBlockSize=10, maxBlockSize=
                     if child.attrib.has_key('href'):
                         if child.attrib['href'].find('http://')!=-1 and child.attrib['href'].find(BaseUrl)==-1:
                             hasLink = True
+                        else:
+                            hasLink = False
                         LinkCounter+=1
                     if child.attrib.has_key('title'):
                         aTitles = aTitles + child.attrib['title'].strip() + '\n'
@@ -203,6 +205,8 @@ if len(urls)==0:
     print('No urls found')
     assert False
 
+total_blocks = 0
+
 for url in urls:
     writeLog(log_file, url+'\n', isLogFile)
     url_id = hashlib.md5(url.encode('utf-8')).hexdigest()    
@@ -222,6 +226,7 @@ for url in urls:
 
     ads, blocks = parseBlocks(text, url, block_complexity, minBlockSize, maxBlockSize, maxLinks)
     print('Find ads:',len(ads))
+    total_blocks +=len(ads)
     writeLog(log_file, 'Find ads: '+str(len(ads))+'\n', isLogFile)
     
     #for k,v in data.items(): print(k,v)
@@ -237,3 +242,5 @@ for url in urls:
     del(blocks)
     #break
 
+writeLog(log_file, 'Total blocks found: '+str(total_blocks)+'\n', isLogFile)
+writeLog(log_file, 'Done\n', isLogFile)
