@@ -216,5 +216,5 @@ for url in urls:
 
     del(ads)
     del(blocks)
-    break
+    #break
 
