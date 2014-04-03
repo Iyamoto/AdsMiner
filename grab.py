@@ -81,7 +81,7 @@ def saveBlocks(id, items):
     out = out + 'End of:' +str(id) +'\n'
     return out
 
-def getAdBlocks(text, url=''):
+def getAdBlocks(text, url='', block_complexity=2):
     """ Get ad (tiser) blocks from html
     A tiser is a block with 1 outer link, text and inner tag complexity
     text is a html code of the page
@@ -107,7 +107,7 @@ def getAdBlocks(text, url=''):
         LinkCounter=0
         for child in element.getchildren():
             # Filter by amount of tags (block complexity)
-            if len(element.getchildren())>2:
+            if len(element.getchildren())>block_complexity:
                 pool += (child.tag,)
                 if child.tag == 'a':# Filter by tag (a href)
                     if child.attrib.has_key('href'):
@@ -134,6 +134,7 @@ except:
 urlsfile = config['DEFAULT']['Urls']
 datadir = config['DEFAULT']['DataDir']
 run = config['DEFAULT']['Run']
+block_complexity = int(config['DEFAULT']['BlockComplexity'])
 
 urls = file2list(urlsfile)
 if len(urls)==0:
@@ -156,7 +157,7 @@ for url in urls:
         print('Cant read file '+path)
         continue
 
-    ads, blocks = getAdBlocks(text, url)
+    ads, blocks = getAdBlocks(text, url, block_complexity)
     print('Find ads:',len(ads))
     
     #for k,v in data.items(): print(k,v)

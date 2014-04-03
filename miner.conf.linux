@@ -2,3 +2,4 @@
 Run = bash -k save.sh
 Urls = lists/women.txt
 DataDir = /tmp/phantom/
+BlockComplexity = 2
