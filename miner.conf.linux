@@ -4,6 +4,6 @@ Urls = lists/women.txt
 DataDir = /tmp/phantom/
 BlockComplexity = 1
 MaxBlockSize = 400
-MinBlockSize = 20
+MinBlockSize = 25
 MaxLinks = 6
 LogFile = log.txt
