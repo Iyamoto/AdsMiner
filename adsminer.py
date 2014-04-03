@@ -88,7 +88,8 @@ def writeLog(log_file, msg, isLogFile=True):
 
 def showBlock(id, items):
     """ Block print
-    No more in use"""
+    No more in use
+    Delete? """
     print('Start of:',id)
     for child in items[id].getchildren():
         #print(child.attrib)
@@ -159,6 +160,7 @@ def parseBlocks(text, url='', block_complexity=2, minBlockSize=10, maxBlockSize=
         hasText = False
         aTitles = ''
         LinkCounter=0
+        InnerLinkCounter = 0
         for child in element.getchildren():
             # Filter html comments
             if str(type(child))=='<class \'lxml.html.HtmlComment\'>':
@@ -170,12 +172,13 @@ def parseBlocks(text, url='', block_complexity=2, minBlockSize=10, maxBlockSize=
                     if child.attrib.has_key('href'):
                         if child.attrib['href'].find('http://')!=-1 and child.attrib['href'].find(BaseUrl)==-1:
                             hasLink = True
+                            LinkCounter+=1
                         else:
                             hasLink = False
-                        LinkCounter+=1
+                            InnerLinkCounter+=1
                     if child.attrib.has_key('title'):
                         aTitles = aTitles + child.attrib['title'].strip() + '\n'
-        if hasLink and LinkCounter<=maxLinks:
+        if hasLink and LinkCounter<=maxLinks and InnerLinkCounter==0:
             AdText=aTitles.strip()
             AdText+=element.text_content().strip()   
             AdSize = len(AdText)

@@ -41,7 +41,10 @@ log_file = config['DEFAULT']['LogFile']
 maxBlockSize = int(config['DEFAULT']['MaxBlockSize'])
 minBlockSize = int(config['DEFAULT']['MinBlockSize'])
 maxLinks = int(config['DEFAULT']['MaxLinks'])
+
 isLogFile = adsminer.initLog(log_file)
+
+# TODO add multi lists support
 
 urls = adsminer.file2list(urlsfile)
 if len(urls)==0:
@@ -64,16 +67,16 @@ for url in urls:
         code = adsminer.url2file(run, url, path)
         if code==False:
             print('Cant get url: '+url)
-            continue      
+            continue        
     try:
         text = adsminer.file2text(path)
     except:
         print('Cant read file '+path)
         continue
-
+    
+    # TODO add tidy html?
     ads, blocks = adsminer.parseBlocks(text, url, block_complexity, minBlockSize, maxBlockSize, maxLinks)
     ads_num = len(ads)
-    #print('Find ads:',ads_num)
     total_blocks +=ads_num
     
     # Test Harness
