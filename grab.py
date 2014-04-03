@@ -9,7 +9,7 @@ import adsminer
 # Test Harness
 test_data = {}
 test_data['http://gotovim-doma.ru/']=9
-test_data['http://horo.tochka.net/']=0 #????
+test_data['http://horo.tochka.net/']=2 #????
 test_data['http://www.edimdoma.ru/retsepty']=4
 test_data['http://www.mycharm.ru/']=4
 test_data['http://onbeauty.ru/']=6
