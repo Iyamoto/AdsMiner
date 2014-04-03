@@ -96,21 +96,36 @@ def showBlock(id, items):
 
 def getBlock(id, items):
     """ Form human readable block """
-    out = 'Start of:'+str(id)+'\n'
+    tags=''
+    textSize = 0
+    out = '=====Start of:'+str(id)+'\n'
     for child in items[id].getchildren():
+        tags = tags + str(child.tag) + ' '
         if child.tag=='a':
             if child.attrib.has_key('href'):
                 out = out + child.attrib['href'] +'\n'
             if child.attrib.has_key('title'):
                 out = out + child.attrib['title'] +'\n'
-        if child.text!=None:
-            out = out + child.text.strip()+'\n'
+##            if child.text!=None:
+##                out = out + child.text.strip()+'\n'              
         if child.tag=='img':
             out = out + child.attrib['src']+'\n'
-    out = out + 'End of:' +str(id) +'\n'
+##        try:
+##            for text in child.itertext():
+##                out = out + text.strip() + '\n'
+##        except:
+##            print(child.itertext())
+##            assert False
+        if str(type(child))!='<class \'lxml.html.HtmlComment\'>':
+            textSize += len(child.text_content().strip())
+            out = out + child.text_content().strip() + '\n'
+            
+    out = out + 'Text size: ' +str(textSize)+'\n'            
+    out = out + 'Tags structure: ' +tags+'\n'           
+    out = out + '=====End of:' +str(id) +'\n\n'
     return out
 
-def parseBlocks(text, url='', block_complexity=2, minBlockSize=10, maxBlockSize=500):
+def parseBlocks(text, url='', block_complexity=2, minBlockSize=10, maxBlockSize=500, maxLinks=1):
     """ Get ad (tiser) blocks from html
     A tiser is a block with 1 outer link, text and inner tag complexity
     text is a html code of the page
@@ -133,6 +148,7 @@ def parseBlocks(text, url='', block_complexity=2, minBlockSize=10, maxBlockSize=
         pool = ()
         hasLink = False
         hasText = False
+        aTitles = ''
         LinkCounter=0
         for child in element.getchildren():
             # Filter by amount of tags (block complexity)
@@ -143,10 +159,13 @@ def parseBlocks(text, url='', block_complexity=2, minBlockSize=10, maxBlockSize=
                         if child.attrib['href'].find('http://')!=-1 and child.attrib['href'].find(BaseUrl)==-1:
                             hasLink = True
                         LinkCounter+=1
-        if hasLink and LinkCounter==1:
-            AdText=''
+                    if child.attrib.has_key('title'):
+                        aTitles = aTitles + child.attrib['title'].strip() + '\n'
+        if hasLink and LinkCounter<=maxLinks:
+            AdText=aTitles
             for text in element.itertext():
                 AdText += text.strip()
+            AdText = AdText.strip()    
             AdSize = len(AdText)
             # print(AdSize)
             # Filter blocks without text and large blocks
@@ -179,6 +198,7 @@ block_complexity = int(config['DEFAULT']['BlockComplexity'])
 log_file = config['DEFAULT']['LogFile']
 maxBlockSize = int(config['DEFAULT']['MaxBlockSize'])
 minBlockSize = int(config['DEFAULT']['MinBlockSize'])
+maxLinks = int(config['DEFAULT']['MaxLinks'])
 isLogFile = initLog(log_file)
 
 urls = file2list(urlsfile)
@@ -203,7 +223,7 @@ for url in urls:
         print('Cant read file '+path)
         continue
 
-    ads, blocks = parseBlocks(text, url, block_complexity, minBlockSize, maxBlockSize)
+    ads, blocks = parseBlocks(text, url, block_complexity, minBlockSize, maxBlockSize, maxLinks)
     print('Find ads:',len(ads))
     writeLog(log_file, 'Find ads: '+str(len(ads))+'\n', isLogFile)
     

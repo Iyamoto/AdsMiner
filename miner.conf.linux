@@ -2,7 +2,8 @@
 Run = bash -k save.sh
 Urls = lists/women.txt
 DataDir = /tmp/phantom/
-BlockComplexity = 0
-MaxBlockSize = 256
+BlockComplexity = 1
+MaxBlockSize = 400
 MinBlockSize = 15
+MaxLinks = 3
 LogFile = log.txt
