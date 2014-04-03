@@ -151,12 +151,12 @@ def parseBlocks(text, url='', block_complexity=2, minBlockSize=10, maxBlockSize=
             # print(AdSize)
             # Filter blocks without text and large blocks
             if AdSize>=minBlockSize and AdSize<=maxBlockSize:
-                # How to filter counters?                
-                # How to get rid of small blocks with only one link?
+                # How to filter counters? Block size?          
+                # How to get rid of small blocks with only one link? No way
                 # Lets try to parse out http* and check text size - bad idea
 
-                #httpes = re.findall(r'http:[^:]+',AdText)
-                #print('httpes',httpes, AdText, AdSize)
+##                httpes = re.findall(r'http:[^:]+',AdText)
+##                print('httpes',httpes, AdText, AdSize)
 
                 # Finaly, block is good
                 data[id] = data.get(id,(element.tag,)) + pool
@@ -171,6 +171,7 @@ except:
     print('Cant read config file')
     assert False
 
+# Init
 urlsfile = config['DEFAULT']['Urls']
 datadir = config['DEFAULT']['DataDir']
 run = config['DEFAULT']['Run']
@@ -204,6 +205,7 @@ for url in urls:
 
     ads, blocks = parseBlocks(text, url, block_complexity, minBlockSize, maxBlockSize)
     print('Find ads:',len(ads))
+    writeLog(log_file, 'Find ads: '+str(len(ads))+'\n', isLogFile)
     
     #for k,v in data.items(): print(k,v)
     

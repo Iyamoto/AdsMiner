@@ -2,7 +2,7 @@
 Run = bash -k save.sh
 Urls = lists/women.txt
 DataDir = /tmp/phantom/
-BlockComplexity = 2
+BlockComplexity = 0
 MaxBlockSize = 256
 MinBlockSize = 15
 LogFile = log.txt
