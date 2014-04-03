@@ -148,7 +148,7 @@ for url in urls:
     if os.path.isfile(path) == False:
         code = url2file(run, url, path)
         if code==False:
-            print('Cant get url: url')
+            print('Cant get url: '+url)
             continue      
     try:
         text = file2text(path)
