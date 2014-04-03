@@ -8,6 +8,7 @@ import os.path
 from urllib.parse import urlparse
 from lxml import html
 import codecs
+import re
 
 def url2file(run, url, html):
     """PhantomJS wrapper
@@ -75,7 +76,7 @@ def writeLog(log_file, msg, isLogFile=True):
     else:
         return False
 
-def showBlocks(id, items):
+def showBlock(id, items):
     """ Block print """
     print('Start of:',id)
     for child in items[id].getchildren():
@@ -109,7 +110,7 @@ def getBlock(id, items):
     out = out + 'End of:' +str(id) +'\n'
     return out
 
-def parseBlocks(text, url='', block_complexity=2):
+def parseBlocks(text, url='', block_complexity=2, minBlockSize=10, maxBlockSize=500):
     """ Get ad (tiser) blocks from html
     A tiser is a block with 1 outer link, text and inner tag complexity
     text is a html code of the page
@@ -146,7 +147,18 @@ def parseBlocks(text, url='', block_complexity=2):
             AdText=''
             for text in element.itertext():
                 AdText += text.strip()
-            if len(AdText)>0:
+            AdSize = len(AdText)
+            # print(AdSize)
+            # Filter blocks without text and large blocks
+            if AdSize>=minBlockSize and AdSize<=maxBlockSize:
+                # How to filter counters?                
+                # How to get rid of small blocks with only one link?
+                # Lets try to parse out http* and check text size - bad idea
+
+                #httpes = re.findall(r'http:[^:]+',AdText)
+                #print('httpes',httpes, AdText, AdSize)
+
+                # Finaly, block is good
                 data[id] = data.get(id,(element.tag,)) + pool
                 id+=1
     return data, items
@@ -164,6 +176,8 @@ datadir = config['DEFAULT']['DataDir']
 run = config['DEFAULT']['Run']
 block_complexity = int(config['DEFAULT']['BlockComplexity'])
 log_file = config['DEFAULT']['LogFile']
+maxBlockSize = int(config['DEFAULT']['MaxBlockSize'])
+minBlockSize = int(config['DEFAULT']['MinBlockSize'])
 isLogFile = initLog(log_file)
 
 urls = file2list(urlsfile)
@@ -172,6 +186,7 @@ if len(urls)==0:
     assert False
 
 for url in urls:
+    writeLog(log_file, url+'\n', isLogFile)
     url_id = hashlib.md5(url.encode('utf-8')).hexdigest()    
     path = datadir + url_id + '.html'
 
@@ -187,19 +202,19 @@ for url in urls:
         print('Cant read file '+path)
         continue
 
-    ads, blocks = parseBlocks(text, url, block_complexity)
+    ads, blocks = parseBlocks(text, url, block_complexity, minBlockSize, maxBlockSize)
     print('Find ads:',len(ads))
     
     #for k,v in data.items(): print(k,v)
     
     if len(ads)>0:
         for id in ads.keys():
-            #showBlocks(id,blocks)
+            #showBlock(id,blocks)
             if isLogFile:
                 out = getBlock(id,blocks)
                 writeLog(log_file, out, isLogFile)
 
     del(ads)
     del(blocks)
-    #break
+    break
 

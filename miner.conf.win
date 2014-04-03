@@ -3,4 +3,6 @@ Run = save.cmd
 Urls = lists\women.txt
 DataDir = F:\tmp\py\
 BlockComplexity = 2
+MaxBlockSize = 256
+MinBlockSize = 15
 LogFile = log.txt
