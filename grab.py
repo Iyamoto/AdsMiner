@@ -15,8 +15,10 @@ def url2file(run, url, html, png=''):
     html - where to save page code (html)
     png - where to save rendered page (image)"""
     cmd = run+' '+url+' '+html
-    code = subprocess.call(cmd, shell=True)
-    # TODO  check return code
+    try:
+        code = subprocess.call(cmd, shell=True)
+    except:
+        print('Cant execute: '+cmd)
     return code
 
 def file2text(path):
@@ -54,6 +56,7 @@ def showBlocks(id, items):
     return None
 
 def saveBlocks(id, items):
+    """ Form human readable block """
     out = 'Start of:'+str(id)+'\n'
     for child in items[id].getchildren():
         if child.tag=='a':
@@ -69,13 +72,19 @@ def saveBlocks(id, items):
     return out
 
 def getAdBlocks(text, url=''):
+    """ Get ad (tiser) blocks from html
+    A tiser is a block with 1 outer link, text and inner tag complexity
+    text is a html code of the page
+    url is a url of the page, needed for outer links detection"""
     assert type(text)==str
     if len(url)>0:
         BaseUrl = urlparse(url).netloc
         tmp = BaseUrl.split('.')
         BaseUrl = tmp[-2]+'.'+tmp[-1]
-    tree = html.document_fromstring(text)
-    # TODO return code?
+    try:
+        tree = html.document_fromstring(text)
+    except:
+        print('Cant render html')
     data = {}
     items = {}
     id=0
@@ -86,7 +95,8 @@ def getAdBlocks(text, url=''):
         hasText = False
         LinkCounter=0
         for child in element.getchildren():
-            if len(element.getchildren())>2:# Filter by amount of tags
+            # Filter by amount of tags (block complexity)
+            if len(element.getchildren())>2:
                 pool += (child.tag,)
                 if child.tag == 'a':# Filter by tag (a href)
                     if child.attrib.has_key('href'):

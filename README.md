@@ -1,8 +1,13 @@
 AdsMiner
 ========
+Ad Blocks data miner
 
-mkdir /tmp/phantom
-cp miner.conf.sample miner.conf
+INSTALL
+=======
+<ul>
+<li>mkdir /tmp/phantom</li>
+<li>cp miner.conf.OS miner.conf</li>
+</ul>
 
 TODO
 ====
