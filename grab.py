@@ -51,6 +51,10 @@ if len(urls)==0:
 total_blocks = 0
 
 for url in urls:
+    try:
+        url = adsminer.clearUrl(url)
+    except:
+        continue
     adsminer.writeLog(log_file, url+'\n', isLogFile)
     url_id = hashlib.md5(url.encode('utf-8')).hexdigest()    
     path = datadir + url_id + '.html'
