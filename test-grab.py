@@ -1,4 +1,4 @@
-# AdsMiner:Grabber
+# AdsMiner: Grabber testing harness
 # TODO http://www.myjane.ru/articles/rubric/?id=54 =?
 
 import configparser

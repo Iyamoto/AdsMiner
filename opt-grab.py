@@ -1,4 +1,4 @@
-# AdsMiner:Grabber
+# AdsMiner: Grabber optimizer
 # TODO http://www.myjane.ru/articles/rubric/?id=54 =?
 
 import configparser
@@ -98,8 +98,8 @@ for test_param in range(min_opt, max_opt, step_opt):
         if url not in text_buckets.keys():
             text_buckets[url] = adsminer.file2text(path)
         text = text_buckets.get(url)
-        # Need less memory?
-        #text = adsminer.file2text(path) # Should I keep em in memory?
+        # Need less memory usage?
+        #text = adsminer.file2text(path) # Should I keep em in memory? Yes
         
         # TODO add tidy html?
         ads = adsminer.parseBlocks(text, url, block_complexity, minBlockSize, maxBlockSize, maxLinks)
@@ -117,5 +117,4 @@ for test_param in range(min_opt, max_opt, step_opt):
 
 sorted_data = sorted(opt_data, key=adsminer.getIndex1)
 print('Best param: '+ str(sorted_data[0][0]))
-
 print('Optimization time: ',datetime.now()-startTime)
