@@ -1,4 +1,3 @@
-Grabber started
 http://horo.mail.ru/
 http://horoscopes.rambler.ru/
 http://www.goroskop.ru/

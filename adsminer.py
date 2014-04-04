@@ -70,7 +70,7 @@ def file2list(path):
     f.close()
     return lines
 
-def initLog(log_file, out = 'Grabber started\n'):
+def initLog(log_file, out = ''):
     """ Log file init """
     try:
         f = codecs.open(log_file, 'w', encoding='utf-8')

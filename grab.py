@@ -24,7 +24,7 @@ maxBlockSize = int(config['GRABBER']['MaxBlockSize'])
 minBlockSize = int(config['GRABBER']['MinBlockSize'])
 maxLinks = int(config['GRABBER']['MaxLinks'])
 
-isLogFile = adsminer.initLog(log_file)
+isLogFile = adsminer.initLog(log_file,'Grabber started\n')
 
 # TODO add multi lists support
 
