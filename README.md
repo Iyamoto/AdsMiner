@@ -1,6 +1,7 @@
 AdsMiner
 ========
-Ad Blocks data miner
+<p>Ad Blocks data miner</p>
+<p>Based on Phantom.JS</p>
 
 INSTALL
 =======

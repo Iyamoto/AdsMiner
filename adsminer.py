@@ -24,9 +24,10 @@ def url2file(run, url, html):
     """PhantomJS wrapper
     url - http://name.tld
     html - where to save page code (html)"""
-    cmd = run+' '+url+' '+html
+    #cmd = run+' '+url+' '+html
+    print(run, url, html)
     try:
-        subprocess.call(cmd, shell=True)
+        subprocess.call([run, url, html], shell=True)
     except:
         print('Cant execute: '+cmd)
         return False

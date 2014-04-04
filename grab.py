@@ -42,7 +42,7 @@ for url in urls:
         continue
     adsminer.writeLog(log_file, url+'\n', isLogFile)
     url_id = hashlib.md5(url.encode('utf-8')).hexdigest()    
-    path = datadir + url_id + '.html'
+    path = os.path.join(datadir, url_id + '.html')
 
     print(url, path)
     if os.path.isfile(path) == False:
