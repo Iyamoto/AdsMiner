@@ -45,16 +45,7 @@ for url in urls:
     path = os.path.join(datadir, url_id + '.html')
 
     print(url, path)
-    if os.path.isfile(path) == False:
-        code = adsminer.url2file(run, url, path)
-        if code==False:
-            print('Cant get url: '+url)
-            continue        
-    try:
-        text = adsminer.file2text(path)
-    except:
-        print('Cant read file '+path)
-        continue
+    text = adsminer.url2html(run, url, path)
     
     # TODO add tidy html?
     ads = adsminer.parseBlocks(text, url, block_complexity, minBlockSize, maxBlockSize, maxLinks)

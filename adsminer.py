@@ -5,6 +5,7 @@ from urllib.parse import urlparse
 from lxml import html
 import codecs
 import re
+import os.path
 
 def clearUrl(url):
     """ Checking is string is an url """
@@ -31,6 +32,17 @@ def url2file(run, url, path):
         print('Cant execute: '+cmd)
         return False
     return True
+
+def url2html(run, url, path):
+    if os.path.isfile(path) == False:
+        code = url2file(run, url, path)
+        assert code==True
+    try:
+        html = file2text(path)
+    except:
+        print('Cant read file: '+path)
+        assert False
+    return html
 
 def file2text(path):
     """Reads utf-8 file from path"""

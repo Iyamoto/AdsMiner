@@ -58,7 +58,7 @@ maxLinks = int(config['GRABBER']['MaxLinks'])
 
 # For maxBlockSize
 ##maxBlockSize = 70
-min_opt, max_opt, step_opt = 150,300,5
+min_opt, max_opt, step_opt = 150,300,10
 
 # TODO add multi lists support
 
@@ -86,20 +86,13 @@ for test_param in range(min_opt, max_opt, step_opt):
         url_id = hashlib.md5(url.encode('utf-8')).hexdigest()    
         path = datadir + url_id + '.html'
 
-        #print(url, path)
-        if os.path.isfile(path) == False:
-            code = adsminer.url2file(run, url, path)
-            if code==False:
-                print('Cant get url: '+url)
-                continue
-
         # Trading memory for file IO
         # Need less file IO?
         if url not in text_buckets.keys():
-            text_buckets[url] = adsminer.file2text(path)
+            text_buckets[url] = adsminer.url2html(run, url, path)
         text = text_buckets.get(url)
         # Need less memory usage?
-        #text = adsminer.file2text(path) # Should I keep em in memory? Yes
+        #text = adsminer.url2html(run, url, path) # Should I keep em in memory? Yes
         
         # TODO add tidy html?
         ads = adsminer.parseBlocks(text, url, block_complexity, minBlockSize, maxBlockSize, maxLinks)

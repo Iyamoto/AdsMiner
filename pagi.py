@@ -6,6 +6,8 @@ import os.path
 from urllib.parse import quote_plus
 import adsminer
 
+
+
 # Read config
 config = configparser.ConfigParser()
 try:
@@ -31,12 +33,5 @@ print(url)
 url_id = hashlib.md5(url.encode('utf-8')).hexdigest()    
 path = os.path.join(datadir, url_id + '.html')
 
-if os.path.isfile(path) == False:
-    code = adsminer.url2file(run, url, path)
-    assert code==True
-try:
-    text = adsminer.file2text(path)
-except:
-    print('Cant read file '+path)
-    assert False
+html = adsminer.url2html(run, url, path)
     
