@@ -1,3 +1,4 @@
 miner.conf
 log.txt
 __pycache__
+logs/*

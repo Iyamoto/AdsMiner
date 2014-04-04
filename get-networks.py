@@ -4,7 +4,7 @@ import os.path
 from urllib.parse import urlparse
 import adsminer
 
-log_path = 'log.txt'
+log_path = os.path.join('logs', 'women.txt')
 stats = {}
 
 low_limit=5
