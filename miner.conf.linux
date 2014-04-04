@@ -1,6 +1,6 @@
 [GRABBER]
 Run = bash -k save.sh
-Urls = lists/women.txt
+Urls = women.txt
 DataDir = /tmp/phantom/
 BlockComplexity = 1
 MaxBlockSize = 400

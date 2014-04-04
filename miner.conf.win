@@ -1,6 +1,6 @@
 [GRABBER]
 Run = save.cmd
-Urls = lists\women.txt
+Urls = women.txt
 DataDir = F:\tmp\py\
 BlockComplexity = 1
 MaxBlockSize = 400
