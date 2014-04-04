@@ -94,7 +94,7 @@ for url in urls:
 
     del(ads)
     del(blocks)
-    break
+    #break
 
 adsminer.writeLog(log_file, 'Total blocks found: '+str(total_blocks)+'\n', isLogFile)
 adsminer.writeLog(log_file, 'Done\n', isLogFile)

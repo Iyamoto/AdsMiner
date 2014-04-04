@@ -117,18 +117,21 @@ def getBlock(id, items):
         if child.tag=='a':
             if child.attrib.has_key('href'):
                 out = out + 'href: '+ child.attrib['href'] +'\n'
-            if child.attrib.has_key('title'):
-                out = out + 'title: '+ child.attrib['title'] +'\n'
-                textLen = len(child.attrib['title'])
-                textSize += textLen              
+##            if child.attrib.has_key('title'):
+##                out = out + 'title: '+ child.attrib['title'] +'\n'
+##                textLen = len(child.attrib['title'])
+##                textSize += textLen              
         if child.tag=='img':
             out = out + 'img src: ' +child.attrib['src']+'\n'
-        if str(type(child))!='<class \'lxml.html.HtmlComment\'>':
-            textLen = len(child.text_content().strip())
-            if textLen>0:
-                textSize += textLen
-                out = out + str(child.tag) +' text: '+child.text_content().strip() + '\n'
-            
+##        if str(type(child))!='<class \'lxml.html.HtmlComment\'>':
+##            textLen = len(child.text_content().strip())
+##            if textLen>0:
+##                textSize += textLen
+##                out = out + str(child.tag) +' text: '+child.text_content().strip() + '\n'
+
+    main_text = items[id].text_content().strip()
+    textSize+= len(main_text)
+    out = out + 'Main text: ' +main_text+'\n'                            
     out = out + 'Text size: ' +str(textSize)+'\n'            
     out = out + 'Tags structure: ' +tags+'\n'           
     out = out + '=====End of:' +str(id) +'\n\n'
@@ -180,23 +183,24 @@ def parseBlocks(text, url='', block_complexity=2, minBlockSize=10, maxBlockSize=
                     else:
                         hasLink = False
                         InnerLinkCounter+=1
-                if child.attrib.has_key('title'):
-                    textLen = len(child.attrib['title'])
-                    textSize += textLen 
-            textLen = len(child.text_content().strip())
-            if textLen>0:
-                textSize += textLen
+##                if child.attrib.has_key('title'):
+##                    textLen = len(child.attrib['title'])
+##                    textSize += textLen 
+##            textLen = len(child.text_content().strip())
+##            if textLen>0:
+##                textSize += textLen
         # Filter by Links and amount of tags (block complexity)                
         if hasLink and LinkCounter<=maxLinks and InnerLinkCounter==0 and Complexity>block_complexity:
+            textSize = len(element.text_content().strip())                        
             # Filter blocks without text and large blocks
             if textSize>=minBlockSize and textSize<=maxBlockSize:
                 # How to filter counters? Block size?          
                 # How to get rid of small blocks with only one link? No way
 
                 # Finaly, block is good
-                print(pool)
-                print(textSize)
-                print(element.text_content())
+                #print(pool)
+                #print(textSize)
+                #print(element.text_content())
                 data[id] = data.get(id,(element.tag,)) + pool
                 items[id] = element
                 id+=1
