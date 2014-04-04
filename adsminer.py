@@ -147,7 +147,7 @@ def getBlock(id, items):
         if child.tag=='a':
             if child.attrib.has_key('href'):
                 out = out + 'href: '+ child.attrib['href'] +'\n'            
-        if child.tag=='img':
+        if child.tag=='img' and child.attrib.has_key('src'):
             out = out + 'img src: ' +child.attrib['src']+'\n'
     main_text = items[id].text_content().strip()
     textSize = len(main_text)

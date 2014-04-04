@@ -1,5 +1,5 @@
 9 http://gotovim-doma.ru/
-2 http://horo.tochka.net/
+#2 http://horo.tochka.net/
 4 http://www.edimdoma.ru/retsepty
 4 http://www.mycharm.ru/
 6 http://onbeauty.ru/
