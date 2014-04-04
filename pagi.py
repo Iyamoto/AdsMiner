@@ -1,4 +1,4 @@
-# A Paginator extraction
+# A Paginator extraction and links accumulation
 
 import configparser
 import hashlib
@@ -7,8 +7,6 @@ from urllib.parse import quote_plus
 from urllib.parse import urlparse
 import re
 import adsminer
-
-
 
 # Read config
 config = configparser.ConfigParser()
