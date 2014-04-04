@@ -14,6 +14,9 @@ except:
     assert False
 
 # Init
+if not os.path.exists('logs'):
+    os.makedirs('logs')
+
 urlsfile = os.path.join('lists', config['GRABBER']['Urls'])
 datadir = config['GRABBER']['DataDir']
 run = config['GRABBER']['Run']
