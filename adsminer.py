@@ -159,7 +159,7 @@ def getBlock(id, items):
     return out
 
 def getDomainfromUrl(url):
-    tld = ('com','net','org')
+    tld = ('com','net','org','ucoz','narod')
     BaseUrl = urlparse(url).netloc
     BaseUrl = BaseUrl.lower()
     tmp = BaseUrl.split('.')
