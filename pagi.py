@@ -40,12 +40,19 @@ while True:
     path = os.path.join(datadir, url_id + '.html')
 
     html = adsminer.url2html(run, url, path)
+    # Get links
+    matches = re.findall(r'<a[^>]+>.+</a>', html)  
+    for match in matches:
+        if match.find('result__name')>0:
+            tmp = re.search(r'href="([^"]+)"',match)
+            link = tmp.group(1)
+            adsminer.writeLog(pagi_list_path,link+'\n',isLogFile)
+    # Find next
     match = re.findall(r'<a[^>]+>следующая</a>', html)
     if len(match)==1:
         next = re.search(r'href="([^"]+)"',match[0])
         url = scheme+'://'+baseurl+next.group(1)
-        print(url)
-        adsminer.writeLog(pagi_list_path,url+'\n',isLogFile)
+        print(url)        
     else:
         break
 
