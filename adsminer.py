@@ -86,6 +86,12 @@ def writeLog(log_file, msg, isLogFile=True):
     else:
         return False
 
+def getIndex1(my_items):
+    return my_items[1]
+
+def getIndex2(my_items):
+    return my_items[2]    
+
 def showBlock(id, items):
     """ Block print
     No more in use
