@@ -23,10 +23,10 @@ lists_dir = os.path.dirname(urlsfile)
 pagi_list_path = os.path.join(lists_dir, 'pagi.txt')
 
 key = 'гороскоп'
-url = quote_plus('http://yaca.yandex.ru/yca/cat/?text='+key)
+urlkey = quote_plus(key)
+baseurl = 'http://yaca.yandex.ru/yca/cat/?text='
+url = baseurl+urlkey
 print(url)
-assert False
-
 
 url_id = hashlib.md5(url.encode('utf-8')).hexdigest()    
 path = os.path.join(datadir, url_id + '.html')

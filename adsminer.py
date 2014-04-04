@@ -20,11 +20,11 @@ def clearUrl(url):
     return None
     
 
-def url2file(run, url, html):
+def url2file(run, url, path):
     """PhantomJS wrapper
     url - http://name.tld
-    html - where to save page code (html)"""
-    cmd = run+' '+url+' '+html
+    path - where to save page code (html)"""
+    cmd = run+' "'+url+'" '+path
     try:
         subprocess.call(cmd, shell=True)
     except:
