@@ -158,6 +158,14 @@ def getBlock(id, items):
     out = out + '=====End of:' +str(id) +'\n\n'
     return out
 
+def getDomainfromUrl(url):
+    BaseUrl = urlparse(url).netloc
+    tmp = BaseUrl.split('.')
+    if len(tmp)>=2:
+        BaseUrl = tmp[-2]+'.'+tmp[-1]
+        BaseUrl = BaseUrl.lower()
+    return BaseUrl
+
 def parseBlocks(text, url='', block_complexity=2, minBlockSize=10, maxBlockSize=500, maxLinks=1):
     """ Get ad (tiser) blocks from html
     A tiser is a block with:
@@ -170,10 +178,7 @@ def parseBlocks(text, url='', block_complexity=2, minBlockSize=10, maxBlockSize=
     url is a url of the page, needed for outer links detection"""
     assert type(text)==str
     if len(url)>0:
-        BaseUrl = urlparse(url).netloc
-        tmp = BaseUrl.split('.')
-        BaseUrl = tmp[-2]+'.'+tmp[-1]
-        BaseUrl = BaseUrl.lower()
+        BaseUrl = getDomainfromUrl(url)
     try:
         tree = html.document_fromstring(text)
     except:
