@@ -101,7 +101,22 @@ def getIndex1(my_items):
     return my_items[1]
 
 def getIndex2(my_items):
-    return my_items[2]    
+    return my_items[2]
+
+def get_test_data(path):
+    if os.path.isfile(path) == True:
+        test_data = {}
+        f = open(path, 'rU')
+        for line in f:
+            if line[0]!='#':
+                items = line.split()
+                if len(items)==2:
+                    test_data[items[1]] = int(items[0])
+        f.close()
+        return test_data
+    else:
+        print('File not found: ',path)
+        assert False
 
 def showBlock(id, items):
     """ Block print
