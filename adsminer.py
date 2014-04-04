@@ -147,7 +147,11 @@ def parseBlocks(text, url='', block_complexity=2, minBlockSize=10, maxBlockSize=
         return None # ????
     items = {}
     id=0
+    SkipBlocks = 0
     for element in tree.body.iter():
+        if SkipBlocks>0:
+            SkipBlocks-=1
+            continue
         pool = ()
         hasLink = False
         LinkCounter=0
@@ -180,4 +184,5 @@ def parseBlocks(text, url='', block_complexity=2, minBlockSize=10, maxBlockSize=
                 # Finaly, block is good
                 items[id] = element
                 id+=1
+                SkipBlocks = len(pool)-1 # Skip checking for inner blocks, they are already in the ad block
     return items
