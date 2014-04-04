@@ -172,6 +172,7 @@ def parseBlocks(text, url='', block_complexity=2, minBlockSize=10, maxBlockSize=
         BaseUrl = urlparse(url).netloc
         tmp = BaseUrl.split('.')
         BaseUrl = tmp[-2]+'.'+tmp[-1]
+        BaseUrl = BaseUrl.lower()
     try:
         tree = html.document_fromstring(text)
     except:
@@ -198,7 +199,7 @@ def parseBlocks(text, url='', block_complexity=2, minBlockSize=10, maxBlockSize=
             pool += (child.tag,)
             if child.tag == 'a':# Filter by tag (a href)
                 if child.attrib.has_key('href'):
-                    if child.attrib['href'].find('http://')!=-1 and child.attrib['href'].find(BaseUrl)==-1:
+                    if child.attrib['href'].find('http://')!=-1 and child.attrib['href'].lower().find(BaseUrl)==-1:
                         hasLink = True
                         LinkCounter+=1
                     else:
