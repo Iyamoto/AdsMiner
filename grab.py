@@ -75,25 +75,22 @@ for url in urls:
         continue
     
     # TODO add tidy html?
-    ads, blocks = adsminer.parseBlocks(text, url, block_complexity, minBlockSize, maxBlockSize, maxLinks)
-    ads_num = len(ads)
+    ads = adsminer.parseBlocks(text, url, block_complexity, minBlockSize, maxBlockSize, maxLinks)
+    ads_num = len(ads.keys())
     total_blocks +=ads_num
     
     # Test Harness
     test_parseBlocks(url,ads_num)
     
-    adsminer.writeLog(log_file, 'Find ads: '+str(len(ads))+'\n', isLogFile)
+    adsminer.writeLog(log_file, 'Find ads: '+str(ads_num)+'\n', isLogFile)
     
-    #for k,v in data.items(): print(k,v)
-    
-    if len(ads)>0:
+    if ads_num>0:
         for id in ads.keys():
             if isLogFile:
-                out = adsminer.getBlock(id,blocks)
+                out = adsminer.getBlock(id,ads)
                 adsminer.writeLog(log_file, out, isLogFile)
 
     del(ads)
-    del(blocks)
     #break
 
 adsminer.writeLog(log_file, 'Total blocks found: '+str(total_blocks)+'\n', isLogFile)
