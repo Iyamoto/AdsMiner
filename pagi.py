@@ -4,6 +4,8 @@ import configparser
 import hashlib
 import os.path
 from urllib.parse import quote_plus
+from urllib.parse import urlparse
+import re
 import adsminer
 
 
@@ -23,15 +25,28 @@ run = config['GRABBER']['Run']
 
 lists_dir = os.path.dirname(urlsfile)
 pagi_list_path = os.path.join(lists_dir, 'pagi.txt')
+isLogFile = adsminer.initLog(pagi_list_path)
 
 key = 'гороскоп'
 urlkey = quote_plus(key)
-baseurl = 'http://yaca.yandex.ru/yca/cat/?text='
-url = baseurl+urlkey
-print(url)
+starturl = 'http://yaca.yandex.ru/yca/cat/?text='
+baseurl = urlparse(starturl).netloc
+scheme = urlparse(starturl).scheme
+url = starturl+urlkey
+print(baseurl)
 
-url_id = hashlib.md5(url.encode('utf-8')).hexdigest()    
-path = os.path.join(datadir, url_id + '.html')
+while True:
+    url_id = hashlib.md5(url.encode('utf-8')).hexdigest()    
+    path = os.path.join(datadir, url_id + '.html')
 
-html = adsminer.url2html(run, url, path)
+    html = adsminer.url2html(run, url, path)
+    match = re.findall(r'<a[^>]+>следующая</a>', html)
+    if len(match)==1:
+        next = re.search(r'href="([^"]+)"',match[0])
+        url = scheme+'://'+baseurl+next.group(1)
+        print(url)
+        adsminer.writeLog(pagi_list_path,url+'\n',isLogFile)
+    else:
+        break
+
     

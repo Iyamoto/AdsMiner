@@ -70,14 +70,13 @@ def file2list(path):
     f.close()
     return lines
 
-def initLog(log_file):
+def initLog(log_file, out = 'Grabber started\n'):
     """ Log file init """
     try:
         f = codecs.open(log_file, 'w', encoding='utf-8')
     except:
         print('Cant open log file: '+log_file)
         return False
-    out = 'Grabber started\n'
     # TODO add date and time
     f.write(out)
     f.close()
