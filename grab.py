@@ -49,7 +49,11 @@ for url in urls:
     
     # TODO add tidy html?
     ads = adsminer.parseBlocks(text, url, block_complexity, minBlockSize, maxBlockSize, maxLinks)
-    ads_num = len(ads.keys())
+    try:
+        ads_num = len(ads.keys())
+    except:
+        del(ads)
+        continue
     total_blocks +=ads_num
       
     adsminer.writeLog(log_file, 'Find ads: '+str(ads_num)+'\n', isLogFile)

@@ -25,7 +25,7 @@ lists_dir = os.path.dirname(urlsfile)
 pagi_list_path = os.path.join(lists_dir, 'pagi.txt')
 isLogFile = adsminer.initLog(pagi_list_path)
 
-key = 'гороскоп'
+key = 'рецепты'
 urlkey = quote_plus(key)
 starturl = 'http://yaca.yandex.ru/yca/cat/?text='
 baseurl = urlparse(starturl).netloc
