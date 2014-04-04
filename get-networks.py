@@ -1,29 +1,23 @@
 # AdsMiner: Get Ads Networks from grab.py log.txt
 
-import os.path
+import os
 from urllib.parse import urlparse
 import adsminer
-import configparser
-
-config = configparser.ConfigParser()
-try:
-    config.read('miner.conf')
-except:
-    print('Cant read config file')
-    assert False
-    
-log_file = os.path.join('logs', config['GRABBER']['Urls'])
+      
 stats = {}
-
+logs_dir = 'logs'
 low_limit=5
-
-if os.path.isfile(log_file) == True:
-    lines = adsminer.file2list(log_file)
-    for line in lines:
-        if line.find('href: ')>=0:
-            domain = adsminer.getDomainfromUrl(line.split()[1])
-            if len(domain)>1:
-                stats[domain] = stats.get(domain,0)+1
+for file in os.listdir(logs_dir):
+    if file.endswith('.txt'):
+        print('Reading log file: ',file)
+        log_path = os.path.join(logs_dir, file)
+        if os.path.isfile(log_path) == True:
+            lines = adsminer.file2list(log_path)
+            for line in lines:
+                if line.find('href: ')>=0:
+                    domain = adsminer.getDomainfromUrl(line.split()[1])
+                    if len(domain)>1:
+                        stats[domain] = stats.get(domain,0)+1
 list_stats = []
 for k,v in stats.items():
     if v>low_limit:
