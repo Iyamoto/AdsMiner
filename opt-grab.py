@@ -41,9 +41,15 @@ block_complexity = int(config['GRABBER']['BlockComplexity'])
 log_file = config['GRABBER']['LogFile']
 maxBlockSize = int(config['GRABBER']['MaxBlockSize'])
 minBlockSize = int(config['GRABBER']['MinBlockSize'])
+maxLinks = int(config['GRABBER']['MaxLinks'])
 
-maxLinks = 0 # Need to find optimal value
-min_opt, max_opt = 0,12
+# For maxLinks
+##maxLinks = 8 
+##min_opt, max_opt, step_opt = 0,12,1
+
+# For block_complexity
+##block_complexity = 0
+min_opt, max_opt, step_opt = 0,4,1
 
 # TODO add multi lists support
 
@@ -54,8 +60,9 @@ if len(urls)==0:
 
 opt_data = []    
 
-for test_param in range(min_opt, max_opt):    
-    maxLinks = test_param
+for test_param in range(min_opt, max_opt, step_opt):    
+    #maxLinks = test_param
+    block_complexity = test_param
     total_diff = 0
 
     for url in urls:
