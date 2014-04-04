@@ -22,7 +22,8 @@ if os.path.isfile(log_file) == True:
     for line in lines:
         if line.find('href: ')>=0:
             domain = adsminer.getDomainfromUrl(line.split()[1])
-            stats[domain] = stats.get(domain,0)+1
+            if len(domain)>1:
+                stats[domain] = stats.get(domain,0)+1
 list_stats = []
 for k,v in stats.items():
     if v>low_limit:
