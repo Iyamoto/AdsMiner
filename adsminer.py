@@ -181,41 +181,44 @@ def parseBlocks(text, url='', block_complexity=2, minBlockSize=10, maxBlockSize=
     items = {}
     id=0
     SkipBlocks = 0
-    for element in tree.body.iter():
-        if SkipBlocks>0:
-            SkipBlocks-=1
-            continue
-        pool = ()
-        hasLink = False
-        LinkCounter=0
-        InnerLinkCounter = 0
-        Complexity = 0
-
-        for child in element.iterdescendants():
-            Complexity+=1
-            # Filter html comments
-            if str(type(child))=='<class \'lxml.html.HtmlComment\'>':
+    try:
+        for element in tree.body.iter():
+            if SkipBlocks>0:
+                SkipBlocks-=1
                 continue
-            pool += (child.tag,)
-            if child.tag == 'a':# Filter by tag (a href)
-                if child.attrib.has_key('href'):
-                    if child.attrib['href'].find('http://')!=-1 and child.attrib['href'].lower().find(BaseUrl)==-1:
-                        hasLink = True
-                        LinkCounter+=1
-                    else:
-                        hasLink = False
-                        InnerLinkCounter+=1
-                        
-        # Filter by Links and amount of tags (block complexity)                
-        if hasLink and LinkCounter<=maxLinks and InnerLinkCounter==0 and Complexity>block_complexity:
-            textSize = len(element.text_content().strip())                        
-            # Filter blocks without text and large blocks
-            if textSize>=minBlockSize and textSize<=maxBlockSize:
-                # How to filter counters? Block size?          
-                # How to get rid of small blocks with only one link? No way
+            pool = ()
+            hasLink = False
+            LinkCounter=0
+            InnerLinkCounter = 0
+            Complexity = 0
 
-                # Finaly, block is good
-                items[id] = element
-                id+=1
-                SkipBlocks = len(pool)-1 # Skip checking for inner blocks, they are already in the ad block
+            for child in element.iterdescendants():
+                Complexity+=1
+                # Filter html comments
+                if str(type(child))=='<class \'lxml.html.HtmlComment\'>':
+                    continue
+                pool += (child.tag,)
+                if child.tag == 'a':# Filter by tag (a href)
+                    if child.attrib.has_key('href'):
+                        if child.attrib['href'].find('http://')!=-1 and child.attrib['href'].lower().find(BaseUrl)==-1:
+                            hasLink = True
+                            LinkCounter+=1
+                        else:
+                            hasLink = False
+                            InnerLinkCounter+=1
+                            
+            # Filter by Links and amount of tags (block complexity)                
+            if hasLink and LinkCounter<=maxLinks and InnerLinkCounter==0 and Complexity>block_complexity:
+                textSize = len(element.text_content().strip())                        
+                # Filter blocks without text and large blocks
+                if textSize>=minBlockSize and textSize<=maxBlockSize:
+                    # How to filter counters? Block size?          
+                    # How to get rid of small blocks with only one link? No way
+
+                    # Finaly, block is good
+                    items[id] = element
+                    id+=1
+                    SkipBlocks = len(pool)-1 # Skip checking for inner blocks, they are already in the ad block
+    except:
+        print('Bad html')
     return items
