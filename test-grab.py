@@ -20,7 +20,7 @@ test_data['http://www.sonniki.net.ru/']=4
 
 def test_parseBlocks(url,num):
     test_data[url] = test_data.get(url, 0)
-    msg = 'Testing! '+url+' Should be: ' + str(test_data[url]) + ' Got: ' + str(num)
+    msg = 'Testing: '+url+' Should be: ' + str(test_data[url]) + ' Got: ' + str(num)
     print(msg)
     diff = abs(num - test_data[url])
     return diff
@@ -74,6 +74,7 @@ for url in urls:
     
     # TODO add tidy html?
     ads = adsminer.parseBlocks(text, url, block_complexity, minBlockSize, maxBlockSize, maxLinks)
+    assert type(ads)==dict
     ads_num = len(ads.keys())
     
     # Test Harness
