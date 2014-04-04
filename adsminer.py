@@ -159,11 +159,14 @@ def getBlock(id, items):
     return out
 
 def getDomainfromUrl(url):
+    tld = ('com','net','org')
     BaseUrl = urlparse(url).netloc
+    BaseUrl = BaseUrl.lower()
     tmp = BaseUrl.split('.')
     if len(tmp)>=2:
-        BaseUrl = tmp[-2]+'.'+tmp[-1]
-        BaseUrl = BaseUrl.lower()
+        if len(tmp[-2])>2:
+            if tmp[-2] not in tld:
+                BaseUrl = tmp[-2]+'.'+tmp[-1]
     return BaseUrl
 
 def parseBlocks(text, url='', block_complexity=2, minBlockSize=10, maxBlockSize=500, maxLinks=1):
