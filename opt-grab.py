@@ -5,6 +5,7 @@ import configparser
 import hashlib
 import os.path
 import adsminer
+from datetime import datetime
 
 # Test Harness
 test_data = {}
@@ -57,7 +58,7 @@ maxLinks = int(config['GRABBER']['MaxLinks'])
 
 # For maxBlockSize
 ##maxBlockSize = 70
-min_opt, max_opt, step_opt = 150,300,10
+min_opt, max_opt, step_opt = 150,300,5
 
 # TODO add multi lists support
 
@@ -66,7 +67,9 @@ if len(urls)==0:
     print('No urls found')
     assert False
 
-opt_data = []    
+opt_data = []
+text_buckets = {}
+startTime = datetime.now()
 
 for test_param in range(min_opt, max_opt, step_opt):    
     #maxLinks = test_param
@@ -88,16 +91,18 @@ for test_param in range(min_opt, max_opt, step_opt):
             code = adsminer.url2file(run, url, path)
             if code==False:
                 print('Cant get url: '+url)
-                continue        
-        try:
-            text = adsminer.file2text(path)
-        except:
-            print('Cant read file '+path)
-            continue
+                continue
+
+        # Trading memory for file IO
+        # Need less file IO?
+        if url not in text_buckets.keys():
+            text_buckets[url] = adsminer.file2text(path)
+        text = text_buckets.get(url)
+        # Need less memory?
+        #text = adsminer.file2text(path) # Should I keep em in memory?
         
         # TODO add tidy html?
         ads = adsminer.parseBlocks(text, url, block_complexity, minBlockSize, maxBlockSize, maxLinks)
-        assert type(ads)==dict
         ads_num = len(ads.keys())
         
         # Test Harness
@@ -112,3 +117,5 @@ for test_param in range(min_opt, max_opt, step_opt):
 
 sorted_data = sorted(opt_data, key=adsminer.getIndex1)
 print('Best param: '+ str(sorted_data[0][0]))
+
+print('Optimization time: ',datetime.now()-startTime)
