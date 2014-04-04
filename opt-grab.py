@@ -49,7 +49,11 @@ maxLinks = int(config['GRABBER']['MaxLinks'])
 
 # For block_complexity
 ##block_complexity = 0
-min_opt, max_opt, step_opt = 0,4,1
+#min_opt, max_opt, step_opt = 0,4,1
+
+# For minBlockSize
+##minBlockSize = 0
+min_opt, max_opt, step_opt = 10,100,5
 
 # TODO add multi lists support
 
@@ -62,7 +66,8 @@ opt_data = []
 
 for test_param in range(min_opt, max_opt, step_opt):    
     #maxLinks = test_param
-    block_complexity = test_param
+    #block_complexity = test_param
+    minBlockSize = test_param
     total_diff = 0
 
     for url in urls:
