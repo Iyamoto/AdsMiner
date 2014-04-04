@@ -60,7 +60,8 @@ def file2list(path):
     Returns a list of lines"""
     lines = []
     try:
-        f = open(path, 'rU')
+        f = codecs.open(path, 'r', encoding='utf-8')
+        #f = open(path, 'rU')
     except:
         print('Cant read file: '+path)
         return lines

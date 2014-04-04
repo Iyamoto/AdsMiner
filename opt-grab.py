@@ -1,5 +1,4 @@
 # AdsMiner: Grabber optimizer
-# TODO http://www.myjane.ru/articles/rubric/?id=54 =?
 
 import configparser
 import hashlib
