@@ -74,7 +74,7 @@ for url in urls:
             if isLogFile:
                 out = adsminer.getBlock(id,ads)
                 json_block = adsminer.Block2List(url, id, ads[id])
-                to_json.extend(json_block)
+                to_json.append(json_block)
                 adsminer.writeLog(log_file, out, isLogFile)
     
     del(ads)

@@ -4,3 +4,4 @@ testurls.txt
 __pycache__
 logs/*
 tasks/*
+json/*
