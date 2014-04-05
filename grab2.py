@@ -1,4 +1,4 @@
-# AdsMiner:Grabber2.0
+# AdsMiner:Grabber2.0 (Grab1 + tasks support)
 # Reads a task(list of urls) from tasksdir
 # Moves task file to proc dir
 # Grabes urls, parses ad blocks
@@ -30,8 +30,6 @@ if not os.path.exists(urlsdir):
 if not os.path.exists(procdir):
     os.makedirs(procdir)    
 
-#urlsfile = os.path.join('tasks', config['GRABBER']['Urls'])
- 
 datadir = config['GRABBER']['DataDir']
 if not os.path.exists(datadir):
     os.makedirs(datadir)
@@ -64,12 +62,11 @@ except:
 if proc_path=='':
     print('No tasks')
     assert False
-    
-urlsfile = proc_path
-urls = adsminer.file2list(urlsfile)
-if len(urls)==0:
-    print('No urls found')
-    assert False
+else:
+    urls = adsminer.file2list(proc_path)
+    if len(urls)==0:
+        print('No urls found')
+        assert False
 
 total_blocks = 0
 
