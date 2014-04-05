@@ -1,9 +1,9 @@
 [GRABBER]
 Run = save.cmd
-Urls = women.txt
+Urls = testurls.txt
 DataDir = F:\tmp\py\
-BlockComplexity = 1
-MaxBlockSize = 400
-MinBlockSize = 25
-MaxLinks = 6
+BlockComplexity = 0
+MaxBlockSize = 260
+MinBlockSize = 15
+MaxLinks = 8
 LogFile = log.txt
