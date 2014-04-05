@@ -40,7 +40,8 @@ test_data = adsminer.get_test_data(test_path)
 # TODO add multi lists support
 
 urls = test_data.keys()
-if len(urls)==0:
+urls_num = len(urls)
+if urls_num==0:
     print('No urls found')
     assert False
 
@@ -68,4 +69,4 @@ for url in urls:
     del(ads)
     #break
 
-print('Total diff: '+str(total_diff))
+print('Total diff: '+str(total_diff)+' '+str(int(total_diff/urls_num)))

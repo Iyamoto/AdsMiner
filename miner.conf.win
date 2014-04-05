@@ -2,7 +2,7 @@
 Run = save.cmd
 Urls = testurls.txt
 DataDir = F:\tmp\py\
-BlockComplexity = 0
+BlockComplexity = 1
 MaxBlockSize = 260
 MinBlockSize = 15
 MaxLinks = 8

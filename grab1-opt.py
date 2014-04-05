@@ -42,11 +42,11 @@ test_data = adsminer.get_test_data(test_path)
 
 # For block_complexity
 ##block_complexity = 0
-#min_opt, max_opt, step_opt = 0,4,1
+min_opt, max_opt, step_opt = 0,4,1
 
 # For minBlockSize
 ##minBlockSize = 70
-min_opt, max_opt, step_opt = 10,30,1
+#min_opt, max_opt, step_opt = 10,30,1
 
 # For maxBlockSize
 ##maxBlockSize = 70
@@ -65,8 +65,8 @@ startTime = datetime.now()
 
 for test_param in range(min_opt, max_opt, step_opt):    
     #maxLinks = test_param
-    #block_complexity = test_param
-    minBlockSize = test_param
+    block_complexity = test_param
+    #minBlockSize = test_param
     #maxBlockSize = test_param
     total_diff = 0
 

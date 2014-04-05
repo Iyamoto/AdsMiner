@@ -2,7 +2,7 @@
 Run = bash -k save.sh
 Urls = testurls.txt
 DataDir = /tmp/phantom/
-BlockComplexity = 0
+BlockComplexity = 1
 MaxBlockSize = 260
 MinBlockSize = 15
 MaxLinks = 8

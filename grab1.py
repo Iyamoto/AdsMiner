@@ -58,7 +58,6 @@ for url in urls:
     print(url, path)
     text = adsminer.url2html(run, url, path)
     
-    # TODO add tidy html?
     ads = adsminer.parseBlocks(text, url, block_complexity, minBlockSize, maxBlockSize, maxLinks)
     try:
         ads_num = len(ads.keys())

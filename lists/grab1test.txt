@@ -1,6 +1,6 @@
 9 http://gotovim-doma.ru/
 2 http://horo.tochka.net/
-4 http://www.edimdoma.ru/retsepty
+11 http://www.edimdoma.ru/retsepty
 4 http://www.mycharm.ru/
 6 http://onbeauty.ru/
 11 http://yeswoman.ru/
@@ -18,7 +18,7 @@
 #0 http://habrahabr.ru/
 0 http://bankreferatov.ru/referaty.htm/referaty-po-ekonomike.htm
 5 http://pozdravok.ru/toast/prazdnik/8-marta/
-15 http://anekdotikov.net/tosty/8marta/
+23 http://anekdotikov.net/tosty/8marta/
 0 http://hibride.ru/2013/06/24/scenariy-viezdnoy-ceremonii-i-dekor/
 3 http://www.42podarka.ru/
 4 http://www.petr-fevronia.ru/info/44

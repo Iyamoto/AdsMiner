@@ -261,16 +261,16 @@ def parseBlocks(text, url='', block_complexity=2, minBlockSize=10, maxBlockSize=
                 if str(type(child))=='<class \'lxml.html.HtmlComment\'>':
                     continue
                 pool += (child.tag,)
-                if child.tag == 'a':# Filter by tag (a href)
+                if child.tag == 'a':# Filter by tag (a href)      
                     if child.attrib.has_key('href'):
                         if child.attrib['href'].find('http://')!=-1 and child.attrib['href'].lower().find(BaseUrl)==-1:
                             hasLink = True
                             LinkCounter+=1
                         else:
                             hasLink = False
-                            InnerLinkCounter+=1
+                            InnerLinkCounter+=1                 
                             
-            # Filter by Links and amount of tags (block complexity)                
+            # Filter by Links and amount of tags (block complexity)
             if hasLink and LinkCounter<=maxLinks and InnerLinkCounter==0 and Complexity>block_complexity:
                 #print(pool)
                 textSize = len(element.text_content().strip())                        
