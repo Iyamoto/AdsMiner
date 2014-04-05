@@ -8,6 +8,7 @@ import re
 import os.path
 import json
 from tidylib import tidy_document
+import chardet
 
 def uniqList(lst):
     assert type(lst)==list
@@ -57,7 +58,7 @@ def url2html(run, url, path):
         code = url2file(run, url, path)
         assert code==True
     try:
-        html = file2text(path)
+        html = file2textU(path)
         html, errors = tidy_document(html, options={'hide-comments':1, 'new-inline-tags':'yatag'})
         #print(errors)
     except:
@@ -74,6 +75,22 @@ def file2text(path):
         return ''
     text = f.read()
     f.close()
+    return text
+
+def file2textU(path):
+    """Reads file from path
+    Detects encoding
+    Returns utf-8 text"""
+    try:
+        f = open(path, 'rb')
+    except:
+        print('Cant read file: '+path)
+        return ''
+    rawdata = f.read()
+    result = chardet.detect(rawdata)
+    charenc = result['encoding']
+    f.close()
+    text = rawdata.decode(charenc)
     return text
 
 def file2list(path):
