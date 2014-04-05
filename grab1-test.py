@@ -25,6 +25,8 @@ except:
 # Init
 urlsdir = 'lists'
 datadir = config['GRABBER']['DataDir']
+if not os.path.exists(datadir):
+    os.makedirs(datadir)
 run = config['GRABBER']['Run']
 block_complexity = int(config['GRABBER']['BlockComplexity'])
 log_file = os.path.join('logs', config['GRABBER']['Urls'])

@@ -33,6 +33,8 @@ if not os.path.exists(procdir):
 #urlsfile = os.path.join('tasks', config['GRABBER']['Urls'])
  
 datadir = config['GRABBER']['DataDir']
+if not os.path.exists(datadir):
+    os.makedirs(datadir)
 run = config['GRABBER']['Run']
 block_complexity = int(config['GRABBER']['BlockComplexity'])
 log_file = os.path.join(logsdir, config['GRABBER']['Urls'])
@@ -43,15 +45,26 @@ maxLinks = int(config['GRABBER']['MaxLinks'])
 isLogFile = adsminer.initLog(log_file,'Grabber started\n')
 
 # Looking for tasks
-for file in os.listdir(tasksdir):
-    if file.endswith('.txt'):
-        print('Reading tasks file: ',file)
-        tasks_path = os.path.join(tasksdir, file)
-        proc_path = os.path.join(procdir, file)
-        urls_path = os.path.join(urlsdir, file)
-        os.rename(tasks_path, proc_path) # Moving the task to proc dir
-        break
+proc_path = ''
+try:
+    for file in os.listdir(tasksdir):
+        if file.endswith('.txt'):
+            print('Reading tasks file: ',file)
+            tasks_path = os.path.join(tasksdir, file)
+            proc_path = os.path.join(procdir, file)
+            urls_path = os.path.join(urlsdir, file)
+            if os.path.isfile(proc_path) == True:
+                os.remove(proc_path)
+            os.rename(tasks_path, proc_path) # Moving the task to proc dir
+            break
+except:
+    print('No tasks')
+    assert False
 
+if proc_path=='':
+    print('No tasks')
+    assert False
+    
 urlsfile = proc_path
 urls = adsminer.file2list(urlsfile)
 if len(urls)==0:
@@ -91,7 +104,10 @@ for url in urls:
 
     del(ads)
     #break
-
-os.rename(proc_path,urls_path) # Moving finished list to lists dir
+    
+# Moving finished list to lists dir    
+if os.path.isfile(urls_path) == True:
+    os.remove(urls_path)
+os.rename(proc_path,urls_path) 
 adsminer.writeLog(log_file, 'Total blocks found: '+str(total_blocks)+'\n', isLogFile)
 adsminer.writeLog(log_file, 'Done\n', isLogFile)

@@ -14,14 +14,18 @@ except:
     assert False
 
 # Init
-if not os.path.exists('logs'):
-    os.makedirs('logs')
+urlsdir = 'lists'
+logsdir = 'logs'
+if not os.path.exists(logsdir):
+    os.makedirs(logsdir)
 
-urlsfile = os.path.join('lists', config['GRABBER']['Urls'])
+urlsfile = os.path.join(urlsdir, config['GRABBER']['Urls'])
 datadir = config['GRABBER']['DataDir']
+if not os.path.exists(datadir):
+    os.makedirs(datadir)
 run = config['GRABBER']['Run']
 block_complexity = int(config['GRABBER']['BlockComplexity'])
-log_file = os.path.join('logs', config['GRABBER']['Urls'])
+log_file = os.path.join(logsdir, config['GRABBER']['Urls'])
 maxBlockSize = int(config['GRABBER']['MaxBlockSize'])
 minBlockSize = int(config['GRABBER']['MinBlockSize'])
 maxLinks = int(config['GRABBER']['MaxLinks'])

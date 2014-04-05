@@ -3,3 +3,4 @@ log.txt
 testurls.txt
 __pycache__
 logs/*
+tasks/*
