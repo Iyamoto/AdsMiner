@@ -78,13 +78,13 @@ for url in urls:
                 adsminer.writeLog(log_file, out, isLogFile)
     
     del(ads)
-    break
+    #break
 
-# Testing json
+# Writing json data to file
 adsminer.writeJson(jsonfile, to_json)
 
-from_json = adsminer.readJson(jsonfile)   
-print(from_json)
+##from_json = adsminer.readJson(jsonfile)   
+##print(from_json)
 
 adsminer.writeLog(log_file, 'Total blocks found: '+str(total_blocks)+'\n', isLogFile)
 adsminer.writeLog(log_file, 'Done\n', isLogFile)
