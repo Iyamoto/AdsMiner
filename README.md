@@ -8,6 +8,7 @@ INSTALL
 <ul>
 <li>aptitude install python-tidylib python3-lxml</li>
 <li>pip-3.2 install pytidylib6</li>
+<li>pip-3.2 install chardet</li>
 <li>cp miner.conf.OS miner.conf</li>
 </ul>
 

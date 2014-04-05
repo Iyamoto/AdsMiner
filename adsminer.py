@@ -58,7 +58,7 @@ def url2html(run, url, path):
         code = url2file(run, url, path)
         assert code==True
     try:
-        html = file2textU(path)
+        html = file2text(path)
         html, errors = tidy_document(html, options={'hide-comments':1, 'new-inline-tags':'yatag'})
         #print(errors)
     except:
