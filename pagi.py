@@ -17,20 +17,23 @@ except:
     assert False
 
 # Init
-urlsfile = config['GRABBER']['Urls']
+##urlsfile = config['GRABBER']['Urls']
 datadir = config['GRABBER']['DataDir']
 run = config['GRABBER']['Run']
 
-lists_dir = os.path.dirname(urlsfile)
-pagi_list_path = os.path.join(lists_dir, 'pagi.txt')
+##lists_dir = os.path.dirname(urlsfile)
+pagi_list_path = os.path.join('tasks', 'pagi.txt')
 isLogFile = adsminer.initLog(pagi_list_path)
 
 key = 'рецепты'
 urlkey = quote_plus(key)
 starturl = 'http://yaca.yandex.ru/yca/cat/?text='
-baseurl = urlparse(starturl).netloc
-scheme = urlparse(starturl).scheme
 url = starturl+urlkey
+url = 'http://yaca.yandex.ru/yca/cat/Private_Life/Beauty/Womens_Life/'
+
+baseurl = urlparse(url).netloc
+scheme = urlparse(url).scheme
+
 print(baseurl)
 
 while True:

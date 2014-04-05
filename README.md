@@ -12,12 +12,17 @@ INSTALL
 
 TODO
 ====
-parse 
+how to improve save.js?
+resourceTimeout to config 
+
+implement tasks system
+
+add graber to cron
+clear cache daily (server)
 
 blacklist rambler counter
-fix com.ua
 
-direct
+Grab direct
 http://direct.yandex.ru/search?text=%27%D0%B3%D0%BE%D1%80%D0%BE%D1%81%D0%BA%D0%BE%D0%BF%27&ref-page=118826
 
 add pytidylib
