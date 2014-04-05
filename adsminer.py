@@ -67,15 +67,15 @@ def url2html(run, url, path, timeout=5000):
     return html
 
 def url2url(run, url, timeout=5000):
-    if os.path.isfile(path) == False:
-        code = url2file(run, url, path, timeout)
-        assert code==True
+    """PhantomJS wrapper
+    url - http://name.tld"""
+    cmd = run+' "'+url+'" '+str(timeout)
     try:
-        html = file2text(path)
+        output=subprocess.check_output(cmd, shell=True)
     except:
-        print('Cant read file: '+path)
-        assert False
-    return html
+        print('Cant execute: '+cmd)
+        return False
+    return output
 
 def file2text(path):
     """Reads utf-8 file from path"""

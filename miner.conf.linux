@@ -1,5 +1,6 @@
 [GRABBER]
 Run = bash -k save.sh
+Run1 = bash -k redir.sh
 Urls = testurls.txt
 DataDir = /tmp/phantom/
 BlockComplexity = 1

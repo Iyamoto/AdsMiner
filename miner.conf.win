@@ -1,5 +1,6 @@
 [GRABBER]
 Run = save.cmd
+Run1 = redir.cmd
 Urls = testurls.txt
 DataDir = F:\tmp\py\
 BlockComplexity = 1
