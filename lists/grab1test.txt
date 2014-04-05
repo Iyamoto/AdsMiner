@@ -1,5 +1,5 @@
 9 http://gotovim-doma.ru/
-#2 http://horo.tochka.net/
+2 http://horo.tochka.net/
 4 http://www.edimdoma.ru/retsepty
 4 http://www.mycharm.ru/
 6 http://onbeauty.ru/
@@ -7,3 +7,22 @@
 0 http://www.astrocentr.ru/
 13 http://astroscope.ru/
 4 http://www.sonniki.net.ru/
+5 http://kedem.ru/recipe/
+7 http://www.gotovim.ru/recepts/
+#6 http://www.povarenok.ru/recipes/ ga
+8 http://recept.domovest.ru/
+5 http://dom.sibmama.ru/?r=9
+#7 http://dom.sibmama.ru/?r=9 ga
+19 http://yaca.yandex.by/yca/cat/Private_Life/Cooking/Recipes/
+4 http://edimka.ru/eda/
+2 http://habrahabr.ru/
+1 http://bankreferatov.ru/referaty.htm/referaty-po-ekonomike.htm#.Uz_hpPnxoVs
+7 http://pozdravok.ru/toast/prazdnik/8-marta/
+19 http://anekdotikov.net/tosty/8marta/
+16 http://hibride.ru/2013/06/24/scenariy-viezdnoy-ceremonii-i-dekor/
+3 http://www.42podarka.ru/
+5 http://www.petr-fevronia.ru/info/44
+11 http://moto.ironhorse.ru/moto/151
+#13 http://moto.ironhorse.ru/moto/151 ga
+24 http://steer.ru/node/18581
+10 http://irinazaytseva.ru/category/recepty-chitatelej

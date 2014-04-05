@@ -13,7 +13,6 @@ TODO
 ====
 how to improve save.js?
 resourceTimeout to config 
-http://bistriymetod.info/?user=mony0142.3127
 
 add graber to cron
 clear cache daily (server)
