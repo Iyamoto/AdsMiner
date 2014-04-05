@@ -72,10 +72,13 @@ for url in urls:
     if ads_num>0:
         for id in ads.keys():
             if isLogFile:
+                # Comment next 2 lines if you dont need logs
                 out = adsminer.getBlock(id,ads)
-                json_block = adsminer.Block2List(url, id, ads[id])
-                to_json.append(json_block)
                 adsminer.writeLog(log_file, out, isLogFile)
+
+                # Accumulating json data
+                json_block = adsminer.Block2List(url, id, ads[id])
+                to_json.append(json_block)                
     
     del(ads)
     #break

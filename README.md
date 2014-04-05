@@ -14,8 +14,6 @@ TODO
 how to improve save.js?
 resourceTimeout to config 
 
-implement tasks system
-
 add graber to cron
 clear cache daily (server)
 
@@ -26,11 +24,12 @@ http://direct.yandex.ru/search?text=%27%D0%B3%D0%BE%D1%80%D0%BE%D1%81%D0%BA%D0%B
 
 add pytidylib to grabber
 
-
 Grabber output structure
+url
+block_id
 links[]
 img_links[]
-text
+block_text
 
 master
  manage cache
