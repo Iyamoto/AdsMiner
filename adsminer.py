@@ -7,7 +7,7 @@ import codecs
 import re
 import os.path
 import json
-#from tidylib import tidy_document
+from tidylib import tidy_document
 #import chardet
 
 def uniqList(lst):
@@ -59,7 +59,7 @@ def url2html(run, url, path):
         assert code==True
     try:
         html = file2text(path)
-        #html, errors = tidy_document(html, options={'hide-comments':0, 'new-inline-tags':'yatag'})
+        html, errors = tidy_document(html, options={'hide-comments':1, 'new-inline-tags':'yatag'})
         #print(errors)
     except:
         print('Cant read file: '+path)
