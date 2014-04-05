@@ -17,7 +17,7 @@ except:
 if not os.path.exists('logs'):
     os.makedirs('logs')
 
-urlsfile = os.path.join('lists', config['GRABBER']['Urls'])
+urlsfile = os.path.join('tasks', config['GRABBER']['Urls'])
 datadir = config['GRABBER']['DataDir']
 run = config['GRABBER']['Run']
 block_complexity = int(config['GRABBER']['BlockComplexity'])
