@@ -66,6 +66,17 @@ def url2html(run, url, path, timeout=5000):
         assert False
     return html
 
+def url2url(run, url, timeout=5000):
+    if os.path.isfile(path) == False:
+        code = url2file(run, url, path, timeout)
+        assert code==True
+    try:
+        html = file2text(path)
+    except:
+        print('Cant read file: '+path)
+        assert False
+    return html
+
 def file2text(path):
     """Reads utf-8 file from path"""
     try:

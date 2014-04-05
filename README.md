@@ -15,7 +15,6 @@ INSTALL
 TODO
 ====
 how to improve save.js?
-resourceTimeout to config 
 
 add graber to cron
 clear cache daily (server)
@@ -25,6 +24,7 @@ blacklist rambler counter
 Grab direct
 http://direct.yandex.ru/search?text=%27%D0%B3%D0%BE%D1%80%D0%BE%D1%81%D0%BA%D0%BE%D0%BF%27&ref-page=118826
 
+Cookies analysis
 
 Grabber output structure
 url
@@ -36,3 +36,4 @@ block_text
 master
  manage cache
  get tasks
+ clear cookies.txt?

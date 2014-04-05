@@ -35,14 +35,11 @@ minBlockSize = int(config['GRABBER']['MinBlockSize'])
 maxLinks = int(config['GRABBER']['MaxLinks'])
 Timeout = int(config['GRABBER']['Timeout'])
 
-isLogFile = adsminer.initLog(log_file,'Grabber started\n')
-
 urls = adsminer.file2list(urlsfile)
 if len(urls)==0:
     print('No urls found')
     assert False
 
-total_blocks = 0
 to_json = []
 
 for url in urls:
@@ -50,7 +47,6 @@ for url in urls:
         url = adsminer.clearUrl(url)
     except:
         continue
-    adsminer.writeLog(log_file, url+'\n', isLogFile)
     url_id = hashlib.md5(url.encode('utf-8')).hexdigest()    
     path = os.path.join(datadir, url_id + '.html')
 
@@ -63,29 +59,17 @@ for url in urls:
     except:
         del(ads)
         continue
-    total_blocks +=ads_num
-      
-    adsminer.writeLog(log_file, 'Find ads: '+str(ads_num)+'\n', isLogFile)
     
     if ads_num>0:
         for id in ads.keys():
-            if isLogFile:
-                # Comment next 2 lines if you dont need logs
-                out = adsminer.getBlock(id,ads)
-                adsminer.writeLog(log_file, out, isLogFile)
-
             # Accumulating json data
             json_block = adsminer.Block2List(url, id, ads[id])
-            to_json.append(json_block)                
+            for target_url in json_block[2]:
+                print(target_url)
+            #to_json.append(json_block)                
     
     del(ads)
-    #break
+    break
 
 # Writing json data to file
-adsminer.writeJson(jsonfile, to_json)
-
-##from_json = adsminer.readJson(jsonfile)   
-##print(from_json)
-
-adsminer.writeLog(log_file, 'Total blocks found: '+str(total_blocks)+'\n', isLogFile)
-adsminer.writeLog(log_file, 'Done\n', isLogFile)
+##adsminer.writeJson(jsonfile, to_json)
