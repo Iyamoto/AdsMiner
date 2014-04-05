@@ -10,9 +10,10 @@ if (system.args.length === 1) {
 
 address = system.args[1];
 file = system.args[2];
+//file = system.args[3];
 //png = system.args[3];
 
-page.settings.resourceTimeout = 10000;
+page.settings.resourceTimeout = system.args[3];
 page.settings.userAgent = 'Mozilla/5.0 (Windows NT 5.1; rv:27.0) Gecko/20100101 Firefox/27.0';
 page.settings.loadImages = false;
 page.viewportSize = { width: 1024, height: 768 };

@@ -29,7 +29,10 @@ for k,v in stats.items():
     
 sorted_stats = sorted(list_stats, key=adsminer.getIndex1,reverse=True)
 for items in sorted_stats:
-    print(items[0], items[1], str(items[2])+'%')
+    try:
+        print(items[0], items[1], str(items[2])+'%')
+    except:
+        continue
             
 
 
