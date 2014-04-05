@@ -1,4 +1,9 @@
 # AdsMiner:Grabber2.0
+# Reads a task(list of urls) from tasksdir
+# Moves task file to proc dir
+# Grabes urls, parses ad blocks
+# Saves results to logs dir, file name same as task file
+# Moves task file to lists dir
 
 import configparser
 import hashlib
@@ -47,9 +52,6 @@ for file in os.listdir(tasksdir):
         os.rename(tasks_path, proc_path) # Moving the task to proc dir
         break
 
-assert False
-
-# TODO add multi lists support
 urlsfile = proc_path
 urls = adsminer.file2list(urlsfile)
 if len(urls)==0:
