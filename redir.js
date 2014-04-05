@@ -20,7 +20,7 @@ page.open(address, function (status) {
     console.log('FAIL to load the address');
   } else {
 
-	 console.log('URL: ' + page.evaluate(function () {
+	 console.log('URL###: ' + page.evaluate(function () {
                 return document.location.href;
             }));
   }

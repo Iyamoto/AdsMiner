@@ -66,7 +66,7 @@ def url2html(run, url, path, timeout=5000):
         assert False
     return html
 
-def url2url(run, url, timeout=5000):
+def url2url(run, url, timeout=10000):
     """PhantomJS wrapper
     url - http://name.tld"""
     cmd = run+' "'+url+'" '+str(timeout)
@@ -75,7 +75,9 @@ def url2url(run, url, timeout=5000):
     except:
         print('Cant execute: '+cmd)
         return False
-    return output
+    s = output.decode('utf-8')
+    s = re.search(r'URL###: (.+)',s)
+    return s.group(1)
 
 def file2text(path):
     """Reads utf-8 file from path"""
