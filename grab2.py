@@ -38,12 +38,12 @@ if not os.path.exists(datadir):
     os.makedirs(datadir)
 run = config['GRABBER']['Run']
 block_complexity = int(config['GRABBER']['BlockComplexity'])
-log_file = os.path.join(logsdir, config['GRABBER']['Urls'])
+##log_file = os.path.join(logsdir, config['GRABBER']['Urls'])
 maxBlockSize = int(config['GRABBER']['MaxBlockSize'])
 minBlockSize = int(config['GRABBER']['MinBlockSize'])
 maxLinks = int(config['GRABBER']['MaxLinks'])
 
-isLogFile = adsminer.initLog(log_file,'Grabber started\n')
+##isLogFile = adsminer.initLog(log_file,'Grabber started\n')
 
 # Looking for tasks
 proc_path = ''
@@ -80,7 +80,7 @@ for url in urls:
         url = adsminer.clearUrl(url)
     except:
         continue
-    adsminer.writeLog(log_file, url+'\n', isLogFile)
+##    adsminer.writeLog(log_file, url+'\n', isLogFile)
     url_id = hashlib.md5(url.encode('utf-8')).hexdigest()    
     path = os.path.join(datadir, url_id + '.html')
 
@@ -96,15 +96,16 @@ for url in urls:
         continue
     total_blocks +=ads_num
       
-    adsminer.writeLog(log_file, 'Find ads: '+str(ads_num)+'\n', isLogFile)
+##    adsminer.writeLog(log_file, 'Find ads: '+str(ads_num)+'\n', isLogFile)
     
     if ads_num>0:
         for id in ads.keys():
-            if isLogFile:
+##            if isLogFile:
 ##                out = adsminer.getBlock(id,ads)
-##                json_block = adsminer.Block2List(url, id, ads[id])
-                to_json.append(json_block)
-                adsminer.writeLog(log_file, out, isLogFile)
+##                adsminer.writeLog(log_file, out, isLogFile)
+            json_block = adsminer.Block2List(url, id, ads[id])
+            to_json.append(json_block)
+                
 
     del(ads)
     #break
@@ -116,5 +117,5 @@ adsminer.writeJson(jsonfile, to_json)
 if os.path.isfile(urls_path) == True:
     os.remove(urls_path)
 os.rename(proc_path,urls_path) 
-adsminer.writeLog(log_file, 'Total blocks found: '+str(total_blocks)+'\n', isLogFile)
-adsminer.writeLog(log_file, 'Done\n', isLogFile)
+##adsminer.writeLog(log_file, 'Total blocks found: '+str(total_blocks)+'\n', isLogFile)
+##adsminer.writeLog(log_file, 'Done\n', isLogFile)
