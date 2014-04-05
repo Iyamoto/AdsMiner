@@ -66,10 +66,10 @@ def url2html(run, url, path, timeout=5000):
         assert False
     return html
 
-def url2url(run, url, timeout=10000):
+def url2url(run, url, ref='http://yandex.ru', timeout=10000):
     """PhantomJS wrapper
     url - http://name.tld"""
-    cmd = run+' "'+url+'" '+str(timeout)
+    cmd = run+' "'+url+'" "'+ref+'" '+str(timeout)
     try:
         output=subprocess.check_output(cmd, shell=True)
     except:

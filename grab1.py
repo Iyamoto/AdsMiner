@@ -28,6 +28,7 @@ datadir = config['GRABBER']['DataDir']
 if not os.path.exists(datadir):
     os.makedirs(datadir)
 run = config['GRABBER']['Run']
+run1 = config['GRABBER']['Run1']
 block_complexity = int(config['GRABBER']['BlockComplexity'])
 log_file = os.path.join(logsdir, config['GRABBER']['Urls'])
 maxBlockSize = int(config['GRABBER']['MaxBlockSize'])
@@ -73,9 +74,16 @@ for url in urls:
                 # Comment next 2 lines if you dont need logs
                 out = adsminer.getBlock(id,ads)
                 adsminer.writeLog(log_file, out, isLogFile)
-
+            
             # Accumulating json data
+            target_urls = []
             json_block = adsminer.Block2List(url, id, ads[id])
+            for target_url in json_block[2]:
+                print(target_url)
+                output = adsminer.url2url(run1, target_url)
+                target_urls.append(output.strip())
+                print(output)
+            json_block.append(target_urls)
             to_json.append(json_block)                
     
     del(ads)

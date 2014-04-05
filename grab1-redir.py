@@ -63,13 +63,16 @@ for url in urls:
     
     if ads_num>0:
         for id in ads.keys():
+            target_urls = []
             # Accumulating json data
             json_block = adsminer.Block2List(url, id, ads[id])
             for target_url in json_block[2]:
                 print(target_url)
-                output = adsminer.url2url(run1, target_url)
+                output = adsminer.url2url(run1, target_url, url)
+                target_urls.append(output.strip())
                 print(output)
-                assert False
+            json_block.append(target_urls)
+
             #to_json.append(json_block)                
     
     del(ads)
