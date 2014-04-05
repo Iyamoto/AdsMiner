@@ -23,12 +23,15 @@ urlsdir = 'lists'
 procdir = 'proc'
 logsdir = 'logs'
 tasksdir = 'tasks'
+jsondir = 'json'
 if not os.path.exists(logsdir):
     os.makedirs(logsdir)
 if not os.path.exists(urlsdir):
     os.makedirs(urlsdir)
 if not os.path.exists(procdir):
-    os.makedirs(procdir)    
+    os.makedirs(procdir)
+if not os.path.exists(jsondir):
+    os.makedirs(jsondir)
 
 datadir = config['GRABBER']['DataDir']
 if not os.path.exists(datadir):
@@ -51,6 +54,7 @@ try:
             tasks_path = os.path.join(tasksdir, file)
             proc_path = os.path.join(procdir, file)
             urls_path = os.path.join(urlsdir, file)
+            jsonfile = os.path.join(jsondir, file)
             if os.path.isfile(proc_path) == True:
                 os.remove(proc_path)
             os.rename(tasks_path, proc_path) # Moving the task to proc dir
@@ -69,6 +73,7 @@ else:
         assert False
 
 total_blocks = 0
+to_json = []
 
 for url in urls:
     try:
@@ -97,10 +102,15 @@ for url in urls:
         for id in ads.keys():
             if isLogFile:
                 out = adsminer.getBlock(id,ads)
+                json_block = adsminer.Block2List(url, id, ads[id])
+                to_json.append(json_block)
                 adsminer.writeLog(log_file, out, isLogFile)
 
     del(ads)
     #break
+
+# Writing json data to file
+adsminer.writeJson(jsonfile, to_json)
     
 # Moving finished list to lists dir    
 if os.path.isfile(urls_path) == True:
