@@ -29,7 +29,7 @@ key = 'рецепты'
 urlkey = quote_plus(key)
 starturl = 'http://yaca.yandex.ru/yca/cat/?text='
 url = starturl+urlkey
-url = 'http://yaca.yandex.ru/yca/cat/Private_Life/Beauty/Womens_Life/'
+url = 'http://yaca.yandex.ru/yca/cat/Private_Life/Family/Parents/'
 
 baseurl = urlparse(url).netloc
 scheme = urlparse(url).scheme

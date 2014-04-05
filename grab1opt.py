@@ -22,7 +22,7 @@ except:
     assert False
 
 # Init
-urlsfile = os.path.join('lists', config['GRABBER']['Urls'])
+urlsdir = 'lists'
 datadir = config['GRABBER']['DataDir']
 run = config['GRABBER']['Run']
 block_complexity = int(config['GRABBER']['BlockComplexity'])
@@ -31,8 +31,7 @@ maxBlockSize = int(config['GRABBER']['MaxBlockSize'])
 minBlockSize = int(config['GRABBER']['MinBlockSize'])
 maxLinks = int(config['GRABBER']['MaxLinks'])
 
-lists_dir = os.path.dirname(urlsfile)
-test_path = os.path.join(lists_dir, 'test.txt')
+test_path = os.path.join(urlsdir, 'grab1test.txt')
 test_data = adsminer.get_test_data(test_path)
 
 # For maxLinks
