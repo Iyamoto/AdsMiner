@@ -43,7 +43,9 @@ for file in os.listdir(tasksdir):
         print('Reading tasks file: ',file)
         tasks_path = os.path.join(tasksdir, file)
         proc_path = os.path.join(procdir, file)
+        urls_path = os.path.join(urlsdir, file)
         os.rename(tasks_path, proc_path) # Moving the task to proc dir
+        break
 
 assert False
 
@@ -88,5 +90,6 @@ for url in urls:
     del(ads)
     #break
 
+os.rename(proc_path,urls_path) # Moving finished list to lists dir
 adsminer.writeLog(log_file, 'Total blocks found: '+str(total_blocks)+'\n', isLogFile)
 adsminer.writeLog(log_file, 'Done\n', isLogFile)
