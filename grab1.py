@@ -80,7 +80,7 @@ for url in urls:
             json_block = adsminer.Block2List(url, id, ads[id])
             for target_url in json_block[2]:
                 print(target_url)
-                output = adsminer.url2url(run1, target_url)
+                output = adsminer.url2url(run1, target_url, url)
                 target_urls.append(output.strip())
                 print(output)
             json_block.append(target_urls)
