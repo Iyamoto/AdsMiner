@@ -53,9 +53,9 @@ def url2file(run, url, path, timeout=5000):
         return False
     return True
 
-def url2html(run, url, path):
+def url2html(run, url, path, timeout=5000):
     if os.path.isfile(path) == False:
-        code = url2file(run, url, path)
+        code = url2file(run, url, path, timeout)
         assert code==True
     try:
         html = file2text(path)

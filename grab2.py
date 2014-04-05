@@ -41,6 +41,7 @@ block_complexity = int(config['GRABBER']['BlockComplexity'])
 maxBlockSize = int(config['GRABBER']['MaxBlockSize'])
 minBlockSize = int(config['GRABBER']['MinBlockSize'])
 maxLinks = int(config['GRABBER']['MaxLinks'])
+Timeout = int(config['GRABBER']['Timeout'])
 
 ##isLogFile = adsminer.initLog(log_file,'Grabber started\n')
 
@@ -85,7 +86,7 @@ for url in urls:
     path = os.path.join(datadir, url_id + '.html')
 
     print(url, path)
-    text = adsminer.url2html(run, url, path)
+    text = adsminer.url2html(run, url, path, Timeout)
     
     # TODO add tidy html?
     ads = adsminer.parseBlocks(text, url, block_complexity, minBlockSize, maxBlockSize, maxLinks)
