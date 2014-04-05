@@ -77,7 +77,12 @@ def url2url(run, url, ref='http://yandex.ru', timeout=10000):
         return False
     s = output.decode('utf-8')
     s = re.search(r'URL###: (.+)',s)
-    return s.group(1)
+    try:
+        out = s.group(1)
+    except:
+        print('Redirect not found')
+        out = ''
+    return out
 
 def file2text(path):
     """Reads utf-8 file from path"""
