@@ -38,7 +38,6 @@ if not os.path.exists(datadir):
     os.makedirs(datadir)
 run = config['GRABBER']['Run']
 block_complexity = int(config['GRABBER']['BlockComplexity'])
-##log_file = os.path.join(logsdir, config['GRABBER']['Urls'])
 maxBlockSize = int(config['GRABBER']['MaxBlockSize'])
 minBlockSize = int(config['GRABBER']['MinBlockSize'])
 maxLinks = int(config['GRABBER']['MaxLinks'])
@@ -54,6 +53,7 @@ try:
             tasks_path = os.path.join(tasksdir, file)
             proc_path = os.path.join(procdir, file)
             urls_path = os.path.join(urlsdir, file)
+            ##log_file = os.path.join(logsdir, file)
             jsonfile = os.path.join(jsondir, file)
             if os.path.isfile(proc_path) == True:
                 os.remove(proc_path)
