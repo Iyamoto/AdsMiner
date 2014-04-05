@@ -223,7 +223,7 @@ def getDomainfromUrl(url):
                 BaseUrl = tmp[-2]+'.'+tmp[-1]
     return BaseUrl
 
-def parseBlocks(text, url='', block_complexity=2, minBlockSize=10, maxBlockSize=500, maxLinks=1):
+def parseBlocks(text, url='', block_complexity=2, minBlockSize=10, maxBlockSize=500, maxLinks=1, maxDomains=1):
     """ Get ad (tiser) blocks from html
     A tiser is a block with:
     Outer links less then maxLinks,
@@ -254,6 +254,7 @@ def parseBlocks(text, url='', block_complexity=2, minBlockSize=10, maxBlockSize=
             LinkCounter=0
             InnerLinkCounter = 0
             Complexity = 0
+            DomainsList = []
 
             for child in element.iterdescendants():
                 Complexity+=1
@@ -266,23 +267,28 @@ def parseBlocks(text, url='', block_complexity=2, minBlockSize=10, maxBlockSize=
                         if child.attrib['href'].find('http://')!=-1 and child.attrib['href'].lower().find(BaseUrl)==-1:
                             hasLink = True
                             LinkCounter+=1
+                            DomainsList.append(urlparse(child.attrib['href'].lower()).netloc)
                         else:
                             hasLink = False
                             InnerLinkCounter+=1                 
+
                             
             # Filter by Links and amount of tags (block complexity)
-            if hasLink and LinkCounter<=maxLinks and InnerLinkCounter==0 and Complexity>block_complexity:
-                #print(pool)
-                textSize = len(element.text_content().strip())                        
-                # Filter blocks without text and large blocks
-                if textSize>=minBlockSize and textSize<=maxBlockSize:
-                    # How to filter counters? Block size?          
-                    # How to get rid of small blocks with only one link? No way
+            if hasLink and LinkCounter<=maxLinks and InnerLinkCounter==0:
+                if Complexity>block_complexity:
+                    DomainsList = uniqList(DomainsList)
+                    if len(DomainsList)<=maxDomains:
+                        #print(pool)
+                        textSize = len(element.text_content().strip())                        
+                        # Filter blocks without text and large blocks
+                        if textSize>=minBlockSize and textSize<=maxBlockSize:
+                            # How to filter counters? Block size?          
+                            # How to get rid of small blocks with only one link? No way
 
-                    # Finaly, block is good
-                    items[id] = element
-                    id+=1
-                    SkipBlocks = len(pool)-1 # Skip checking for inner blocks, they are already in the ad block
+                            # Finaly, block is good
+                            items[id] = element
+                            id+=1
+                            SkipBlocks = len(pool)-1 # Skip checking for inner blocks, they are already in the ad block
     except:
         print('Bad html')
     return items

@@ -40,9 +40,13 @@ test_data = adsminer.get_test_data(test_path)
 ##maxLinks = 8 
 ##min_opt, max_opt, step_opt = 0,12,1
 
+# For maxDomains
+#maxDomains = 1 
+min_opt, max_opt, step_opt = 1,4,1
+
 # For block_complexity
 ##block_complexity = 0
-min_opt, max_opt, step_opt = 0,4,1
+#min_opt, max_opt, step_opt = 0,4,1
 
 # For minBlockSize
 ##minBlockSize = 70
@@ -65,7 +69,8 @@ startTime = datetime.now()
 
 for test_param in range(min_opt, max_opt, step_opt):    
     #maxLinks = test_param
-    block_complexity = test_param
+    maxDomains = test_param
+    #block_complexity = test_param
     #minBlockSize = test_param
     #maxBlockSize = test_param
     total_diff = 0
@@ -87,7 +92,7 @@ for test_param in range(min_opt, max_opt, step_opt):
         #text = adsminer.url2html(run, url, path) # Should I keep em in memory? Yes
         
         # TODO add tidy html?
-        ads = adsminer.parseBlocks(text, url, block_complexity, minBlockSize, maxBlockSize, maxLinks)
+        ads = adsminer.parseBlocks(text, url, block_complexity, minBlockSize, maxBlockSize, maxLinks, maxDomains)
         ads_num = len(ads.keys())
         
         # Test Harness

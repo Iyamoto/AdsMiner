@@ -22,12 +22,9 @@ clear cache daily (server)
 
 blacklist rambler counter
 
-gzip json? no need
-
 Grab direct
 http://direct.yandex.ru/search?text=%27%D0%B3%D0%BE%D1%80%D0%BE%D1%81%D0%BA%D0%BE%D0%BF%27&ref-page=118826
 
-add pytidylib to grabber
 
 Grabber output structure
 url
