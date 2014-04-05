@@ -32,6 +32,7 @@ block_id
 links[]
 img_links[]
 block_text
+target_urls[]
 
 master
  manage cache
