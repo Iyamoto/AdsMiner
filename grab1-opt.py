@@ -50,7 +50,7 @@ test_data = adsminer.get_test_data(test_path)
 
 # For maxBlockSize
 ##maxBlockSize = 70
-min_opt, max_opt, step_opt = 150,300,10
+min_opt, max_opt, step_opt = 150,500,10
 
 # TODO add multi lists support
 

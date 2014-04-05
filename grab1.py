@@ -16,10 +16,14 @@ except:
 # Init
 urlsdir = 'lists'
 logsdir = 'logs'
+jsondir = 'json'
 if not os.path.exists(logsdir):
     os.makedirs(logsdir)
+if not os.path.exists(jsondir):
+    os.makedirs(jsondir)
 
 urlsfile = os.path.join(urlsdir, config['GRABBER']['Urls'])
+jsonfile = os.path.join(jsondir, config['GRABBER']['Urls'])
 datadir = config['GRABBER']['DataDir']
 if not os.path.exists(datadir):
     os.makedirs(datadir)
@@ -40,6 +44,7 @@ if len(urls)==0:
     assert False
 
 total_blocks = 0
+to_json = []
 
 for url in urls:
     try:
@@ -68,10 +73,18 @@ for url in urls:
         for id in ads.keys():
             if isLogFile:
                 out = adsminer.getBlock(id,ads)
+                json_block = adsminer.Block2List(url, id, ads[id])
+                to_json.extend(json_block)
                 adsminer.writeLog(log_file, out, isLogFile)
-
+    
     del(ads)
-    #break
+    break
+
+# Testing json
+adsminer.writeJson(jsonfile, to_json)
+
+from_json = adsminer.readJson(jsonfile)   
+print(from_json)
 
 adsminer.writeLog(log_file, 'Total blocks found: '+str(total_blocks)+'\n', isLogFile)
 adsminer.writeLog(log_file, 'Done\n', isLogFile)

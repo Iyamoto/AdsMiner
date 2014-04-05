@@ -6,6 +6,24 @@ from lxml import html
 import codecs
 import re
 import os.path
+import json
+
+def uniqList(lst):
+    assert type(lst)==list
+    uniq = list(set(lst))
+    return uniq
+
+def readJson(jsonpath):
+    with open(jsonpath, 'r') as fp:
+        from_json = json.load(fp)    
+    fp.close()
+    return from_json
+
+def writeJson(jsonpath, to_json):
+    with open(jsonpath, 'w') as fp:
+        json.dump(to_json, fp)
+    fp.close()
+    return
 
 def clearUrl(url):
     """ Checking is string is an url """
@@ -139,15 +157,31 @@ def showBlock(id, items):
     print()
     return None
 
+def Block2List(url, id, item):
+    """ Convert an ad block to a list
+    [url, id, [href1, hrefN], [imgsrc1, imgsrcN], text]"""
+    hrefs = []
+    imgsrcs = []
+    for child in item.iterdescendants():
+        if child.tag=='a' and child.attrib.has_key('href'):
+            hrefs.append(child.attrib['href'])
+        if child.tag=='img' and child.attrib.has_key('src'):
+            imgsrcs.append(child.attrib['src'])
+    text = item.text_content().strip()
+    hrefs = uniqList(hrefs)
+    imgsrcs = uniqList(imgsrcs)
+    out_list = [url, id, hrefs, imgsrcs, text]
+    return out_list
+    
+
 def getBlock(id, items):
     """ Form human readable block """
     tags=''
     out = '=====Start of:'+str(id)+'\n'
     for child in items[id].iterdescendants():
         tags = tags + str(child.tag) + ' '
-        if child.tag=='a':
-            if child.attrib.has_key('href'):
-                out = out + 'href: '+ child.attrib['href'] +'\n'            
+        if child.tag=='a' and child.attrib.has_key('href'):
+            out = out + 'href: '+ child.attrib['href'] +'\n'            
         if child.tag=='img' and child.attrib.has_key('src'):
             out = out + 'img src: ' +child.attrib['src']+'\n'
     main_text = items[id].text_content().strip()
