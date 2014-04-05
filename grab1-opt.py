@@ -46,11 +46,11 @@ test_data = adsminer.get_test_data(test_path)
 
 # For minBlockSize
 ##minBlockSize = 70
-#min_opt, max_opt, step_opt = 10,100,5
+min_opt, max_opt, step_opt = 10,30,1
 
 # For maxBlockSize
 ##maxBlockSize = 70
-min_opt, max_opt, step_opt = 150,500,10
+#min_opt, max_opt, step_opt = 150,500,10
 
 # TODO add multi lists support
 
@@ -66,8 +66,8 @@ startTime = datetime.now()
 for test_param in range(min_opt, max_opt, step_opt):    
     #maxLinks = test_param
     #block_complexity = test_param
-    #minBlockSize = test_param
-    maxBlockSize = test_param
+    minBlockSize = test_param
+    #maxBlockSize = test_param
     total_diff = 0
 
     for url in urls:

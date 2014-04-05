@@ -7,6 +7,7 @@ import codecs
 import re
 import os.path
 import json
+from tidylib import tidy_document
 
 def uniqList(lst):
     assert type(lst)==list
@@ -56,7 +57,8 @@ def url2html(run, url, path):
         code = url2file(run, url, path)
         assert code==True
     try:
-        html = file2text(path)
+        text = file2text(path)
+        html, errors = tidy_document(text)
     except:
         print('Cant read file: '+path)
         assert False
@@ -252,6 +254,7 @@ def parseBlocks(text, url='', block_complexity=2, minBlockSize=10, maxBlockSize=
                             
             # Filter by Links and amount of tags (block complexity)                
             if hasLink and LinkCounter<=maxLinks and InnerLinkCounter==0 and Complexity>block_complexity:
+                #print(pool)
                 textSize = len(element.text_content().strip())                        
                 # Filter blocks without text and large blocks
                 if textSize>=minBlockSize and textSize<=maxBlockSize:
