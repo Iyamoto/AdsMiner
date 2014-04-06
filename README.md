@@ -1,32 +1,37 @@
 AdsMiner
 ========
 <p>Ad Blocks data miner</p>
-<p>Based on Phantom.JS</p>
+<p>Based on Python 3 and Phantom.JS</p>
 
 INSTALL
 =======
 <ul>
-<li>aptitude install python-tidylib python3-lxml</li>
-<li>pip-3.2 install pytidylib6</li>
-<li>pip-3.2 install chardet</li>
+<li>aptitude install python3-lxml</li>
+<li>#pip-3.2 install pytidylib6</li>
+<li>#pip-3.2 install chardet</li>
 <li>cp miner.conf.OS miner.conf</li>
 </ul>
 
 TODO
 ====
-how to improve save.js?
 
 add graber to cron
-clear cache daily (server)
+add bot master to cron
 
 blacklist rambler counter
 
 Grab direct
 http://direct.yandex.ru/search?text=%27%D0%B3%D0%BE%D1%80%D0%BE%D1%81%D0%BA%D0%BE%D0%BF%27&ref-page=118826
 
-Cookies analysis
+IDEAS
+=====
 
-Grabber output structure
+Cookies statical analysis
+
+INFO
+====
+
+<h2>Grabber output structure</h2>
 url
 block_id
 links[]
@@ -34,7 +39,8 @@ img_links[]
 block_text
 target_urls[]
 
-master
+<h2>Bot Master functions</h2>
  manage cache
  get tasks
  clear cookies.txt?
+ zip and send results

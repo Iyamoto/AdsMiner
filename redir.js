@@ -3,8 +3,8 @@ var page = require('webpage').create(),
 	system = require('system'),
 	address, file;
 
-if (system.args.length === 1) {
-  console.log('Usage: save.js <some URL> <file name>');
+if (system.args.length !== 4) {
+  console.log('Usage: redir.js <URL> <Refferer> <Timeout>');
   phantom.exit();
 }	
 
@@ -13,7 +13,7 @@ page.settings.resourceTimeout = system.args[3];
 page.settings.userAgent = 'Mozilla/5.0 (Windows NT 5.1; rv:27.0) Gecko/20100101 Firefox/27.0';
 page.settings.loadImages = false;
 page.customHeaders = {'Referer': system.args[2]};
-page.viewportSize = { width: 1024, height: 768 };
+page.viewportSize = { width: 1280, height: 1024 };
 
 
 page.open(address, function (status) {

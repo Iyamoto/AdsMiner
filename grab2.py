@@ -108,8 +108,11 @@ for url in urls:
             target_urls = []
             json_block = adsminer.Block2List(url, id, ads[id])
             for target_url in json_block[2]:
-                output = adsminer.url2url(run1, target_url, url)
-                target_urls.append(output.strip())
+                output = adsminer.url2url(run1, target_url, url, 1000)
+                try:
+                    target_urls.append(output.strip())
+                except:
+                    continue
             json_block.append(target_urls)
             to_json.append(json_block)
                 
