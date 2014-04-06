@@ -111,7 +111,7 @@ for url in urls:
     del(ads)
     #break
 
-f = open(os.path.join(tasksdir, 'targets.wget'),w)
+f = open(os.path.join(tasksdir, 'targets.wget'),'w')
 target_urls = adsminer.uniqList(target_urls)
 for target_url in target_urls:
     f.write(target_url+'\n')
