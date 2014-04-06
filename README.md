@@ -10,6 +10,7 @@ INSTALL
 <li>aptitude install curl</li>
 <li>#pip-3.2 install pytidylib6</li>
 <li>#pip-3.2 install chardet</li>
+<li>pip-3.2 install requests</li>
 <li>cp miner.conf.OS miner.conf</li>
 </ul>
 
@@ -18,6 +19,8 @@ TODO
 
 add graber to cron
 add bot master to cron
+
+replace urllib with requests?
 
 blacklist rambler counter
 

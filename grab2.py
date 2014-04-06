@@ -10,6 +10,7 @@ import hashlib
 import os.path
 import adsminer
 import codecs
+import requests
 
 # Read config
 config = configparser.ConfigParser()
@@ -77,7 +78,7 @@ else:
 
 total_blocks = 0
 to_json = []
-target_urls = []
+##target_urls = []
 
 for url in urls:
     try:
@@ -98,24 +99,28 @@ for url in urls:
         del(ads)
         continue
     total_blocks +=ads_num
-        
+    redir_urls = []    
     if ads_num>0:
         for id in ads.keys():          
             json_block = adsminer.Block2List(url, id, ads[id])
             for target_url in json_block[2]:
-                target_urls.append(target_url)
-
+                r = requests.get(target_url)
+                print('Redirecting: '+target_url)
+                print('Landind: '+r.url)
+                redir_urls.append(r.url)
+                
+            json_block.append(redir_urls)
             to_json.append(json_block)
                 
 
     del(ads)
     #break
 
-f = codecs.open(os.path.join(tasksdir, 'targets.wget'), 'w', encoding='utf-8')
-target_urls = adsminer.uniqList(target_urls)
-for target_url in target_urls:
-    f.write(target_url+'\n')
-f.close()
+##f = codecs.open(os.path.join(tasksdir, 'targets.wget'), 'w', encoding='utf-8')
+##target_urls = adsminer.uniqList(target_urls)
+##for target_url in target_urls:
+##    f.write(target_url+'\n')
+##f.close()
 
 # Writing json data to file
 adsminer.writeJson(jsonfile, to_json)
