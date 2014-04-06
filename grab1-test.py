@@ -23,7 +23,7 @@ except:
     assert False
 
 # Init
-urlsdir = 'lists'
+urlsdir = 'info'
 datadir = config['GRABBER']['DataDir']
 if not os.path.exists(datadir):
     os.makedirs(datadir)

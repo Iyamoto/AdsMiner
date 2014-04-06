@@ -8,33 +8,47 @@ import adsminer
 stats = {}
 cookies_dir = ''
 cookies_file = 'cookies.txt'
-low_limit=0 # ?????
+lists_dir = 'lists'
+limit = 1
+domains_counters = {}
 total = 0
 cookies_path = os.path.join(cookies_dir, cookies_file)
 if os.path.isfile(cookies_path) == True:
     text = adsminer.file2text(cookies_path)
-        
-##        for url_id in url_ids:
-##            for href in url_id[5]:
-##                domain = adsminer.getDomainfromUrl(href)
-##                if len(domain)>1:
-##                    stats[domain] = stats.get(domain,0)+1
-##                    total+=1
-                        
-print('Total Links found: ',  total)
-if total>0:
-    list_stats = []
-    for k,v in stats.items():
-        if v>low_limit:
-            percent = int(100*v/total)
-            list_stats.append((k,v,percent))
-        
-    sorted_stats = sorted(list_stats, key=adsminer.getIndex1,reverse=True)
-    for items in sorted_stats:
-        try:
-            print(items[0], items[1], str(items[2])+'%')
-        except:
-            continue
+    matches = re.findall(r'domain=\.([^;]+);', text)
+    for domain in matches:
+        domains_counters[domain] = domains_counters.get(domain,0)+1
+    domains_from_cookies = adsminer.uniqList(matches)
+    print('Domains in cookies found: '+ str(len(domains_from_cookies)))
+
+domains_from_lists = []
+for file in os.listdir(lists_dir):
+    if file.endswith('.txt'):
+        print('Reading url list file: ',file)
+        list_path = os.path.join(lists_dir, file)
+        if os.path.isfile(list_path) == True:
+            urls = adsminer.file2list(list_path)
+            if len(urls)>0:
+                for url in urls:
+                    try:
+                        url = adsminer.clearUrl(url)
+                    except:
+                        continue
+                    domains_from_lists.append(urlparse(url).netloc.lower())
+                    
+domains_from_lists = adsminer.uniqList(domains_from_lists)
+print('Domains in lists found: '+ str(len(domains_from_lists)))            
+
+suspects = []
+for domain_from_cookies in domains_from_cookies:
+    if domain_from_cookies not in domains_from_lists:
+        if domains_counters[domain_from_cookies] > limit:
+            suspects.append([domain_from_cookies, domains_counters[domain_from_cookies]])
+
+stats = sorted(suspects, key=adsminer.getIndex1, reverse=True)
+for pairs in stats:
+    print(pairs[0], pairs[1])
+
             
 
 
