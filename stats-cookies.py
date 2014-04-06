@@ -5,7 +5,6 @@ import re
 from urllib.parse import urlparse
 import adsminer
     
-stats = {}
 cookies_dir = ''
 cookies_file = 'cookies.txt'
 lists_dir = 'lists'

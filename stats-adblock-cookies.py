@@ -1,31 +1,24 @@
-# Compare found ad domains with domains from adblock list
+# Compare domains from cookies.txt with domains from adblock list
 
 import os
 import re
 from urllib.parse import urlparse
 import adsminer
     
-stats = {}
-json_dir = 'json'
+cookies_dir = ''
+cookies_file = 'cookies.txt'
 lists_dir = 'info'
-limit = 0
-ad_domains = []
+limit = 5
 domains_counters = {}
-for file in os.listdir(json_dir):
-    if file.endswith('.txt'):
-        print('Reading json file: ',file)
-        json_path = os.path.join(json_dir, file)
-        if os.path.isfile(json_path) == True:
-            url_ids = adsminer.readJson(json_path)
-            for url_id in url_ids:
-                for href in url_id[2]:
-                    domain = adsminer.getDomainfromUrl(href)
-                    if len(domain)>1:
-                        domains_counters[domain] = domains_counters.get(domain,0)+1
-                        ad_domains.append(domain)
-
-ad_domains = adsminer.uniqList(ad_domains)
-print('Domains in lists found: '+ str(len(ad_domains)))
+total = 0
+cookies_path = os.path.join(cookies_dir, cookies_file)
+if os.path.isfile(cookies_path) == True:
+    text = adsminer.file2text(cookies_path)
+    matches = re.findall(r'domain=\.([^;]+);', text)
+    for domain in matches:
+        domains_counters[domain] = domains_counters.get(domain,0)+1
+    domains_from_cookies = adsminer.uniqList(matches)
+    print('Domains in cookies found: '+ str(len(domains_from_cookies)))
 
 domains_from_adblock = []
 for file in os.listdir(lists_dir):
@@ -48,10 +41,10 @@ domains_from_adblock = adsminer.uniqList(domains_from_adblock)
 print('Domains in adblock list found: '+ str(len(domains_from_adblock)))            
 
 suspects = []
-for ad_domain in ad_domains:
-    if ad_domain in domains_from_adblock:
-        if domains_counters[ad_domain] > limit:
-            suspects.append([ad_domain, domains_counters[ad_domain]])
+for domain_from_cookies in domains_from_cookies:
+    if domain_from_cookies in domains_from_adblock:
+        if domains_counters[domain_from_cookies] > limit:
+            suspects.append([domain_from_cookies, domains_counters[domain_from_cookies]])
 
 stats = sorted(suspects, key=adsminer.getIndex1, reverse=True)
 for pairs in stats:
