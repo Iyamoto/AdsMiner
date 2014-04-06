@@ -96,18 +96,19 @@ for url in urls:
         for id in ads.keys():          
             json_block = adsminer.Block2List(url, id, ads[id])
             for target_url in json_block[2]:
+                landing = ''
                 try:
                     r = requests.get(target_url)
+                    landing = r.url
                 except:
                     continue
-                redir_urls.append(r.url)
+                redir_urls.append(landing)
                 
             json_block.append(redir_urls)
             to_json.append(json_block)
                 
 
     del(ads)
-    #break
 
 ##f = codecs.open(os.path.join(tasksdir, 'targets.wget'), 'w', encoding='utf-8')
 ##target_urls = adsminer.uniqList(target_urls)
@@ -122,5 +123,3 @@ adsminer.writeJson(jsonfile, to_json)
 if os.path.isfile(urls_path) == True:
     os.remove(urls_path)
 os.rename(proc_path,urls_path) 
-##adsminer.writeLog(log_file, 'Total blocks found: '+str(total_blocks)+'\n', isLogFile)
-##adsminer.writeLog(log_file, 'Done\n', isLogFile)
