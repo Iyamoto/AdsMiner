@@ -7,6 +7,7 @@ INSTALL
 =======
 <ul>
 <li>aptitude install python3-lxml</li>
+<li>aptitude install curl</li>
 <li>#pip-3.2 install pytidylib6</li>
 <li>#pip-3.2 install chardet</li>
 <li>cp miner.conf.OS miner.conf</li>
@@ -25,8 +26,6 @@ http://direct.yandex.ru/search?text=%27%D0%B3%D0%BE%D1%80%D0%BE%D1%81%D0%BA%D0%B
 
 IDEAS
 =====
-
-Cookies statical analysis
 
 INFO
 ====
