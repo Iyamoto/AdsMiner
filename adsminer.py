@@ -75,10 +75,9 @@ def url2url(run, url, ref='http://yandex.ru', timeout=10000):
     except:
         print('Cant execute: '+cmd)
         return ''
-
-    s = output.decode('utf-8')
-    s = re.search(r'URL###: (.+)',s)
     try:
+        s = output.decode('utf-8')
+        s = re.search(r'URL###: (.+)',s)
         out = s.group(1)
     except:
         print('Redirect not found')
