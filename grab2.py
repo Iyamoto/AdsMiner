@@ -98,7 +98,7 @@ for url in urls:
             for target_url in json_block[2]:
                 landing = ''
                 try:
-                    r = requests.get(target_url)
+                    r = requests.get(target_url, timeout=1)
                     landing = r.url
                 except:
                     continue

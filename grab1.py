@@ -82,7 +82,7 @@ for url in urls:
                 landing = ''
                 adsminer.writeLog(log_file, 'Redirecting: '+target_url+'\n', isLogFile)
                 try:
-                    r = requests.get(target_url)
+                    r = requests.get(target_url, timeout=1)
                     landing = r.url
                 except:
                     adsminer.writeLog(log_file, 'Connection failed? \n', isLogFile)
