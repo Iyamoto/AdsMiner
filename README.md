@@ -22,6 +22,8 @@ add bot master to cron
 
 replace urllib with requests?
 
+grab2 json save every N blocks?
+
 blacklist rambler counter
 
 Grab direct
