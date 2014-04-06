@@ -8,7 +8,7 @@ import re
 import os.path
 import json
 from tidylib import tidy_document
-import chardet
+#import chardet
 
 def uniqList(lst):
     assert type(lst)==list
@@ -74,10 +74,9 @@ def url2url(run, url, ref='http://yandex.ru', timeout=10000):
         output=subprocess.check_output(cmd, shell=True)
     except:
         print('Cant execute: '+cmd)
-        return False
-    result = chardet.detect(output)
-    charenc = result['encoding']
-    s = output.decode(charenc)
+        return ''
+
+    s = output.decode('utf-8')
     s = re.search(r'URL###: (.+)',s)
     try:
         out = s.group(1)
