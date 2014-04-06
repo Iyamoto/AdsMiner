@@ -1,4 +1,4 @@
-# AdsMiner: Get Ads Networks from grab.py log files
+# AdsMiner: Get target domain stats
 
 import os
 from urllib.parse import urlparse

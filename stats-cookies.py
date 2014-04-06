@@ -1,4 +1,4 @@
-# AdsMiner: Get Ads Networks from grab.py log files
+# Compare domains from cookies.txt with domains from urls lists
 
 import os
 import re
