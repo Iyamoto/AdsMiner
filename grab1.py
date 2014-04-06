@@ -80,7 +80,11 @@ for url in urls:
             json_block = adsminer.Block2List(url, id, ads[id])
             for target_url in json_block[2]:
                 adsminer.writeLog(log_file, 'Redirecting: '+target_url+'\n', isLogFile)
-                r = requests.get(target_url)
+                try:
+                    r = requests.get(target_url)
+                except:
+                    adsminer.writeLog(log_file, 'Connection failed? \n', isLogFile)
+                    continue
                 landing = r.url
                 redir_urls.append(landing)
                 adsminer.writeLog(log_file, 'Landed: '+landing+'\n', isLogFile)
