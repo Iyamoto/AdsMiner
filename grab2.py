@@ -9,6 +9,7 @@ import configparser
 import hashlib
 import os.path
 import adsminer
+import codecs
 
 # Read config
 config = configparser.ConfigParser()
@@ -111,7 +112,7 @@ for url in urls:
     del(ads)
     #break
 
-f = open(os.path.join(tasksdir, 'targets.wget'),'w')
+f = codecs.open(os.path.join(tasksdir, 'targets.wget'), 'w', encoding='utf-8')
 target_urls = adsminer.uniqList(target_urls)
 for target_url in target_urls:
     f.write(target_url+'\n')
