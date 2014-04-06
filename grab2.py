@@ -46,8 +46,6 @@ minBlockSize = int(config['GRABBER']['MinBlockSize'])
 maxLinks = int(config['GRABBER']['MaxLinks'])
 Timeout = int(config['GRABBER']['Timeout'])
 
-##isLogFile = adsminer.initLog(log_file,'Grabber started\n')
-
 # Looking for tasks
 proc_path = ''
 try:
@@ -57,7 +55,6 @@ try:
             tasks_path = os.path.join(tasksdir, file)
             proc_path = os.path.join(procdir, file)
             urls_path = os.path.join(urlsdir, file)
-            ##log_file = os.path.join(logsdir, file)
             jsonfile = os.path.join(jsondir, file)
             if os.path.isfile(proc_path) == True:
                 os.remove(proc_path)
@@ -76,10 +73,7 @@ else:
         print('No urls found')
         assert False
 
-total_blocks = 0
 to_json = []
-##target_urls = []
-
 for url in urls:
     try:
         url = adsminer.clearUrl(url)
@@ -90,23 +84,19 @@ for url in urls:
 
     print(url, path)
     text = adsminer.url2html(run, url, path, Timeout)
-    
-    # TODO add tidy html?
+
     ads = adsminer.parseBlocks(text, url, block_complexity, minBlockSize, maxBlockSize, maxLinks)
     try:
         ads_num = len(ads.keys())
     except:
         del(ads)
         continue
-    total_blocks +=ads_num
     redir_urls = []    
     if ads_num>0:
         for id in ads.keys():          
             json_block = adsminer.Block2List(url, id, ads[id])
             for target_url in json_block[2]:
                 r = requests.get(target_url)
-                print('Redirecting: '+target_url)
-                print('Landind: '+r.url)
                 redir_urls.append(r.url)
                 
             json_block.append(redir_urls)
