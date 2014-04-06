@@ -20,19 +20,20 @@ for file in os.listdir(json_dir):
                     if len(domain)>1:
                         stats[domain] = stats.get(domain,0)+1
                         total+=1
-print('Total Links found: ',  total)                        
-list_stats = []
-for k,v in stats.items():
-    if v>low_limit:
-        percent = int(100*v/total)
-        list_stats.append((k,v,percent))
-    
-sorted_stats = sorted(list_stats, key=adsminer.getIndex1,reverse=True)
-for items in sorted_stats:
-    try:
-        print(items[0], items[1], str(items[2])+'%')
-    except:
-        continue
+print('Total Links found: ',  total)
+if total>0:
+    list_stats = []
+    for k,v in stats.items():
+        if v>low_limit:
+            percent = int(100*v/total)
+            list_stats.append((k,v,percent))
+        
+    sorted_stats = sorted(list_stats, key=adsminer.getIndex1,reverse=True)
+    for items in sorted_stats:
+        try:
+            print(items[0], items[1], str(items[2])+'%')
+        except:
+            continue
             
 
 

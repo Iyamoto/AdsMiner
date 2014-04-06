@@ -1,25 +1,25 @@
 # AdsMiner: Get Ads Networks from grab.py log files
 
 import os
+import re
 from urllib.parse import urlparse
 import adsminer
     
 stats = {}
-json_dir = 'json'
+cookies_dir = ''
+cookies_file = 'cookies.txt'
 low_limit=0 # ?????
 total = 0
-for file in os.listdir(json_dir):
-    if file.endswith('.txt'):
-        print('Reading json file: ',file)
-        json_path = os.path.join(json_dir, file)
-        if os.path.isfile(json_path) == True:
-            url_ids = adsminer.readJson(json_path)
-            for url_id in url_ids:
-                for href in url_id[5]:
-                    domain = adsminer.getDomainfromUrl(href)
-                    if len(domain)>1:
-                        stats[domain] = stats.get(domain,0)+1
-                        total+=1
+cookies_path = os.path.join(cookies_dir, cookies_file)
+if os.path.isfile(cookies_path) == True:
+    text = adsminer.file2text(cookies_path)
+        
+##        for url_id in url_ids:
+##            for href in url_id[5]:
+##                domain = adsminer.getDomainfromUrl(href)
+##                if len(domain)>1:
+##                    stats[domain] = stats.get(domain,0)+1
+##                    total+=1
                         
 print('Total Links found: ',  total)
 if total>0:
