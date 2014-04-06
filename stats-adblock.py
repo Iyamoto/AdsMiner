@@ -43,7 +43,7 @@ print('Domains in adblock list found: '+ str(len(domains_from_adblock)))
 
 suspects = []
 for domain_from_cookies in domains_from_cookies:
-    if domain_from_cookies not in domains_from_adblock:
+    if domain_from_cookies in domains_from_adblock:
         if domains_counters[domain_from_cookies] > limit:
             suspects.append([domain_from_cookies, domains_counters[domain_from_cookies]])
 
