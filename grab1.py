@@ -79,13 +79,13 @@ for url in urls:
             target_urls = []
             json_block = adsminer.Block2List(url, id, ads[id])
             for target_url in json_block[2]:
-                adsminer.writeLog(log_file, target_url+'\n', isLogFile)
+                adsminer.writeLog(log_file, 'Redirecting: '+target_url+'\n', isLogFile)
                 output = adsminer.url2url(run1, target_url, url)
                 try:
                     target_urls.append(output.strip())
                 except:
                     continue
-                adsminer.writeLog(log_file, output+'\n', isLogFile)
+                adsminer.writeLog(log_file, 'Landed: '+output+'\n', isLogFile)
             json_block.append(target_urls)
             to_json.append(json_block)                
     
