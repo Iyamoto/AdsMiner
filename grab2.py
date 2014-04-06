@@ -105,7 +105,6 @@ for url in urls:
             for target_url in json_block[2]:
                 target_urls.append(target_url)
 
-            json_block.append(target_urls)
             to_json.append(json_block)
                 
 
