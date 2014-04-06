@@ -15,12 +15,14 @@ for file in os.listdir(json_dir):
         if os.path.isfile(json_path) == True:
             url_ids = adsminer.readJson(json_path)
             for url_id in url_ids:
-                for href in url_id[5]:
-                    domain = adsminer.getDomainfromUrl(href)
-                    if len(domain)>1:
-                        stats[domain] = stats.get(domain,0)+1
-                        total+=1
-                        
+                try:
+                    for href in url_id[5]:
+                        domain = adsminer.getDomainfromUrl(href)
+                        if len(domain)>1:
+                            stats[domain] = stats.get(domain,0)+1
+                            total+=1
+                except:
+                    continue
 print('Total Links found: ',  total)
 if total>0:
     list_stats = []
