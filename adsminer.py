@@ -66,7 +66,7 @@ def url2html(run, url, path, timeout=5000):
         assert False
     return html
 
-def url2url(run, url, ref='http://yandex.ru', timeout=10000):
+def url2url(run, url, ref='http://yandex.ru', timeout=5000):
     """PhantomJS wrapper
     url - http://name.tld"""
     cmd = run+' "'+url+'" "'+ref+'" '+str(timeout)
@@ -282,7 +282,8 @@ def parseBlocks(text, url='', block_complexity=2, minBlockSize=10, maxBlockSize=
                 pool += (child.tag,)
                 if child.tag == 'a':# Filter by tag (a href)      
                     if child.attrib.has_key('href'):
-                        if child.attrib['href'].find('http://')!=-1 and child.attrib['href'].lower().find(BaseUrl)==-1:
+                        if child.attrib['href'].find('http://')>0 and child.attrib['href'].lower().find(BaseUrl)==-1:
+                        #if child.attrib['href'].find('http://')!=-1 and child.attrib['href'].lower().find(BaseUrl)==-1:
                             hasLink = True
                             LinkCounter+=1
                             DomainsList.append(urlparse(child.attrib['href'].lower()).netloc)

@@ -76,13 +76,13 @@ else:
 
 total_blocks = 0
 to_json = []
+target_urls = []
 
 for url in urls:
     try:
         url = adsminer.clearUrl(url)
     except:
         continue
-##    adsminer.writeLog(log_file, url+'\n', isLogFile)
     url_id = hashlib.md5(url.encode('utf-8')).hexdigest()    
     path = os.path.join(datadir, url_id + '.html')
 
@@ -97,28 +97,25 @@ for url in urls:
         del(ads)
         continue
     total_blocks +=ads_num
-      
-##    adsminer.writeLog(log_file, 'Find ads: '+str(ads_num)+'\n', isLogFile)
-    
+        
     if ads_num>0:
-        for id in ads.keys():
-##            if isLogFile:
-##                out = adsminer.getBlock(id,ads)
-##                adsminer.writeLog(log_file, out, isLogFile)
-            target_urls = []
+        for id in ads.keys():          
             json_block = adsminer.Block2List(url, id, ads[id])
             for target_url in json_block[2]:
-                output = adsminer.url2url(run1, target_url, url, 1000)
-                try:
-                    target_urls.append(output.strip())
-                except:
-                    continue
+                target_urls.append(target_url)
+
             json_block.append(target_urls)
             to_json.append(json_block)
                 
 
     del(ads)
     #break
+
+f = open(os.path.join(tasksdir, 'targets.wget'),w)
+target_urls = adsminer.uniqList(target_urls)
+for target_url in target_urls:
+    f.write(target_url+'\n')
+f.close()
 
 # Writing json data to file
 adsminer.writeJson(jsonfile, to_json)
