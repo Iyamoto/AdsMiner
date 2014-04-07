@@ -34,18 +34,19 @@ def write2mysql(conn, table, row):
         val = items[1]
     print(table, col, val)
     #sql = 'INSERT INTO '+table+"("+col+") VALUES ('"+val+"')"
-    sql = "INSERT INTO %s(%s) VALUES ('%s')"
+    sql = """INSERT INTO %s(%s) VALUES (%s)"""
     execute_mysqldb(conn, sql, (table, col, val))
     return
 
 def execute_mysqldb(conn, sql, params=()):
     """ executes sql request"""
     cur = conn.cursor()
-    cur.execute(sql, params)
-    for response in cur:
-        print(response)
+    if len(params)==0:
+        data = cur.execute(sql)
+    else:
+        data = cur.execute(sql, params)
     cur.close()
-    return response
+    return data
 
 def kill_mysqldb(conn):
     """ Finishes connection to db"""
