@@ -38,7 +38,7 @@ def write2mysql(conn, table, row):
     execute_mysqldb(conn, sql, (table, col, val))
     return
 
-def execute_mysqldb(conn, sql, params):
+def execute_mysqldb(conn, sql, params=()):
     """ executes sql request"""
     cur = conn.cursor()
     cur.execute(sql, params)

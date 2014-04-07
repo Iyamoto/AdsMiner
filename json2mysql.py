@@ -9,7 +9,7 @@ conn = adsmysql.init_mysqldb()
 write2db = adsmysql.write2mysql
 
 sql = 'SELECT * FROM sites'
-data = execute_mysqldb(conn, sql)
+data = adsmysql.execute_mysqldb(conn, sql)
 print(data)
     
 json_dir = 'json'
