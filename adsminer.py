@@ -39,8 +39,13 @@ class adblock(object):
         self.LinkCounter+=1
         return
 
+    def getText(self):
+        """ Returns text of AdBlock"""
+        return self.Text
+
     def getTextLen(self):
-        """Return length of the AdBlock text"""
+        """ Returns length of the AdBlock text"""
+        return self.TextLen
 
     def addText(self, text):
         """ Adds text to AdBlock"""
@@ -74,6 +79,7 @@ class adblock(object):
         output+='ID: '+str(self.getId())+'\n'
         output+='Images: '+str(self.ImgsNum())+'\n'
         output+='Links: '+str(self.LinksNum())+'\n'
+        output+='Text: '+str(self.getText())+'\n'
         return output
 
 def uniqList(lst):

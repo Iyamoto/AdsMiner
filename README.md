@@ -38,12 +38,12 @@ INFO
 ====
 
 <h2>Grabber output structure</h2>
-url
-block_id
-links[]
-img_links[]
-block_text
-target_urls[]
+0 url
+1 block_id
+2 links[]
+3 img_links[]
+4 block_text
+5 target_urls[]
 
 <h2>Bot Master functions</h2>
  manage cache

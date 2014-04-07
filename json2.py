@@ -14,17 +14,19 @@ for file in os.listdir(json_dir):
         if os.path.isfile(json_path) == True:
             data = adsminer.readJson(json_path)
             for block in data:
-                try:
-                    ab = adsminer.adblock(block[0],block[1])
-                    for img in block[2]:
-                        ab.addImgUrl(img)
-                    i=0                        
-                    for img in block[3]:
-                        ab.addLink(block[3][i])                        
-                    print(ab)
-                except:
-                    print('Cant get block')
-                    continue
+                #try:
+                ab = adsminer.adblock(block[0],block[1])
+                for img in block[3]:
+                    ab.addImgUrl(img)
+                i=0
+                for link in block[2]:
+                    ab.addLink(link, block[5][i])
+                    i+=1
+                ab.addText(block[4])    
+                print(ab, ab.getLinks())
+##                except:
+##                    print('Cant get block')
+##                    continue
 print('Total Links found: ',  total)
 
             

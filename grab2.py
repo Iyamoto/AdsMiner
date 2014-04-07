@@ -96,12 +96,11 @@ for url in urls:
         for id in ads.keys():          
             json_block = adsminer.Block2List(url, id, ads[id])
             for target_url in json_block[2]:
-                landing = ''
                 try:
                     r = requests.get(target_url, timeout=1)
                     landing = r.url
                 except:
-                    continue
+                    landing = ''
                 redir_urls.append(landing)
                 
             json_block.append(redir_urls)
