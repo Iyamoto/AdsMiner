@@ -7,8 +7,74 @@ import codecs
 import re
 import os.path
 import json
-from tidylib import tidy_document
+#from tidylib import tidy_document
 #import chardet
+
+class adblock(object):
+    #Ad block (tiser) class
+    def __init__(self, url='', id=0):
+        """Create an AdBlock"""
+        self.SrcUrl = clearUrl(url)
+        self.Id = int(id)
+        self.ImgUrls = []
+        self.ImgCounter = 0
+        self.Links = {}
+        self.LinkCounter = 0
+        self.Text = ''
+        self.TextLen = 0
+
+    def addImgUrl(self, e):
+        """ Adds img url to AdBlock"""
+        self.ImgUrls.append(e) # Should I check the url?
+        self.ImgCounter+=1
+        return
+
+    def getImgUrls(self):
+        """ Returns list of img urls"""
+        return self.ImgUrls
+
+    def addLink(self, redirect, landing):
+        """ Adds redirect-landing pair urls to AdBlock"""
+        self.Links[redirect]=landing
+        self.LinkCounter+=1
+        return
+
+    def getTextLen(self):
+        """Return length of the AdBlock text"""
+
+    def addText(self, text):
+        """ Adds text to AdBlock"""
+        self.Text = text
+        self.TextLen = len(text)
+        return
+
+    def getLinks(self):
+        """ Returns dict of ad urls pairs"""
+        return self.Links
+
+    def getId(self):
+        """ Returns AdBlock ID"""
+        return self.Id
+
+    def getSrcUrl(self):
+        """ Returns AdBlock Src Url"""
+        return self.SrcUrl
+
+    def ImgsNum(self):
+        """ Returns number of img urls"""
+        return self.ImgCounter
+
+    def LinksNum(self):
+        """ Returns number of ad urls pairs"""
+        return self.LinkCounter
+
+    def __str__(self):
+        """Returns a string representation of AdBlock"""
+        output = 'SrcUrl: '+self.getSrcUrl()+'\n'
+        output+='ID: '+str(self.getId())+'\n'
+        output+='Images: '+str(self.ImgsNum())+'\n'
+        output+='Links: '+str(self.LinksNum())+'\n'
+        return output
 
 def uniqList(lst):
     assert type(lst)==list

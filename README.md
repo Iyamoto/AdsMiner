@@ -20,6 +20,8 @@ TODO
 add graber to cron
 add bot master to cron
 
+add blacklist support for grab.parser
+
 replace urllib with requests?
 
 grab2 json save every N blocks?
@@ -48,3 +50,16 @@ target_urls[]
  get tasks
  clear cookies.txt?
  zip and send results
+
+<h2>Tables</h2>
+1.Categories (category_id, name)
+2.Sites (site_id, domain)
+3.Urls (url_id, category_id, site_id, url)
+4.Ads (ad_id, url_id, text, time)
+5.Landings (land_id, ad_id, url_id, src_url, land_url, time)
+6.(land_id, landing_domain)
+7.Images (img_id, ad_id, img_url)
+
+
+
+
