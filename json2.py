@@ -45,7 +45,7 @@ for file in os.listdir(json_dir):
                 #print(ab.getSrcDomain())
                 row = []
                 row.append(('domain', ab.getSrcDomain()))
-                write2db(conn, 'sites', row)
+                #write2db(conn, 'sites', row)
 
                 total+=1
 ##                except:
