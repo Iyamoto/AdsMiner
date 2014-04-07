@@ -39,7 +39,7 @@ for file in os.listdir(json_dir):
                     ab.addImgUrl(img)
                 i=0
                 for link in block[2]:
-                    ab.addLink(link, block[5][i])
+                    ab.addLink(link, block[5][i]) #TODO check index (out of range)
                     i+=1
                 ab.addText(block[4])
                 #print(ab.getSrcDomain())

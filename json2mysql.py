@@ -3,10 +3,10 @@
 import os
 from urllib.parse import urlparse
 import adsminer
-import ad-mysql.py
+import admysql.py
 
-conn = ad-mysql.init_mysqldb()
-write2db = write2mysql
+conn = admysql.init_mysqldb()
+write2db = admysql.write2mysql
     
 json_dir = 'json'
 
@@ -40,7 +40,7 @@ for file in os.listdir(json_dir):
 print('Total Links found: ',  total)
 
 
-ad-mysql.kill_mysqldb(conn)
+admysql.kill_mysqldb(conn)
 
             
 
