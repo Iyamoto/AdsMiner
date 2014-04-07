@@ -33,12 +33,12 @@ def write2mysql(conn, table, row):
         col = items[0]
         val = items[1]
     print(col, val)
-    sql = """INSERT INTO '%(table)s'(id, '%(col)s')
-    VALUES (NULL , '%(val)s')
-    """%{"table":table, "col":col, "val":val}
-##    sql = """INSERT INTO sites(domain)
-##        VALUES ('%(val)s')
-##        """%{"val":val}
+##    sql = """INSERT INTO '%(table)s'(id, '%(col)s')
+##    VALUES (NULL , '%(val)s')
+##    """%{"table":table, "col":col, "val":val}
+    sql = """INSERT INTO sites(domain)
+        VALUES ('%(val)s')
+        """%{"val":val}
     execute_mysqldb(conn, sql)
     return
 
