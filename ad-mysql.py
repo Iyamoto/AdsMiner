@@ -21,15 +21,15 @@ except:
     assert False
 
 cur = conn.cursor()
-cur.execute("SELECT Host,User FROM user")
+
+domain = 'www.ru'
+sql = """INSERT INTO sites(domain)
+        VALUES ('%(name)s')
+        """%{"name":domain}
+
+cur.execute(sql)
 for response in cur:
     print(response)
+
 cur.close()
-##
-##sql = """INSERT INTO sites(domain)
-##        VALUES ('%(name)s')
-##        """%{"name":domain}
-##cursor.execute(sql)
-
-
 conn.close()    
