@@ -17,6 +17,7 @@ for file in os.listdir(json_dir):
             for url_id in url_ids:
                 try:
                     for href in url_id[5]:
+                        print(href)
                         domain = adsminer.getDomainfromUrl(href)
                         if len(domain)>1:
                             stats[domain] = stats.get(domain,0)+1
