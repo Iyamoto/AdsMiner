@@ -41,10 +41,13 @@ def write2mysql(conn, table, row):
 def execute_mysqldb(conn, sql, params=()):
     """ executes sql request"""
     cur = conn.cursor()
+    print(params)
     if len(params)==0:
         data = cur.execute(sql)
     else:
         data = cur.execute(sql, params)
+    for response in cur:
+        print(response)
     cur.close()
     return data
 
