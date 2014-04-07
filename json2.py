@@ -21,11 +21,10 @@ def writeDummy(conn, table, row):
     executeDummy(conn, sql)
     return
 
+conn = None
 write2db = writeDummy
     
 json_dir = 'json'
-conn = None
-
 total = 0
 for file in os.listdir(json_dir):
     if file.endswith('.txt'):
