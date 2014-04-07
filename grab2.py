@@ -91,9 +91,10 @@ for url in urls:
     except:
         del(ads)
         continue
-    redir_urls = []    
+    
     if ads_num>0:
-        for id in ads.keys():          
+        for id in ads.keys():
+            redir_urls = []  
             json_block = adsminer.Block2List(url, id, ads[id])
             for target_url in json_block[2]:
                 try:

@@ -20,9 +20,12 @@ for file in os.listdir(json_dir):
                     ab.addImgUrl(img)
                 i=0
                 for link in block[2]:
+                    #print('src', i, link)
                     ab.addLink(link, block[5][i])
                     i+=1
-                ab.addText(block[4])    
+                ab.addText(block[4])
+                #for land in block[5]:
+                    #print('land',land)  
                 print(ab, ab.getLinks())
 ##                except:
 ##                    print('Cant get block')

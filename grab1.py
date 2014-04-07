@@ -68,9 +68,10 @@ for url in urls:
     total_blocks +=ads_num
       
     adsminer.writeLog(log_file, 'Find ads: '+str(ads_num)+'\n', isLogFile)
-    redir_urls = []
+    
     if ads_num>0:
         for id in ads.keys():
+            redir_urls = []
             if isLogFile:
                 # Comment next 2 lines if you dont need logs
                 out = adsminer.getBlock(id,ads)
