@@ -15,6 +15,7 @@ class adblock(object):
     def __init__(self, url='', id=0):
         """Create an AdBlock"""
         self.SrcUrl = clearUrl(url)
+        self.SrcDomain = urlparse(self.SrcUrl).netloc
         self.Id = int(id)
         self.ImgUrls = []
         self.ImgCounter = 0
@@ -64,6 +65,10 @@ class adblock(object):
     def getSrcUrl(self):
         """ Returns AdBlock Src Url"""
         return self.SrcUrl
+
+    def getSrcDomain(self):
+        """ Returns AdBlock Src Domain name"""
+        return self.SrcDomain
 
     def ImgsNum(self):
         """ Returns number of img urls"""
