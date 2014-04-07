@@ -38,7 +38,7 @@ def write2mysql(conn, table, row):
 ##    """%{"table":table, "col":col, "val":val}
     sql = """INSERT INTO '%(table)s'('%(col)s')
         VALUES ('%(val)s')
-        """%{"val":val}
+        """%{"table":table, "col":col, "val":val}
     execute_mysqldb(conn, sql)
     return
 
