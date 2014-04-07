@@ -1,4 +1,4 @@
-import MySQLdb
+import pymysql
 import configparser
 
 # Read config
@@ -15,7 +15,7 @@ password = config['MYSQL']['pass']
 db = config['MYSQL']['db']
 
 try:
-    db = MySQLdb.connect(host, user, password, db, charset='utf8')
+    conn = pymysql.connect(host, user, password, db)
 except:
     print('Cant connect to db')
     assert False
@@ -28,4 +28,4 @@ except:
 ##cursor.execute(sql)
 
 
-db.close()    
+conn.close()    
