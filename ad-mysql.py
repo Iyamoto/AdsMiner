@@ -20,7 +20,11 @@ except:
     print('Cant connect to db')
     assert False
 
-##cursor = db.cursor()
+cur = conn.cursor()
+cur.execute("SELECT Host,User FROM user")
+for response in cur:
+    print(response)
+cur.close()
 ##
 ##sql = """INSERT INTO sites(domain)
 ##        VALUES ('%(name)s')
