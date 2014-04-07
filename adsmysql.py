@@ -36,7 +36,7 @@ def write2mysql(conn, table, row):
 ##    sql = """INSERT INTO '%(table)s'(id, '%(col)s')
 ##    VALUES (NULL , '%(val)s')
 ##    """%{"table":table, "col":col, "val":val}
-    sql = """INSERT INTO sites(domain)
+    sql = """INSERT INTO '%(table)s'('%(col)s')
         VALUES ('%(val)s')
         """%{"val":val}
     execute_mysqldb(conn, sql)
