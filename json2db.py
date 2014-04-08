@@ -44,7 +44,7 @@ sel = urls_table.select()
 rs = sel.execute()
 rows = rs.fetchall()
 for row in rows:
-    urls[row[1]] = row[0] # urls[url]=id
+    urls[row[3]] = row[0] # urls[url]=id
     
 json_dir = 'json'
 Category = 1
