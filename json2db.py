@@ -124,8 +124,7 @@ for file in os.listdir(json_dir):
 
 
                 #7.Images (img_id, ad_id, img_url)
-                img_links = ab.ImgUrls()
-                for img_link in img_links:
+                for img_link in ab.getImgUrls():
                     img_url = img_link.encode('utf-8')
                     rp = landings_ins.execute(ad_id=ad_id, img_url=img_url)
                     total_images+=1
