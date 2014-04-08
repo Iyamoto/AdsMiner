@@ -21,20 +21,20 @@ database = config['MYSQL']['db']
 
 
 #Connect to db
-#engine = create_engine('postgresql://scott:tiger@localhost:5432/mydatabase')
+#engine = create_engine('postgresql://'+user+':'+password+'@'+host+'/'+database)
 db = create_engine('mysql+pymysql://'+user+':'+password+'@'+host+'/'+database)
 db.echo = False  # We want to see the SQL we're creating
 metadata = MetaData(db)
 
 # Build tables
-# Categories
-##categories_table = Table('categories', metadata,
-##    Column('id', Integer, primary_key=True),
-##    Column('name', String(40)),
-##)
-##categories_table.create()
-##ins = categories_table.insert()
-##ins.execute(name='women')
+ Categories
+categories_table = Table('categories', metadata,
+    Column('id', Integer, primary_key=True),
+    Column('name', String(40)),
+)
+categories_table.create()
+ins = categories_table.insert()
+ins.execute(name='women')
 
 # Sites
 sites_table = Table('sites', metadata,
