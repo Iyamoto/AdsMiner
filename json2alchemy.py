@@ -61,9 +61,8 @@ for file in os.listdir(json_dir):
                 if ab.getSrcDomain() not in sites.keys():
                     #Insert into the db
                     r = ins.execute(domain=ab.getSrcDomain())
-                    print(help(r))
-                
-                break
+                    print(r.inserted_primary_key)
+                    break
                 total+=1
 ##                except:
 ##                    print('Cant get block')
