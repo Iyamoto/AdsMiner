@@ -131,11 +131,11 @@ for file in os.listdir(json_dir):
                     rp = landings_ins.execute(ad_id=ad_id, url_id=url_id, src_url=src_url, land_url=land_url, time=time)
                     total_landings+=1
 
-                #6.LandDomains (landdomain_id, landing_domain)
+                #6.LandDomains (landdomain_id, domain)
                 for k,v in links.items():
                     land_domain = urlparse(v).netloc.lower()
                     if land_domain not in landdomains.keys():
-                        rp = landdomains_ins.execute(landing_domain=land_domain)
+                        rp = landdomains_ins.execute(domain=land_domain)
                         landdomains[land_domain] = rp.lastrowid
                         total_landdomains+=1
 
