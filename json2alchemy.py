@@ -24,7 +24,8 @@ database = config['MYSQL']['db']
 db = create_engine('mysql+pymysql://'+user+':'+password+'@'+host+'/'+database)
 
 db.echo = True  # We want to see the SQL we're creating
-metadata = BoundMetaData(db)
+metadata = MetaData(db)
+#metadata = BoundMetaData(db)
 
 sites = Table('sites', metadata, autoload=True)
 s = sites.select()
