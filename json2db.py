@@ -19,29 +19,11 @@ user = config['MYSQL']['user']
 password = config['MYSQL']['pass']
 database = config['MYSQL']['db']
 
-
 #Connect to db
 #engine = create_engine('postgresql://'+user+':'+password+'@'+host+'/'+database)
 db = create_engine('mysql+pymysql://'+user+':'+password+'@'+host+'/'+database)
 db.echo = False  # We want to see the SQL we're creating
 metadata = MetaData(db)
-
-# Build tables
-# Categories
-categories_table = Table('categories', metadata,
-    Column('id', Integer, primary_key=True),
-    Column('name', String(40)),
-)
-categories_table.create()
-ins = categories_table.insert()
-ins.execute(name='women')
-
-# Sites
-sites_table = Table('sites', metadata,
-    Column('id', Integer, primary_key=True),
-    Column('domain', String(80)),
-)
-sites_table.create()
 
 # Get all sites
 sites_table = Table('sites', metadata, autoload=True)
@@ -53,7 +35,6 @@ rows = rs.fetchall()
 sites = {}
 for row in rows:
     sites[row[1]] = row[0] # sites[domain]=id
-
     
 json_dir = 'json'
 
