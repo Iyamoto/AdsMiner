@@ -18,8 +18,10 @@ user = config['MYSQL']['user']
 password = config['MYSQL']['pass']
 database = config['MYSQL']['db']
 
+
+#Connect to db
 #engine = create_engine('postgresql://scott:tiger@localhost:5432/mydatabase')
-db = create_engine('mysql://'+user+':'+password+'@'+host+'/'+database)
+db = create_engine('mysql+pymysql://'+user+':'+password+'@'+host+'/'+database)
 
 db.echo = True  # We want to see the SQL we're creating
 metadata = BoundMetaData(db)
