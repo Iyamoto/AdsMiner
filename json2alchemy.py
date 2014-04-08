@@ -27,7 +27,7 @@ db.echo = False  # We want to see the SQL we're creating
 metadata = MetaData(db)
 
 # Build tables
- Categories
+# Categories
 categories_table = Table('categories', metadata,
     Column('id', Integer, primary_key=True),
     Column('name', String(40)),
