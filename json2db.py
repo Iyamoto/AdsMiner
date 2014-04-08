@@ -20,7 +20,15 @@ host = config['SQL']['host']
 user = config['SQL']['user']
 password = config['SQL']['pass']
 database = config['SQL']['db']
+encode = config['SQL']['encode']
 
+if encode == True:
+    def encoding(val):
+        return val.encode('utf-8')
+else:
+    def encoding(val):
+        return val
+        
 sites = {}
 urls = {}
 landdomains = {}
@@ -109,7 +117,7 @@ for file in os.listdir(json_dir):
                 # category_id = Category
                 # site_id = sites[ab.getSrcDomain()]
                 if ab.getSrcUrl() not in urls.keys():
-                    url = ab.getSrcUrl().encode('utf-8')
+                    url = encoding(ab.getSrcUrl())
                     rp = urls_ins.execute(category_id=Category, site_id = sites[ab.getSrcDomain()], url = url)
                     #urls[ab.getSrcUrl()] = rp.lastrowid
                     urls[ab.getSrcUrl()] = rp.inserted_primary_key[0]
@@ -117,7 +125,7 @@ for file in os.listdir(json_dir):
 
                 # 4.Ads (ad_id, url_id, text, hash)
                 url_id = urls[ab.getSrcUrl()]
-                text = ab.getText().encode('utf-8')
+                text =  encoding(ab.getText())
                 hash = ab.getHash()
                 rp = ads_ins.execute(url_id=url_id, text = text, hash = hash)
                 #ad_id = rp.lastrowid
@@ -129,8 +137,8 @@ for file in os.listdir(json_dir):
                 time = ''
                 links = ab.getLinks()
                 for k,v in links.items():
-                    src_url = k.encode('utf-8')
-                    land_url = v.encode('utf-8')
+                    src_url =  encoding(k)
+                    land_url =  encoding(v)
                     rp = landings_ins.execute(ad_id=ad_id, url_id=url_id, src_url=src_url, land_url=land_url, time=time)
                     total_landings+=1
 
@@ -146,7 +154,7 @@ for file in os.listdir(json_dir):
 
                 #7.Images (img_id, ad_id, img_url)
                 for img_link in ab.getImgUrls():
-                    img_url = img_link.encode('utf-8')
+                    img_url =  encoding(img_link)
                     rp = images_ins.execute(ad_id=ad_id, img_url=img_url)
                     total_images+=1
                                       
