@@ -37,11 +37,11 @@ metadata = MetaData(db)
 ##ins.execute(name='women')
 
 # Sites
-##sites_table = Table('sites', metadata,
-##    Column('id', Integer, primary_key=True),
-##    Column('domain', String(40)),
-##)
-##sites_table.create()
+sites_table = Table('sites', metadata,
+    Column('id', Integer, primary_key=True),
+    Column('domain', String(80)),
+)
+sites_table.create()
 
 # Get all sites
 sites_table = Table('sites', metadata, autoload=True)
@@ -76,10 +76,9 @@ for file in os.listdir(json_dir):
                 ab.addText(block[4])
                 #Check if domain is already in the db
                 if ab.getSrcDomain() not in sites.keys():
-                    #Insert into the db
+                    #Insert into the db.sites
                     rp = ins.execute(domain=ab.getSrcDomain()) #returns ResultProxy
-                    #site_id = rp.lastrowid
-                    break
+                    sites[ab.getSrcDomain()] = rp.lastrowid
                     total+=1
 ##                except:
 ##                    print('Cant get block')
