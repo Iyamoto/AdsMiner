@@ -19,27 +19,32 @@ user = config['MYSQL']['user']
 password = config['MYSQL']['pass']
 database = config['MYSQL']['db']
 
+sites = {}
+urls = {}
+
 #Connect to db
 #db = create_engine('postgresql://'+user+':'+password+'@'+host+'/'+database)
 db = create_engine('mysql+pymysql://'+user+':'+password+'@'+host+'/'+database)
 db.echo = False  # We want to see the SQL we're creating
 metadata = MetaData(db)
 
-# Get all sites
+# Get all sites from db
 sites_table = Table('sites', metadata, autoload=True)
-sel = sites_table.select()
 sites_ins = sites_table.insert()
+sel = sites_table.select()
 rs = sel.execute()
 rows = rs.fetchall()
-
-sites = {}
-urls = {}
-
 for row in rows:
     sites[row[1]] = row[0] # sites[domain]=id
 
+# Get all urls from db
 urls_table = Table('urls', metadata, autoload=True)
 urls_ins = urls_table.insert()
+sel = urls_table.select()
+rs = sel.execute()
+rows = rs.fetchall()
+for row in rows:
+    urls[row[1]] = row[0] # urls[url]=id
     
 json_dir = 'json'
 Category = 1
@@ -73,10 +78,11 @@ for file in os.listdir(json_dir):
                 # 3.Urls (url_id, category_id, site_id, url)
                 # category_id = Category
                 # site_id = sites[ab.getSrcDomain()]
-                url = ab.getSrcUrl().encode('utf-8')
-                rp = urls_ins.execute(category_id=Category, site_id = sites[ab.getSrcDomain()], url = url)
-                urls[ab.getSrcUrl] = rp.lastrowid
-                total+=1
+                if ab.getSrcUrl() not in urls.keys():
+                    url = ab.getSrcUrl().encode('utf-8')
+                    rp = urls_ins.execute(category_id=Category, site_id = sites[ab.getSrcDomain()], url = url)
+                    urls[ab.getSrcUrl()] = rp.lastrowid
+                    total+=1
                 #break
                     
 ##                except:
