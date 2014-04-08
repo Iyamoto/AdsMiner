@@ -2,6 +2,7 @@
 
 import os
 import adsminer
+import configparser
 from sqlalchemy import *
 
 # Read config

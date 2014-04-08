@@ -9,6 +9,7 @@ INSTALL
 <li>aptitude install python3-lxml</li>
 <li>aptitude install curl</li>
 <li>pip-3.2 install PyMySQL</li>
+<li>pip-3.2 install sqlalchemy</li>
 <li>#pip-3.2 install pytidylib6</li>
 <li>#pip-3.2 install chardet</li>
 <li>pip-3.2 install requests</li>
