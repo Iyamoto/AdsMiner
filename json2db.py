@@ -135,9 +135,10 @@ for file in os.listdir(json_dir):
                 for k,v in links.items():
                     land_domain = urlparse(v).netloc.lower()
                     if land_domain not in landdomains.keys():
-                        rp = landdomains_ins.execute(domain=land_domain)
-                        landdomains[land_domain] = rp.lastrowid
-                        total_landdomains+=1
+                        if len(land_domain)>0:
+                            rp = landdomains_ins.execute(domain=land_domain)
+                            landdomains[land_domain] = rp.lastrowid
+                            total_landdomains+=1
 
                 #7.Images (img_id, ad_id, img_url)
                 for img_link in ab.getImgUrls():
