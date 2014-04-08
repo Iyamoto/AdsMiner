@@ -22,7 +22,7 @@ password = config['SQL']['pass']
 database = config['SQL']['db']
 encode = config['SQL']['encode']
 
-if encode == True:
+if encode == 'True':
     def encoding(val):
         return val.encode('utf-8')
 else:
