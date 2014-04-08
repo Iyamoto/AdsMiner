@@ -7,6 +7,7 @@ import codecs
 import re
 import os.path
 import json
+import hashlib
 #from tidylib import tidy_document
 #import chardet
 
@@ -22,6 +23,7 @@ class adblock(object):
         self.Links = {}
         self.LinkCounter = 0
         self.Text = ''
+        self.Hash = ''
         self.TextLen = 0
 
     def addImgUrl(self, e):
@@ -44,14 +46,19 @@ class adblock(object):
         """ Returns text of AdBlock"""
         return self.Text
 
+    def gethash(self):
+        """ Returns hash of AdBlock text"""
+        return self.Hash
+
     def getTextLen(self):
         """ Returns length of the AdBlock text"""
         return self.TextLen
 
     def addText(self, text):
         """ Adds text to AdBlock"""
-        self.Text = text
-        self.TextLen = len(text)
+        self.Text = text.encode('utf-8')
+        self.Hash = hashlib.md5(self.Text).hexdigest()
+        self.TextLen = len(self.Text)
         return
 
     def getLinks(self):

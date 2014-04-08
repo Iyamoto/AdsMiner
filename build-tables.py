@@ -50,12 +50,12 @@ urls_table = Table('urls', metadata,
 )
 urls_table.create()
 
-# 4.Ads (ad_id, url_id, text, time)
+# 4.Ads (ad_id, url_id, text, hash)
 ads_table = Table('ads', metadata,
     Column('id', Integer, primary_key=True),
     Column('url_id', Integer),
     Column('text', Text),                   
-    Column('time', String(255)),
+    Column('hash', String(255)),
 )
 ads_table.create()
 
