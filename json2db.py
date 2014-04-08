@@ -56,7 +56,7 @@ landings_ins = landings_table.insert()
 
 # Inits images table
 images_table = Table('images', metadata, autoload=True)
-images_ins = landings_table.insert()
+images_ins = images_table.insert()
     
 json_dir = 'json'
 Category = 1
