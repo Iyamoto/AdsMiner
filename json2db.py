@@ -98,7 +98,7 @@ for file in os.listdir(json_dir):
 
                 # 4.Ads (ad_id, url_id, text, hash)
                 url_id = urls[ab.getSrcUrl()]
-                text = ab.getText()#.encode('utf-8')
+                text = ab.getText().encode('utf-8')
                 hash = ab.getHash()
                 rp = ads_ins.execute(url_id=url_id, text = text, hash = hash)
                 ad_id = rp.lastrowid
