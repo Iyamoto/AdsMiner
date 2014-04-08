@@ -27,14 +27,21 @@ db.echo = False  # We want to see the SQL we're creating
 metadata = MetaData(db)
 
 # Build tables
-# Category
-categories_table = Table('categories', metadata,
+# Categories
+##categories_table = Table('categories', metadata,
+##    Column('id', Integer, primary_key=True),
+##    Column('name', String(40)),
+##)
+##categories_table.create()
+##ins = categories_table.insert()
+##ins.execute(name='women')
+
+# Sites
+sites_table = Table('sites', metadata,
     Column('id', Integer, primary_key=True),
-    Column('name', String(40)),
+    Column('domain', String(40)),
 )
 categories_table.create()
-ins = categories_table.insert()
-ins.execute(name='women')
 
 # Get all sites
 sites_table = Table('sites', metadata, autoload=True)
