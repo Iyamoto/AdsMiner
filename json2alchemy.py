@@ -61,7 +61,7 @@ for file in os.listdir(json_dir):
                 if ab.getSrcDomain() not in sites.keys():
                     #Insert into the db
                     r = ins.execute(domain=ab.getSrcDomain())
-                    print(r)
+                    print(help(r))
                 
                 break
                 total+=1
