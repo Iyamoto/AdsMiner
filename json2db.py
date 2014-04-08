@@ -69,20 +69,21 @@ for file in os.listdir(json_dir):
                     # Insert into the db.sites
                     rp = sites_ins.execute(domain=ab.getSrcDomain()) #returns ResultProxy
                     sites[ab.getSrcDomain()] = rp.lastrowid
-                    total+=1
+                    
                 # 3.Urls (url_id, category_id, site_id, url)
                 # category_id = Category
                 # site_id = sites[ab.getSrcDomain()]
                 url = ab.getSrcUrl().encode('utf-8')
                 rp = urls_ins.execute(category_id=Category, site_id = sites[ab.getSrcDomain()], url = url)
                 urls[ab.getSrcUrl] = rp.lastrowid
+                total+=1
                 #break
                     
 ##                except:
 ##                    print('Cant get block')
 ##                    continue
 
-print('Total domains inserted: ',  total)
+print('Total urls inserted: ',  total)
 
           
 
