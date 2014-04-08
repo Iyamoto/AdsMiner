@@ -10,7 +10,8 @@ MaxLinks = 8
 Timeout = 5000
 LogFile = log.txt
 
-[MYSQL]
+[SQL]
+driver = mysql+pymysql
 host = 127.0.0.1
 user = user
 pass = pass
