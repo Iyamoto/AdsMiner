@@ -15,7 +15,7 @@ class adblock(object):
     #Ad block (tiser) class
     def __init__(self, url='', id=0):
         """Create an AdBlock"""
-        self.SrcUrl = clearUrl(url).encode('utf-8')
+        self.SrcUrl = clearUrl(url)
         self.SrcDomain = urlparse(self.SrcUrl).netloc.lower()
         self.Id = int(id)
         self.ImgUrls = []
@@ -28,7 +28,6 @@ class adblock(object):
 
     def addImgUrl(self, e):
         """ Adds img url to AdBlock"""
-        e = e.encode('utf-8')
         self.ImgUrls.append(e) # Should I check the url?
         self.ImgCounter+=1
         return
@@ -39,8 +38,6 @@ class adblock(object):
 
     def addLink(self, redirect, landing):
         """ Adds redirect-landing pair urls to AdBlock"""
-        redirect = redirect.encode('utf-8')
-        landing = landing.encode('utf-8')
         self.Links[redirect]=landing
         self.LinkCounter+=1
         return
@@ -59,7 +56,7 @@ class adblock(object):
 
     def addText(self, text):
         """ Adds text to AdBlock"""
-        self.Text = text.encode('utf-8')
+        self.Text = text#.encode('utf-8')
         self.Hash = hashlib.md5(self.Text).hexdigest()
         self.TextLen = len(self.Text)
         return

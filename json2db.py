@@ -91,14 +91,14 @@ for file in os.listdir(json_dir):
                 # category_id = Category
                 # site_id = sites[ab.getSrcDomain()]
                 if ab.getSrcUrl() not in urls.keys():
-                    url = ab.getSrcUrl()
+                    url = ab.getSrcUrl().encode('utf-8')
                     rp = urls_ins.execute(category_id=Category, site_id = sites[ab.getSrcDomain()], url = url)
                     urls[ab.getSrcUrl()] = rp.lastrowid
                     total_urls+=1
 
                 # 4.Ads (ad_id, url_id, text, hash)
                 url_id = urls[ab.getSrcUrl()]
-                text = ab.getText()
+                text = ab.getText()#.encode('utf-8')
                 hash = ab.getHash()
                 rp = ads_ins.execute(url_id=url_id, text = text, hash = hash)
                 ad_id = rp.lastrowid
