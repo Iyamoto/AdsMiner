@@ -60,15 +60,15 @@ for file in os.listdir(json_dir):
                 #Check if domain is already in the db
                 if ab.getSrcDomain() not in sites.keys():
                     #Insert into the db
-                    r = ins.execute(domain=ab.getSrcDomain())
-                    print(r.inserted_primary_key)
+                    rp = ins.execute(domain=ab.getSrcDomain()) #returns ResultProxy
+                    #site_id = rp.lastrowid
                     break
-                total+=1
+                    total+=1
 ##                except:
 ##                    print('Cant get block')
 ##                    continue
 
-print('Total Links found: ',  total)
+print('Total domains inserted: ',  total)
 
           
 
