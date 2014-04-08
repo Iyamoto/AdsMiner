@@ -37,11 +37,11 @@ metadata = MetaData(db)
 ##ins.execute(name='women')
 
 # Sites
-sites_table = Table('sites', metadata,
-    Column('id', Integer, primary_key=True),
-    Column('domain', String(40)),
-)
-categories_table.create()
+##sites_table = Table('sites', metadata,
+##    Column('id', Integer, primary_key=True),
+##    Column('domain', String(40)),
+##)
+##sites_table.create()
 
 # Get all sites
 sites_table = Table('sites', metadata, autoload=True)
