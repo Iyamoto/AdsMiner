@@ -37,7 +37,7 @@ ins.execute(name='women')
 # 2.Sites (site_id, domain)
 sites_table = Table('sites', metadata,
     Column('id', Integer, primary_key=True),
-    Column('domain', String(80)),
+    Column('domain', String(255)),
 )
 sites_table.create()
 
@@ -46,7 +46,7 @@ urls_table = Table('urls', metadata,
     Column('id', Integer, primary_key=True),
     Column('category_id', Integer),
     Column('site_id', Integer),                   
-    Column('url', String(255)),
+    Column('url', Text),
 )
 urls_table.create()
 
@@ -64,8 +64,8 @@ landings_table = Table('landings', metadata,
     Column('id', Integer, primary_key=True),
     Column('ad_id', Integer),
     Column('url_id', Integer),
-    Column('src_url', String(255)),                       
-    Column('land_url', String(255)),                   
+    Column('src_url', Text),                       
+    Column('land_url', Text),                   
     Column('time', String(255)),
 )
 landings_table.create()
@@ -73,7 +73,7 @@ landings_table.create()
 # 6.Landdomains(land_id, domain)
 landdomains_table = Table('landdomains', metadata,
     Column('id', Integer, primary_key=True),
-    Column('domain', String(80)),
+    Column('domain', String(255)),
 )
 landdomains_table.create()
 
@@ -81,7 +81,7 @@ landdomains_table.create()
 images_table = Table('images', metadata,
     Column('id', Integer, primary_key=True),
     Column('ad_id', Integer),                
-    Column('img_url', String(255)),
+    Column('img_url', Text),
 )
 images_table.create()
 
