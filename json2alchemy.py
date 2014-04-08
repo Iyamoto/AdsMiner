@@ -22,16 +22,19 @@ database = config['MYSQL']['db']
 #Connect to db
 #engine = create_engine('postgresql://scott:tiger@localhost:5432/mydatabase')
 db = create_engine('mysql+pymysql://'+user+':'+password+'@'+host+'/'+database)
-
-db.echo = True  # We want to see the SQL we're creating
+db.echo = False  # We want to see the SQL we're creating
 metadata = MetaData(db)
-#metadata = BoundMetaData(db)
 
-sites = Table('sites', metadata, autoload=True)
-s = sites.select()
+# Get all sites
+sites_table = Table('sites', metadata, autoload=True)
+s = sites_table.select()
 rs = s.execute()
-row = rs.fetchone()
-print(row)
+rows = rs.fetchall()
+
+sites = {}
+for row in rows:
+    sites[row[1]] = row[0] # sites[domain]=id
+print(sites)
 
 ##conn = adsmysql.init_mysqldb()
 ##write2db = adsmysql.write2mysql
