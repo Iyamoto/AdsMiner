@@ -46,7 +46,7 @@ class adblock(object):
         """ Returns text of AdBlock"""
         return self.Text
 
-    def gethash(self):
+    def getHash(self):
         """ Returns hash of AdBlock text"""
         return self.Hash
 
