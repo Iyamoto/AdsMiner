@@ -57,7 +57,7 @@ class adblock(object):
     def addText(self, text):
         """ Adds text to AdBlock"""
         self.Text = text#.encode('utf-8')
-        self.Hash = hashlib.md5(self.Text).hexdigest()
+        self.Hash = hashlib.md5(self.Text.encode('utf-8')).hexdigest()
         self.TextLen = len(self.Text)
         return
 
