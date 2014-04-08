@@ -19,7 +19,7 @@ database = config['MYSQL']['db']
 
 
 #Connect to db
-#engine = create_engine('postgresql://'+user+':'+password+'@'+host+'/'+database)
+#db = create_engine('postgresql://'+user+':'+password+'@'+host+'/'+database)
 db = create_engine('mysql+pymysql://'+user+':'+password+'@'+host+'/'+database)
 db.echo = False  # We want to see the SQL we're creating
 metadata = MetaData(db)
