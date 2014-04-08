@@ -3,6 +3,7 @@
 
 import os
 import adsminer
+from urllib.parse import urlparse
 import configparser
 from sqlalchemy import *
 
@@ -21,6 +22,7 @@ database = config['MYSQL']['db']
 
 sites = {}
 urls = {}
+landdomains = {}
 
 #Connect to db
 #db = create_engine('postgresql://'+user+':'+password+'@'+host+'/'+database)
@@ -54,6 +56,15 @@ ads_ins = ads_table.insert()
 landings_table = Table('landings', metadata, autoload=True)
 landings_ins = landings_table.insert()
 
+# Get all land domains from db
+landdomains_table = Table('landdomains', metadata, autoload=True)
+landdomains_ins = landdomains_table.insert()
+sel = landdomains_table.select()
+rs = sel.execute()
+rows = rs.fetchall()
+for row in rows:
+    landdomains[row[1]] = row[0] # landdomains[domain]=id
+
 # Inits images table
 images_table = Table('images', metadata, autoload=True)
 images_ins = images_table.insert()
@@ -65,6 +76,7 @@ total_sites = 0
 total_urls = 0
 total_ads = 0
 total_landings = 0
+total_landdomains = 0
 total_images = 0
 for file in os.listdir(json_dir):
     if file.endswith('.txt'):
@@ -108,7 +120,6 @@ for file in os.listdir(json_dir):
                 rp = ads_ins.execute(url_id=url_id, text = text, hash = hash)
                 ad_id = rp.lastrowid
                 total_ads+=1
-                #break
 
                 # 5.Landings (land_id, ad_id, url_id, src_url, land_url, time)
                 url_id = urls[ab.getSrcUrl()]
@@ -120,8 +131,13 @@ for file in os.listdir(json_dir):
                     rp = landings_ins.execute(ad_id=ad_id, url_id=url_id, src_url=src_url, land_url=land_url, time=time)
                     total_landings+=1
 
-                #6.(land_id, landing_domain)
-
+                #6.LandDomains (landdomain_id, landing_domain)
+                for k,v in links.items():
+                    land_domain = urlparse(v).netloc.lower()
+                    if land_domain not in landdomains.keys():
+                        rp = landdomains_ins.execute(landing_domain=land_domain)
+                        landdomains[land_domain] = rp.lastrowid
+                        total_landdomains+=1
 
                 #7.Images (img_id, ad_id, img_url)
                 for img_link in ab.getImgUrls():
@@ -137,6 +153,7 @@ print('Total sites inserted: ',  total_sites)
 print('Total urls inserted: ',  total_urls)
 print('Total ads inserted: ',  total_ads)
 print('Total landings inserted: ',  total_landings)
+print('Total land domains inserted: ',  total_landdomains)
 print('Total images inserted: ',  total_images)
 
           

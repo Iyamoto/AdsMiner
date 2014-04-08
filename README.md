@@ -59,7 +59,7 @@ INFO
 3.Urls (url_id, category_id, site_id, url)
 4.Ads (ad_id, url_id, text, hash)
 5.Landings (land_id, ad_id, url_id, src_url, land_url, time)
-6.(land_id, landing_domain)
+6.LandDomains (landdomain_id, landing_domain)
 7.Images (img_id, ad_id, img_url)
 
 
