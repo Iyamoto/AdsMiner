@@ -53,6 +53,10 @@ ads_ins = ads_table.insert()
 # Inits landings table
 landings_table = Table('landings', metadata, autoload=True)
 landings_ins = landings_table.insert()
+
+# Inits images table
+images_table = Table('images', metadata, autoload=True)
+images_ins = landings_table.insert()
     
 json_dir = 'json'
 Category = 1
@@ -61,6 +65,7 @@ total_sites = 0
 total_urls = 0
 total_ads = 0
 total_landings = 0
+total_images = 0
 for file in os.listdir(json_dir):
     if file.endswith('.txt'):
         print('Reading json file: ',file)
@@ -115,6 +120,15 @@ for file in os.listdir(json_dir):
                     rp = landings_ins.execute(ad_id=ad_id, url_id=url_id, src_url=src_url, land_url=land_url, time=time)
                     total_landings+=1
 
+                #6.(land_id, landing_domain)
+
+
+                #7.Images (img_id, ad_id, img_url)
+                img_links = ab.ImgUrls()
+                for img_link in img_links:
+                    img_url = img_link.encode('utf-8')
+                    rp = landings_ins.execute(ad_id=ad_id, img_url=img_url)
+                    total_images+=1
                                       
 ##                except:
 ##                    print('Cant get block')
@@ -124,6 +138,7 @@ print('Total sites inserted: ',  total_sites)
 print('Total urls inserted: ',  total_urls)
 print('Total ads inserted: ',  total_ads)
 print('Total landings inserted: ',  total_landings)
+print('Total images inserted: ',  total_images)
 
           
 
