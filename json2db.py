@@ -21,7 +21,6 @@ database = config['MYSQL']['db']
 
 sites = {}
 urls = {}
-ads = {}
 
 #Connect to db
 #db = create_engine('postgresql://'+user+':'+password+'@'+host+'/'+database)
