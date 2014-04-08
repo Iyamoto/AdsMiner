@@ -101,7 +101,8 @@ for file in os.listdir(json_dir):
                 if ab.getSrcDomain() not in sites.keys():
                     # Insert into the db.sites
                     rp = sites_ins.execute(domain=ab.getSrcDomain()) #returns ResultProxy
-                    sites[ab.getSrcDomain()] = rp.lastrowid
+                    #sites[ab.getSrcDomain()] = rp.lastrowid
+                    sites[ab.getSrcDomain()] = rp.inserted_primary_key
                     total_sites+=1
                     
                 # 3.Urls (url_id, category_id, site_id, url)
@@ -110,7 +111,8 @@ for file in os.listdir(json_dir):
                 if ab.getSrcUrl() not in urls.keys():
                     url = ab.getSrcUrl().encode('utf-8')
                     rp = urls_ins.execute(category_id=Category, site_id = sites[ab.getSrcDomain()], url = url)
-                    urls[ab.getSrcUrl()] = rp.lastrowid
+                    #urls[ab.getSrcUrl()] = rp.lastrowid
+                    urls[ab.getSrcUrl()] = rp.inserted_primary_key
                     total_urls+=1
 
                 # 4.Ads (ad_id, url_id, text, hash)
@@ -118,7 +120,8 @@ for file in os.listdir(json_dir):
                 text = ab.getText().encode('utf-8')
                 hash = ab.getHash()
                 rp = ads_ins.execute(url_id=url_id, text = text, hash = hash)
-                ad_id = rp.lastrowid
+                #ad_id = rp.lastrowid
+                ad_id = rp.inserted_primary_key
                 total_ads+=1
 
                 # 5.Landings (land_id, ad_id, url_id, src_url, land_url, time)
@@ -137,7 +140,8 @@ for file in os.listdir(json_dir):
                     if land_domain not in landdomains.keys():
                         if len(land_domain)>0:
                             rp = landdomains_ins.execute(domain=land_domain)
-                            landdomains[land_domain] = rp.lastrowid
+                            #landdomains[land_domain] = rp.lastrowid
+                            landdomains[land_domain] = rp.inserted_primary_key
                             total_landdomains+=1
 
                 #7.Images (img_id, ad_id, img_url)

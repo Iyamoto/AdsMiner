@@ -22,6 +22,8 @@ TODO
 add graber to cron
 add bot master to cron
 
+check locale
+
 add blacklist support for grab.parser
 
 replace urllib with requests?
