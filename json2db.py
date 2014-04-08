@@ -109,7 +109,9 @@ for file in os.listdir(json_dir):
                 url_id = urls[ab.getSrcUrl()]
                 time = ''
                 links = ab.getLinks()
-                for src_url,land_url in links.items():
+                for k,v in links.items():
+                    src_url = k.encode('utf-8')
+                    land_url = v.encode('utf-8')
                     rp = landings_ins.execute(ad_id=ad_id, url_id=url_id, src_url=src_url, land_url=land_url, time=time)
                     total_landings+=1
 
