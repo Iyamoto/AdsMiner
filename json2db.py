@@ -28,15 +28,21 @@ metadata = MetaData(db)
 # Get all sites
 sites_table = Table('sites', metadata, autoload=True)
 sel = sites_table.select()
-ins = sites_table.insert()
+sites_ins = sites_table.insert()
 rs = sel.execute()
 rows = rs.fetchall()
 
 sites = {}
+urls = {}
+
 for row in rows:
     sites[row[1]] = row[0] # sites[domain]=id
+
+urls_table = Table('urls', metadata, autoload=True)
+urls_ins = urls_table.insert()
     
 json_dir = 'json'
+Category = 1
 
 total = 0
 for file in os.listdir(json_dir):
@@ -47,6 +53,7 @@ for file in os.listdir(json_dir):
             data = adsminer.readJson(json_path)
             for block in data:
 ##                try:
+                # Forming adblock object
                 ab = adsminer.adblock(block[0],block[1])
                 for img in block[3]:
                     ab.addImgUrl(img)
@@ -55,12 +62,22 @@ for file in os.listdir(json_dir):
                     ab.addLink(link, block[5][i])
                     i+=1
                 ab.addText(block[4])
-                #Check if domain is already in the db
+                # Inserting adblock data int to db
+                # 2.Sites (site_id, domain)
+                # Check if domain is already in db
                 if ab.getSrcDomain() not in sites.keys():
-                    #Insert into the db.sites
-                    rp = ins.execute(domain=ab.getSrcDomain()) #returns ResultProxy
+                    # Insert into the db.sites
+                    rp = sites_ins.execute(domain=ab.getSrcDomain()) #returns ResultProxy
                     sites[ab.getSrcDomain()] = rp.lastrowid
                     total+=1
+                # 3.Urls (url_id, category_id, site_id, url)
+                # category_id = Category
+                # site_id = sites[ab.getSrcDomain()]
+                # url = ab.getSrcUrl
+                rp = urls_ins.execute(category_id=Category, site_id = sites[ab.getSrcDomain()], url = ab.getSrcUrl)
+                urls[ab.getSrcUrl] = rp.lastrowid
+                break
+                    
 ##                except:
 ##                    print('Cant get block')
 ##                    continue
