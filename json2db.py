@@ -47,14 +47,13 @@ rows = rs.fetchall()
 for row in rows:
     urls[row[3]] = row[0] # urls[url]=id
 
-# Get all ads from db
+# Inits ads table
 ads_table = Table('ads', metadata, autoload=True)
 ads_ins = ads_table.insert()
-##sel = ads_table.select()
-##rs = sel.execute()
-##rows = rs.fetchall()
-##for row in rows:
-##    urls[row[3]] = row[0] # urls[url]=id    
+
+# Inits landings table
+landings_table = Table('landings', metadata, autoload=True)
+landings_ins = landings_table.insert()
     
 json_dir = 'json'
 Category = 1
@@ -62,6 +61,7 @@ Category = 1
 total_sites = 0
 total_urls = 0
 total_ads = 0
+total_landings = 0
 for file in os.listdir(json_dir):
     if file.endswith('.txt'):
         print('Reading json file: ',file)
@@ -92,7 +92,7 @@ for file in os.listdir(json_dir):
                 # category_id = Category
                 # site_id = sites[ab.getSrcDomain()]
                 if ab.getSrcUrl() not in urls.keys():
-                    url = ab.getSrcUrl().encode('utf-8')
+                    url = ab.getSrcUrl()
                     rp = urls_ins.execute(category_id=Category, site_id = sites[ab.getSrcDomain()], url = url)
                     urls[ab.getSrcUrl()] = rp.lastrowid
                     total_urls+=1
@@ -102,10 +102,19 @@ for file in os.listdir(json_dir):
                 text = ab.getText()
                 hash = ab.getHash()
                 rp = ads_ins.execute(url_id=url_id, text = text, hash = hash)
-                #urls[ab.getHash()] = rp.lastrowid
+                ad_id = rp.lastrowid
                 total_ads+=1
                 #break
-                    
+
+                # 5.Landings (land_id, ad_id, url_id, src_url, land_url, time)
+                url_id = urls[ab.getSrcUrl()]
+                time = ''
+                links = ab.getLinks()
+                for src_url,land_url in links.items():
+                    rp = landings_ins.execute(ad_id=ad_id, url_id=url_id, src_url=src_url, land_url=land_url, time=time)
+                    total_landings+=1
+
+                                      
 ##                except:
 ##                    print('Cant get block')
 ##                    continue
@@ -113,6 +122,7 @@ for file in os.listdir(json_dir):
 print('Total sites inserted: ',  total_sites)
 print('Total urls inserted: ',  total_urls)
 print('Total ads inserted: ',  total_ads)
+print('Total landings inserted: ',  total_landings)
 
           
 
