@@ -1,4 +1,5 @@
 # AdsMiner: Adblocks from json to mysql
+# http://docs.sqlalchemy.org/en/rel_0_9/core/connections.html#sqlalchemy.engine.ResultProxy
 
 import os
 import adsminer
@@ -25,6 +26,16 @@ db = create_engine('mysql+pymysql://'+user+':'+password+'@'+host+'/'+database)
 db.echo = False  # We want to see the SQL we're creating
 metadata = MetaData(db)
 
+# Build tables
+# Category
+categories_table = Table('categories', metadata,
+    Column('id', Integer, primary_key=True),
+    Column('name', String(40)),
+)
+categories_table.create()
+ins = categories_table.insert()
+ins.execute(name='women')
+
 # Get all sites
 sites_table = Table('sites', metadata, autoload=True)
 sel = sites_table.select()
@@ -35,7 +46,6 @@ rows = rs.fetchall()
 sites = {}
 for row in rows:
     sites[row[1]] = row[0] # sites[domain]=id
-print(sites)
 
     
 json_dir = 'json'
