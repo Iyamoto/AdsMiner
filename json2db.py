@@ -76,7 +76,7 @@ for file in os.listdir(json_dir):
                 url = ab.getSrcUrl().encode('utf-8')
                 rp = urls_ins.execute(category_id=Category, site_id = sites[ab.getSrcDomain()], url = url)
                 urls[ab.getSrcUrl] = rp.lastrowid
-                break
+                #break
                     
 ##                except:
 ##                    print('Cant get block')
