@@ -49,7 +49,8 @@ for row in rows:
 json_dir = 'json'
 Category = 1
 
-total = 0
+total_sites = 0
+total_urls = 0
 for file in os.listdir(json_dir):
     if file.endswith('.txt'):
         print('Reading json file: ',file)
@@ -74,6 +75,7 @@ for file in os.listdir(json_dir):
                     # Insert into the db.sites
                     rp = sites_ins.execute(domain=ab.getSrcDomain()) #returns ResultProxy
                     sites[ab.getSrcDomain()] = rp.lastrowid
+                    total_sites+=1
                     
                 # 3.Urls (url_id, category_id, site_id, url)
                 # category_id = Category
@@ -82,14 +84,15 @@ for file in os.listdir(json_dir):
                     url = ab.getSrcUrl().encode('utf-8')
                     rp = urls_ins.execute(category_id=Category, site_id = sites[ab.getSrcDomain()], url = url)
                     urls[ab.getSrcUrl()] = rp.lastrowid
-                    total+=1
+                    total_urls+=1
                 #break
                     
 ##                except:
 ##                    print('Cant get block')
 ##                    continue
 
-print('Total urls inserted: ',  total)
+print('Total sites inserted: ',  total_sites)
+print('Total urls inserted: ',  total_urls)
 
           
 
