@@ -1,0 +1,9 @@
+﻿SELECT * FROM `landings` WHERE `land_url` LIKE '%ref%'
+SELECT * FROM `landings` WHERE `land_url` LIKE '%partner%'
+
+
+select * from `urls` where `id` in
+(SELECT `url_id` FROM `landings` WHERE `land_domain_id` = 1 )
+
+select * from `ads` where `id` in
+(SELECT `ad_id` FROM `landings` WHERE `land_domain_id` = 1 )
