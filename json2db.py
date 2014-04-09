@@ -122,9 +122,9 @@ for file in os.listdir(json_dir):
                 links = ab.getLinks()                    
                 for k,v in links.items():
                     land_domain = urlparse(v).netloc.lower()
-                    if land_domain not in landdomains.keys():
-                        if len(land_domain)==0:
+                    if len(land_domain)==0:
                             land_domain = 'none'
+                    if land_domain not in landdomains.keys():
                         rp = landdomains_ins.execute(domain=land_domain)
                         landdomains[land_domain] = rp.inserted_primary_key[0]
                         total_landdomains+=1                    
