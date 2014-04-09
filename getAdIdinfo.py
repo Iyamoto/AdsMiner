@@ -38,7 +38,7 @@ else:
         return val
         
 #Connect to db
-db = create_engine(driver+'://'+user+':'+password+'@'+host+'/'+database)
+db = create_engine(driver+'://'+user+':'+password+'@'+host+'/'+database+'?charset=utf8')
 db.echo = False
 metadata = MetaData(db)
 metadata.reflect()
