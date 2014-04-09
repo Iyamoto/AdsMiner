@@ -1,25 +1,24 @@
 ﻿Filter landings:
-SELECT * FROM `landings` WHERE `land_url` LIKE '%ref%'
-SELECT * FROM `landings` WHERE `land_url` LIKE '%partner%'
+SELECT * FROM landings WHERE land_url LIKE '%ref%'
+SELECT * FROM landings WHERE land_url LIKE '%partner%'
 
 Get all urls where found ads to land domain:
-select * from `urls` where `id` in
-(SELECT `url_id` FROM `landings` WHERE `land_domain_id` = 1 )
+select * from urls where id in
+(SELECT url_id FROM landings WHERE land_domain_id = 1 )
 
 Get all urls where found ads to ad domain:
-select * from `urls` where `id` in
-(SELECT `url_id` FROM `landings` WHERE `ad_domain_id` = 1 )
+select * from urls where id in
+(SELECT url_id FROM landings WHERE ad_domain_id = 1 )
 
 Get all ad texts for land domain:
-select * from `ads` where `id` in
-(SELECT `ad_id` FROM `landings` WHERE `land_domain_id` = 1 )
+select * from ads where id in
+(SELECT ad_id FROM landings WHERE land_domain_id = 1 )
 
 Get all ad texts for ad domain:
-select * from `ads` where `id` in
-(SELECT `ad_id` FROM `landings` WHERE `ad_domain_id` = 1 )
+select * from ads where id in (SELECT ad_id FROM landings WHERE ad_domain_id = 1 )
 
-select * from `ads` where `id` in
-(SELECT `ad_id` FROM `landings` WHERE `src_url` LIKE '%domain.ru%')
+select * from ads where id in
+(SELECT ad_id FROM landings WHERE src_url LIKE '%domain.ru%')
 
 Get all ad links for ad domain
 SELECT src_url FROM landings WHERE ad_domain_id = 1
