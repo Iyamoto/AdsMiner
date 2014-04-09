@@ -61,9 +61,10 @@ INFO
 <li>2.Sites (site_id, domain)</li>
 <li>3.Urls (url_id, category_id, site_id, url)</li>
 <li>4.Ads (ad_id, url_id, text, hash)</li>
-<li>5.Landings (land_id, ad_id, url_id, src_url, land_url, land_domain_id)</li>
+<li>5.Landings (land_id, ad_id, url_id, src_url, land_url, land_domain_id, ad_domain_id)</li>
 <li>6.LandDomains (land_domain_id, landing_domain)</li>
 <li>7.Images (img_id, ad_id, img_url)</li>
+<li>8.AdDomains (ad_domain_id, ad_domain)</li>
 </ol>
 
 

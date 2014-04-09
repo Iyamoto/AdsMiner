@@ -72,6 +72,7 @@ landings_table = Table('landings', metadata,
     Column('src_url', Text),                       
     Column('land_url', Text),                   
     Column('land_domain_id', Integer),
+    Column('ad_domain_id', Integer),
 )
 landings_table.create()
 
@@ -89,5 +90,12 @@ images_table = Table('images', metadata,
     Column('img_url', Text),
 )
 images_table.create()
+
+# 8.AdDomains (ad_domain_id, ad_domain)
+addomains_table = Table('addomains', metadata,
+    Column('id', Integer, primary_key=True),
+    Column('domain', String(255)),
+)
+addomains_table.create()
 
 

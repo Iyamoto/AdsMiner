@@ -32,6 +32,7 @@ else:
 sites = {}
 urls = {}
 landdomains = {}
+addomains = {}
 
 #Connect to db
 db = create_engine(driver+'://'+user+':'+password+'@'+host+'/'+database)
@@ -73,6 +74,16 @@ rows = rs.fetchall()
 for row in rows:
     landdomains[row[1]] = row[0] # landdomains[domain]=id
 
+# Get all ad domains from db
+addomains_table = Table('addomains', metadata, autoload=True)
+addomains_ins = addomains_table.insert()
+sel = addomains_table.select()
+rs = sel.execute()
+rows = rs.fetchall()
+for row in rows:
+    addomains[row[1]] = row[0] # addomains[domain]=id
+    
+
 # Inits images table
 images_table = Table('images', metadata, autoload=True)
 images_ins = images_table.insert()
@@ -85,6 +96,7 @@ total_urls = 0
 total_ads = 0
 total_landings = 0
 total_landdomains = 0
+total_addomains = 0
 total_images = 0
 for file in os.listdir(json_dir):
     if file.endswith('.txt'):
@@ -118,7 +130,7 @@ for file in os.listdir(json_dir):
                     urls[ab.getSrcUrl()] = rp.inserted_primary_key[0]
                     total_urls+=1
 
-                #6.LandDomains (landdomain_id, domain)
+                # 6.LandDomains (landdomain_id, domain)
                 links = ab.getLinks()                    
                 for k,v in links.items():
                     land_domain = urlparse(v).netloc.lower()
@@ -127,7 +139,18 @@ for file in os.listdir(json_dir):
                     if land_domain not in landdomains.keys():
                         rp = landdomains_ins.execute(domain=land_domain)
                         landdomains[land_domain] = rp.inserted_primary_key[0]
-                        total_landdomains+=1                    
+                        total_landdomains+=1
+                        
+                # 8.AdDomains (ad_domain_id, ad_domain)
+                links = ab.getLinks()                    
+                for k,v in links.items():
+                    ad_domain = urlparse(k).netloc.lower()
+                    if len(ad_domain)==0:
+                            ad_domain = 'none'
+                    if ad_domain not in addomains.keys():
+                        rp = addomains_ins.execute(domain=ad_domain)
+                        addomains[ad_domain] = rp.inserted_primary_key[0]
+                        total_addomains+=1                         
 
                 # 4.Ads (ad_id, url_id, text, hash)
                 url_id = urls[ab.getSrcUrl()]
@@ -146,13 +169,17 @@ for file in os.listdir(json_dir):
                     src_url =  encoding(k)
                     land_url =  encoding(v)
                     land_domain = urlparse(v).netloc.lower()
+                    ad_domain = urlparse(k).netloc.lower()
                     if len(land_domain)==0:
                         land_domain = 'none'
+                    if len(ad_domain)==0:
+                        ad_domain = 'none'
                     land_domain_id = landdomains[land_domain]
-                    rp = landings_ins.execute(ad_id=ad_id, url_id=url_id, src_url=src_url, land_url=land_url, land_domain_id=land_domain_id)
+                    ad_domain_id = addomains[ad_domain]
+                    rp = landings_ins.execute(ad_id=ad_id, url_id=url_id, src_url=src_url, land_url=land_url, land_domain_id=land_domain_id, ad_domain_id=ad_domain_id)
                     total_landings+=1
 
-                #7.Images (img_id, ad_id, img_url)
+                # 7.Images (img_id, ad_id, img_url)
                 for img_link in ab.getImgUrls():
                     img_url =  encoding(img_link)
                     rp = images_ins.execute(ad_id=ad_id, img_url=img_url)
@@ -167,6 +194,7 @@ print('Total urls inserted: ',  total_urls)
 print('Total ads inserted: ',  total_ads)
 print('Total landings inserted: ',  total_landings)
 print('Total land domains inserted: ',  total_landdomains)
+print('Total Ad domains inserted: ',  total_addomains)
 print('Total images inserted: ',  total_images)
 
           
