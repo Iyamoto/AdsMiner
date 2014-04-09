@@ -148,6 +148,7 @@ for file in os.listdir(json_dir):
                     if len(ad_domain)==0:
                             ad_domain = 'none'
                     if ad_domain not in addomains.keys():
+                        ad_domain = encoding(ad_domain)
                         rp = addomains_ins.execute(domain=ad_domain)
                         addomains[ad_domain] = rp.inserted_primary_key[0]
                         total_addomains+=1                         
