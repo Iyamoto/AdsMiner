@@ -23,6 +23,7 @@ database = config['SQL']['db']
 db = create_engine(driver+'://'+user+':'+password+'@'+host+'/'+database)
 db.echo = False  # We want to see the SQL we're creating
 metadata = MetaData(db)
+metadata.drop_all()
 
 # Build tables
 # 1.Categories (category_id, name)
