@@ -64,7 +64,7 @@ ads_table = Table('ads', metadata,
 )
 ads_table.create()
 
-# 5.Landings (land_id, ad_id, url_id, src_url, land_url, land_domain_id)
+# 5.Landings (land_id, ad_id, url_id, src_url, land_url, land_domain_id, ad_domain_id)
 landings_table = Table('landings', metadata,
     Column('id', Integer, primary_key=True),
     Column('ad_id', Integer),

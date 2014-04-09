@@ -43,9 +43,18 @@ else:
 db = create_engine(driver+'://'+user+':'+password+'@'+host+'/'+database)
 db.echo = False  # We want to see the SQL we're creating
 metadata = MetaData(db)
+metadata.reflect()
 
 addomains_table = Table('addomains', metadata, autoload=True)
+landings_table = Table('landings', metadata, autoload=True)
 
-s = addomains_table.select(users.c.id == 1)
+s = select([addomains_table.c.id, addomains_table.c.domain, \
+func.count(landings_table.c.ad_domain_id)], \
+from_obj=[addomains_table.join(landings_table,\
+landings_table.c.ad_domain_id == addomains_table.c.id)]).\
+group_by(landings_table.c.ad_domain_id).\
+order_by(func.count(landings_table.c.ad_domain_id).desc()).\
+limit(20)
+
 run(s)
 
