@@ -6,17 +6,27 @@ Get all urls where found ads to land domain:
 select * from `urls` where `id` in
 (SELECT `url_id` FROM `landings` WHERE `land_domain_id` = 1 )
 
+Get all urls where found ads to ad domain:
+select * from `urls` where `id` in
+(SELECT `url_id` FROM `landings` WHERE `ad_domain_id` = 1 )
+
 Get all ad texts for land domain:
 select * from `ads` where `id` in
 (SELECT `ad_id` FROM `landings` WHERE `land_domain_id` = 1 )
 
-Count and sort land urls:
+Get all ad texts for ad domain:
+select * from `ads` where `id` in
+(SELECT `ad_id` FROM `landings` WHERE `ad_domain_id` = 1 )
+
+TOP land urls:
 SELECT land_url, count(land_url) from landings group by land_url order by count(land_url) desc
 
-Count and sort land domains:
+TOP land domains:
 SELECT landdomains.id, landdomains.domain, count(land_domain_id) from landings inner join landdomains
  on landings.land_domain_id = landdomains.id
  group by land_domain_id order by count(land_domain_id) desc
 
-TOP ad networks??? src domains needed?
-SELECT src_url, count(src_url) from landings group by src_url order by count(src_url) desc
+TOP ad networks:
+SELECT addomains.id, addomains.domain, count(ad_domain_id) from landings inner join addomains
+ on landings.ad_domain_id = addomains.id
+ group by ad_domain_id order by count(ad_domain_id) desc
