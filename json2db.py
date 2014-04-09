@@ -180,7 +180,7 @@ for file in os.listdir(json_dir):
                     land_domain_id = landdomains[land_domain]
                     try:
                         ad_domain_id = addomains[ad_domain]
-                    except
+                    except:
                         ad_domain_id = addomains['none']
                     rp = landings_ins.execute(ad_id=ad_id, url_id=url_id, src_url=src_url, land_url=land_url, land_domain_id=land_domain_id, ad_domain_id=ad_domain_id)
                     total_landings+=1
