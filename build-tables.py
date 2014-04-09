@@ -19,10 +19,13 @@ password = config['SQL']['pass']
 database = config['SQL']['db']
 
 
-#Connect to db
+# Connect to db
 db = create_engine(driver+'://'+user+':'+password+'@'+host+'/'+database)
 db.echo = False  # We want to see the SQL we're creating
 metadata = MetaData(db)
+
+# Drops all tables before creating
+metadata.reflect()
 metadata.drop_all()
 
 # Build tables
