@@ -1,8 +1,4 @@
 # AdsMiner: Gets info about ad domain id from db
-##select * from urls where id in
-##(SELECT url_id FROM landings WHERE ad_domain_id = 1)
-##select * from ads where id in
-##(SELECT ad_id FROM landings WHERE ad_domain_id = 1)
 
 import os
 import sys
@@ -48,16 +44,12 @@ metadata.reflect()
 ##urls_table = Table('urls', metadata, autoload=True)
 
 id = int(sys.argv[1])
-##s = text("""select * from urls where id in
-##(SELECT url_id FROM landings WHERE ad_domain_id = :x)""")
-s = text("""select url from urls inner join landings on landings.url_id=urls.id where landings.ad_domain_id=:x""")
+s = text("""select distinct url from urls inner join landings on urls.id=landings.url_id where landings.ad_domain_id=:x""")
 rows = db.execute(s,x=id).fetchall()
 for row in rows:
      print(row[0])
-assert False
-##s = text("""select * from ads where id in
-##(SELECT ad_id FROM landings WHERE ad_domain_id = :x)""")
-dss = text("""select text from ads inner join landings on landings.ad_id=ads.id where landings.ad_domain_id=:x""")
+
+dss = text("""select distinct text from ads inner join landings on landings.ad_id=ads.id where landings.ad_domain_id=:x""")
 rows = db.execute(s,x=id).fetchall()
 for row in rows:
      print(row[2])
