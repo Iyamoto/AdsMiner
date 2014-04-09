@@ -56,13 +56,15 @@ INFO
  zip and send results
 
 <h2>Tables</h2>
-1.Categories (category_id, name)
-2.Sites (site_id, domain)
-3.Urls (url_id, category_id, site_id, url)
-4.Ads (ad_id, url_id, text, hash)
-5.Landings (land_id, ad_id, url_id, src_url, land_url, time)
-6.LandDomains (landdomain_id, landing_domain)
-7.Images (img_id, ad_id, img_url)
+<ol>
+<li>1.Categories (category_id, name)</li>
+<li>2.Sites (site_id, domain)</li>
+<li>3.Urls (url_id, category_id, site_id, url)</li>
+<li>4.Ads (ad_id, url_id, text, hash)</li>
+<li>5.Landings (land_id, ad_id, url_id, src_url, land_url, land_domain_id)</li>
+<li>6.LandDomains (land_domain_id, landing_domain)</li>
+<li>7.Images (img_id, ad_id, img_url)</li>
+</ol>
 
 
 
