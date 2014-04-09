@@ -27,6 +27,7 @@ metadata = MetaData(db)
 # Drops all tables before creating
 metadata.reflect()
 metadata.drop_all()
+metadata.clear()
 
 # Build tables
 # 1.Categories (category_id, name)

@@ -123,10 +123,11 @@ for file in os.listdir(json_dir):
                 for k,v in links.items():
                     land_domain = urlparse(v).netloc.lower()
                     if land_domain not in landdomains.keys():
-                        if len(land_domain)>0:
-                            rp = landdomains_ins.execute(domain=land_domain)
-                            landdomains[land_domain] = rp.inserted_primary_key[0]
-                            total_landdomains+=1                    
+                        if len(land_domain)==0:
+                            land_domain = 'none'
+                        rp = landdomains_ins.execute(domain=land_domain)
+                        landdomains[land_domain] = rp.inserted_primary_key[0]
+                        total_landdomains+=1                    
 
                 # 4.Ads (ad_id, url_id, text, hash)
                 url_id = urls[ab.getSrcUrl()]
@@ -145,6 +146,8 @@ for file in os.listdir(json_dir):
                     src_url =  encoding(k)
                     land_url =  encoding(v)
                     land_domain = urlparse(v).netloc.lower()
+                    if len(land_domain)==0:
+                        land_domain = 'none'
                     land_domain_id = landdomains[land_domain]
                     rp = landings_ins.execute(ad_id=ad_id, url_id=url_id, src_url=src_url, land_url=land_url, land_domain_id=land_domain_id)
                     total_landings+=1
