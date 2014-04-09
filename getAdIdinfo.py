@@ -52,13 +52,13 @@ s = text("""select * from urls where id in
 (SELECT url_id FROM landings WHERE ad_domain_id = :x)""")
 rows = db.execute(s,x=id).fetchall()
 for row in rows:
-     print(row)
+     print(row[4])
 
 s = text("""select * from ads where id in
 (SELECT ad_id FROM landings WHERE ad_domain_id = :x)""")
 rows = db.execute(s,x=id).fetchall()
 for row in rows:
-     print(row)
+     print(row[2])
 
 
 
