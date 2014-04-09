@@ -1,6 +1,8 @@
 # AdsMiner: Gets info about ad domain id from db
 ##select * from urls where id in
-##(SELECT url_id FROM landings WHERE ad_domain_id = 1 )
+##(SELECT url_id FROM landings WHERE ad_domain_id = 1)
+##select * from ads where id in
+##(SELECT ad_id FROM landings WHERE ad_domain_id = 1)
 
 import os
 import sys
@@ -51,4 +53,13 @@ s = text("""select * from urls where id in
 rows = db.execute(s,x=id).fetchall()
 for row in rows:
      print(row)
+
+s = text("""select * from ads where id in
+(SELECT ad_id FROM landings WHERE ad_domain_id = :x)""")
+rows = db.execute(s,x=id).fetchall()
+for row in rows:
+     print(row)
+
+
+
 
