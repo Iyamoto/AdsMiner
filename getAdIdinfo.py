@@ -1,12 +1,9 @@
-# AdsMiner: Gets top ads domains from db
-##SELECT addomains.id, addomains.domain, count( ad_domain_id )
-##FROM landings
-##INNER JOIN addomains ON landings.ad_domain_id = addomains.id
-##GROUP BY ad_domain_id
-##ORDER BY count( ad_domain_id ) DESC
-##LIMIT 20
+# AdsMiner: Gets info about ad domain id from db
+##select * from urls where id in
+##(SELECT url_id FROM landings WHERE ad_domain_id = 1 )
 
 import os
+import sys
 import adsminer
 import configparser
 from sqlalchemy import *
@@ -44,16 +41,14 @@ db.echo = False
 metadata = MetaData(db)
 metadata.reflect()
 
-addomains_table = Table('addomains', metadata, autoload=True)
-landings_table = Table('landings', metadata, autoload=True)
+##addomains_table = Table('addomains', metadata, autoload=True)
+##landings_table = Table('landings', metadata, autoload=True)
+##urls_table = Table('urls', metadata, autoload=True)
 
-s = select([addomains_table.c.id, addomains_table.c.domain, \
-func.count(landings_table.c.ad_domain_id)], \
-from_obj=[addomains_table.join(landings_table,\
-landings_table.c.ad_domain_id == addomains_table.c.id)]).\
-group_by(landings_table.c.ad_domain_id).\
-order_by(func.count(landings_table.c.ad_domain_id).desc()).\
-limit(20)
-
-run(s)
+id = int(sys.argv[1])
+s = text("""select * from urls where id in
+(SELECT url_id FROM landings WHERE ad_domain_id = :x)""")
+rows = db.execute(s,x=id).fetchall()
+for row in rows:
+     print(row)
 
