@@ -49,7 +49,7 @@ rows = db.execute(s,x=id).fetchall()
 for row in rows:
      print(row[0])
 
-dss = text("""select distinct text from ads inner join landings on landings.ad_id=ads.id where landings.ad_domain_id=:x""")
+s = text("""select distinct text from ads inner join landings on landings.ad_id=ads.id where landings.ad_domain_id=:x""")
 rows = db.execute(s,x=id).fetchall()
 for row in rows:
      print(row[0])
