@@ -53,10 +53,11 @@ id = int(sys.argv[1])
 s = text("""select url from urls inner join landings on landings.url_id=urls.id where landings.ad_domain_id=:x""")
 rows = db.execute(s,x=id).fetchall()
 for row in rows:
-     print(row[3])
+     print(row[0])
 assert False
-s = text("""select * from ads where id in
-(SELECT ad_id FROM landings WHERE ad_domain_id = :x)""")
+##s = text("""select * from ads where id in
+##(SELECT ad_id FROM landings WHERE ad_domain_id = :x)""")
+dss = text("""select text from ads inner join landings on landings.ad_id=ads.id where landings.ad_domain_id=:x""")
 rows = db.execute(s,x=id).fetchall()
 for row in rows:
      print(row[2])
