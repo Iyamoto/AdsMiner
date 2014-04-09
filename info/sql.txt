@@ -18,6 +18,12 @@ Get all ad texts for ad domain:
 select * from `ads` where `id` in
 (SELECT `ad_id` FROM `landings` WHERE `ad_domain_id` = 1 )
 
+select * from `ads` where `id` in
+(SELECT `ad_id` FROM `landings` WHERE `src_url` LIKE '%domain.ru%')
+
+Get all ad links for ad domain
+SELECT src_url FROM landings WHERE ad_domain_id = 1
+
 TOP land urls:
 SELECT land_url, count(land_url) from landings group by land_url order by count(land_url) desc
 
