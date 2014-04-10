@@ -24,6 +24,7 @@ except:
 
 # Init
 urlsdir = 'info'
+infodir = 'info'
 datadir = config['GRABBER']['DataDir']
 if not os.path.exists(datadir):
     os.makedirs(datadir)
@@ -33,11 +34,13 @@ log_file = os.path.join('logs', config['GRABBER']['Urls'])
 maxBlockSize = int(config['GRABBER']['MaxBlockSize'])
 minBlockSize = int(config['GRABBER']['MinBlockSize'])
 maxLinks = int(config['GRABBER']['MaxLinks'])
-
+blacklist_file = os.path.join(infodir, 'blacklist.txt')
 test_path = os.path.join(urlsdir, 'grab1test.txt')
 test_data = adsminer.get_test_data(test_path)
 
 # TODO add multi lists support
+
+blacklist = sorted(adsminer.uniqList(adsminer.file2list(blacklist_file)))
 
 urls = test_data.keys()
 urls_num = len(urls)
@@ -58,7 +61,7 @@ for url in urls:
     text = adsminer.url2html(run, url, path)
     
     # TODO add tidy html?
-    ads = adsminer.parseBlocks(text, url, block_complexity, minBlockSize, maxBlockSize, maxLinks)
+    ads = adsminer.parseBlocksV(text, url, block_complexity, minBlockSize, maxBlockSize, maxLinks, blacklist=blacklist)
     assert type(ads)==dict
     ads_num = len(ads.keys())
     

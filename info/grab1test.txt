@@ -17,7 +17,7 @@
 5 http://edimka.ru/eda/
 #0 http://habrahabr.ru/
 0 http://bankreferatov.ru/referaty.htm/referaty-po-ekonomike.htm
-5 http://pozdravok.ru/toast/prazdnik/8-marta/
+0 http://pozdravok.ru/toast/prazdnik/8-marta/
 23 http://anekdotikov.net/tosty/8marta/
 0 http://hibride.ru/2013/06/24/scenariy-viezdnoy-ceremonii-i-dekor/
 3 http://www.42podarka.ru/

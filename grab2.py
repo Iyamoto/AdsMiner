@@ -26,6 +26,7 @@ procdir = 'proc'
 logsdir = 'logs'
 tasksdir = 'tasks'
 jsondir = 'json'
+infodir = 'info'
 if not os.path.exists(logsdir):
     os.makedirs(logsdir)
 if not os.path.exists(urlsdir):
@@ -45,6 +46,7 @@ maxBlockSize = int(config['GRABBER']['MaxBlockSize'])
 minBlockSize = int(config['GRABBER']['MinBlockSize'])
 maxLinks = int(config['GRABBER']['MaxLinks'])
 Timeout = int(config['GRABBER']['Timeout'])
+blacklist_file = os.path.join(infodir, 'blacklist.txt')
 
 # Looking for tasks
 proc_path = ''
@@ -68,6 +70,7 @@ if proc_path=='':
     print('No tasks')
     assert False
 else:
+    blacklist = sorted(adsminer.uniqList(adsminer.file2list(blacklist_file)))
     urls = adsminer.file2list(proc_path)
     if len(urls)==0:
         print('No urls found')
@@ -85,7 +88,7 @@ for url in urls:
     print(url, path)
     text = adsminer.url2html(run, url, path, Timeout)
 
-    ads = adsminer.parseBlocks(text, url, block_complexity, minBlockSize, maxBlockSize, maxLinks)
+    ads = adsminer.parseBlocksV(text, url, block_complexity, minBlockSize, maxBlockSize, maxLinks, blacklist=blacklist)
     try:
         ads_num = len(ads.keys())
     except:

@@ -315,14 +315,14 @@ def getBlock(id, items):
     return out
 
 def getDomainfromUrl(url):
-    tld = ('com','net','org','ucoz','narod','livejournal','blogspot')
+    #tld = ('com','net','org','ucoz','narod','livejournal','blogspot')
     BaseUrl = urlparse(url).netloc
     BaseUrl = BaseUrl.lower()
     tmp = BaseUrl.split('.')
     if len(tmp)>=2:
         if len(tmp[-2])>2:
-            if tmp[-2] not in tld:
-                BaseUrl = tmp[-2]+'.'+tmp[-1]
+            #if tmp[-2] not in tld:
+            BaseUrl = tmp[-2]+'.'+tmp[-1]
     return BaseUrl
 
 def parseBlocks(text, url='', block_complexity=2, minBlockSize=10, maxBlockSize=500, maxLinks=1, maxDomains=1):
@@ -367,7 +367,6 @@ def parseBlocks(text, url='', block_complexity=2, minBlockSize=10, maxBlockSize=
                 if child.tag == 'a':# Filter by tag (a href)      
                     if child.attrib.has_key('href'):
                         if child.attrib['href'].find('http://')==0 and child.attrib['href'].lower().find(BaseUrl)==-1:
-                        #if child.attrib['href'].find('http://')!=-1 and child.attrib['href'].lower().find(BaseUrl)==-1:
                             hasLink = True
                             LinkCounter+=1
                             DomainsList.append(urlparse(child.attrib['href'].lower()).netloc)
@@ -395,3 +394,87 @@ def parseBlocks(text, url='', block_complexity=2, minBlockSize=10, maxBlockSize=
     except:
         print('Bad html')
     return items
+
+def parseBlocksV(text, url='', block_complexity=2, minBlockSize=10, maxBlockSize=500, maxLinks=1, maxDomains=1, blacklist=[], whitelist=[]):
+    assert type(text)==str
+    if len(url)>0:
+        BaseUrl = getDomainfromUrl(url)
+    try:
+        tree = html.document_fromstring(text)
+    except:
+        print('Cant render html')
+        return None # ????
+    items = {}
+    id=0
+    SkipBlocks = 0
+    GoodVes = 5
+    try:
+##    if True:
+        for element in tree.body.iter():
+            if SkipBlocks>0:
+                SkipBlocks-=1
+                continue
+            pool = ()
+            hasLink = False
+            LinkCounter=0
+            InnerLinkCounter = 0
+            Complexity = 0
+            DomainsList = []
+            Ves = 0
+
+            for child in element.iterdescendants():
+                Complexity+=1
+                # Filter html comments
+                if str(type(child))=='<class \'lxml.html.HtmlComment\'>':
+                    continue
+                pool += (child.tag,)
+                if child.tag == 'a':# Filter by tag (a href)      
+                    if child.attrib.has_key('href'):
+                        if child.attrib['href'].find('http://')==0 and child.attrib['href'].lower().find(BaseUrl)==-1:
+                            hasLink = True
+                            LinkCounter+=1
+                            DomainsList.append(getDomainfromUrl(child.attrib['href']))
+                        else:
+                            hasLink = False
+                            InnerLinkCounter+=1                 
+
+            DomainsList = sorted(uniqList(DomainsList))
+            if len(DomainsList)>0:
+                #print(DomainsList)
+                for domain in DomainsList:
+                    if domain in blacklist:
+                        Ves-=5
+                        #print(domain)
+                        break
+            
+                # Check lists (whitelist)
+                if Ves>=GoodVes:
+                    items[id] = element
+                    id+=1
+                    SkipBlocks = len(pool)-1
+                    Ves=0
+                # Blacklisted
+                if Ves<0:
+                    #print(DomainsList)
+                    Ves=0
+                    SkipBlocks = 1
+                           
+            # Filter by Links and amount of tags (block complexity)
+            if hasLink and LinkCounter<=maxLinks and InnerLinkCounter==0:
+                if Complexity>block_complexity:
+                    if len(DomainsList)<=maxDomains:
+                        #print(pool)
+                        textSize = len(element.text_content().strip())                        
+                        # Filter blocks without text and large blocks
+                        if textSize>=minBlockSize and textSize<=maxBlockSize:
+                            # How to filter counters? Block size?          
+                            # How to get rid of small blocks with only one link? No way
+
+                            # Finaly, block is good
+                            items[id] = element
+                            id+=1
+                            SkipBlocks = len(pool)-1 # Skip checking for inner blocks, they are already in the ad block
+    except:
+        print('Bad html')
+    return items
+

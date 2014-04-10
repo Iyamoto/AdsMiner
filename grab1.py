@@ -18,6 +18,7 @@ except:
 urlsdir = 'lists'
 logsdir = 'logs'
 jsondir = 'json'
+infodir = 'info'
 if not os.path.exists(logsdir):
     os.makedirs(logsdir)
 if not os.path.exists(jsondir):
@@ -25,6 +26,7 @@ if not os.path.exists(jsondir):
 
 urlsfile = os.path.join(urlsdir, config['GRABBER']['Urls'])
 jsonfile = os.path.join(jsondir, config['GRABBER']['Urls'])
+blacklist_file = os.path.join(infodir, 'blacklist.txt')
 datadir = config['GRABBER']['DataDir']
 if not os.path.exists(datadir):
     os.makedirs(datadir)
@@ -38,6 +40,8 @@ maxLinks = int(config['GRABBER']['MaxLinks'])
 Timeout = int(config['GRABBER']['Timeout'])
 
 isLogFile = adsminer.initLog(log_file,'Grabber started\n')
+
+blacklist = sorted(adsminer.uniqList(adsminer.file2list(blacklist_file)))
 
 urls = adsminer.file2list(urlsfile)
 if len(urls)==0:
@@ -59,7 +63,7 @@ for url in urls:
     print(url, path)
     text = adsminer.url2html(run, url, path, Timeout)
     
-    ads = adsminer.parseBlocks(text, url, block_complexity, minBlockSize, maxBlockSize, maxLinks)
+    ads = adsminer.parseBlocksV(text, url, block_complexity, minBlockSize, maxBlockSize, maxLinks, blacklist=blacklist)
     try:
         ads_num = len(ads.keys())
     except:
