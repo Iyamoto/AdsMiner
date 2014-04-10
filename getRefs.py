@@ -61,9 +61,11 @@ for filter in filters:
 
 reflinks = sorted(adsminer.uniqList(reflinks))
 for reflink in reflinks:
-    for filter in filters:
-        if urlparse(reflink).query.lower().find(filter)!=-1:
-            print(reflink)
-            break
+    query = urlparse(reflink).query.lower()
+    if query.find('=')!=-1:
+        for filter in filters:
+            if query.find(filter)!=-1:
+                print(reflink)
+                break
 
         
