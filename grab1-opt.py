@@ -23,6 +23,7 @@ except:
 
 # Init
 urlsdir = 'info'
+infodir = 'info'
 datadir = config['GRABBER']['DataDir']
 if not os.path.exists(datadir):
     os.makedirs(datadir)
@@ -32,7 +33,7 @@ log_file = os.path.join('logs', config['GRABBER']['Urls'])
 maxBlockSize = int(config['GRABBER']['MaxBlockSize'])
 minBlockSize = int(config['GRABBER']['MinBlockSize'])
 maxLinks = int(config['GRABBER']['MaxLinks'])
-
+blacklist_file = os.path.join(infodir, 'blacklist.txt')
 test_path = os.path.join(urlsdir, 'grab1test.txt')
 test_data = adsminer.get_test_data(test_path)
 
@@ -42,11 +43,11 @@ test_data = adsminer.get_test_data(test_path)
 
 # For maxDomains
 #maxDomains = 1 
-min_opt, max_opt, step_opt = 1,4,1
+#min_opt, max_opt, step_opt = 1,4,1
 
 # For block_complexity
 ##block_complexity = 0
-#min_opt, max_opt, step_opt = 0,4,1
+min_opt, max_opt, step_opt = 0,5,1
 
 # For minBlockSize
 ##minBlockSize = 70
@@ -56,7 +57,7 @@ min_opt, max_opt, step_opt = 1,4,1
 ##maxBlockSize = 70
 #min_opt, max_opt, step_opt = 150,500,10
 
-# TODO add multi lists support
+blacklist = sorted(adsminer.uniqList(adsminer.file2list(blacklist_file)))
 
 urls = test_data.keys()
 if len(urls)==0:
@@ -69,8 +70,8 @@ startTime = datetime.now()
 
 for test_param in range(min_opt, max_opt, step_opt):    
     #maxLinks = test_param
-    maxDomains = test_param
-    #block_complexity = test_param
+    #maxDomains = test_param
+    block_complexity = test_param
     #minBlockSize = test_param
     #maxBlockSize = test_param
     total_diff = 0
@@ -92,7 +93,7 @@ for test_param in range(min_opt, max_opt, step_opt):
         #text = adsminer.url2html(run, url, path) # Should I keep em in memory? Yes
         
         # TODO add tidy html?
-        ads = adsminer.parseBlocks(text, url, block_complexity, minBlockSize, maxBlockSize, maxLinks, maxDomains)
+        ads = adsminer.parseBlocksV(text, url, block_complexity, minBlockSize, maxBlockSize, maxLinks, blacklist=blacklist)
         ads_num = len(ads.keys())
         
         # Test Harness
