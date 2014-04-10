@@ -69,7 +69,7 @@ for reflink in reflinks:
         continue
     if query.find('=')!=-1:
         for domain in blacklist:
-            if base.find(domain)!=-1:
+            if base.find(domain)==-1:
                 blacklisted = True
                 continue
         if not blacklisted:
