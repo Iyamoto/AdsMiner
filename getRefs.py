@@ -49,6 +49,7 @@ addomains_table = Table('addomains', metadata, autoload=True)
 landings_table = Table('landings', metadata, autoload=True)
 
 filters = ('ref','partner','id')
+blacklist = ('yandex.ru',)
 reflinks = []
 
 for filter in filters:
@@ -61,11 +62,20 @@ for filter in filters:
 
 reflinks = sorted(adsminer.uniqList(reflinks))
 for reflink in reflinks:
+    blacklisted = False
     query = urlparse(reflink).query.lower()
+    base = query = urlparse(reflink).netloc.lower()
+    if len(query)==0:
+        continue
     if query.find('=')!=-1:
-        for filter in filters:
-            if query.find(filter)!=-1:
-                print(reflink)
-                break
+        for domain in blacklist:
+            if base.find(domain)!=-1:
+                blacklisted = True
+                continue
+        if not blacklisted:
+            for filter in filters:
+                if query.find(filter)!=-1:
+                    print(reflink)
+                    break
 
-        
+       
