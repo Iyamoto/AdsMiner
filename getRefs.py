@@ -51,7 +51,8 @@ filters = ('ref','partner','id')
 reflinks = []
 
 for filter in filters:
-    s = text("""SELECT src_url FROM landings WHERE src_url LIKE '%:x%'""")
+    filter = '%'+filter+'%'
+    s = text("""SELECT src_url FROM landings WHERE src_url LIKE :x""")
     rows = db.execute(s,x=filter).fetchall()
     for row in rows:
          print(row[0])
