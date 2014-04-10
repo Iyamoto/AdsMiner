@@ -37,7 +37,7 @@ else:
 try:
     lim = int(sys.argv[1])
 except:
-    lim = 20    
+    lim = 20   
         
 #Connect to db
 db = create_engine(driver+'://'+user+':'+password+'@'+host+'/'+database)
@@ -49,7 +49,7 @@ addomains_table = Table('addomains', metadata, autoload=True)
 landings_table = Table('landings', metadata, autoload=True)
 
 filters = ('ref','partner','id')
-blacklist = ('yandex.ru','begun.ru','adriver.ru')
+blacklist = ('yandex.ru','begun.ru','adriver.ru','adfox.ru')
 reflinks = []
 
 for filter in filters:
