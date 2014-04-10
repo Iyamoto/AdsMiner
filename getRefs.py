@@ -64,12 +64,12 @@ reflinks = sorted(adsminer.uniqList(reflinks))
 for reflink in reflinks:
     blacklisted = False
     query = urlparse(reflink).query.lower()
-    base = query = urlparse(reflink).netloc.lower()
+    base = urlparse(reflink).netloc.lower()
     if len(query)==0:
         continue
     if query.find('=')!=-1:
         for domain in blacklist:
-            if base.find(domain)==-1:
+            if base.find(domain)!=-1:
                 blacklisted = True
                 continue
         if not blacklisted:
