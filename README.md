@@ -19,7 +19,6 @@ INSTALL
 TODO
 ====
 
-add blacklist support for grab.parser
 write php wrapper(and web interface) for top ad domains and info
 gather blacklist, adnets and partners
 
@@ -28,7 +27,7 @@ add bot master to cron
 
 replace urllib with requests?
 
-Grab direct
+Grab direct with out redirects
 http://direct.yandex.ru/search?text=%27%D0%B3%D0%BE%D1%80%D0%BE%D1%81%D0%BA%D0%BE%D0%BF%27&ref-page=118826
 
 IDEAS
