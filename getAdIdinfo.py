@@ -43,7 +43,10 @@ metadata.reflect()
 ##landings_table = Table('landings', metadata, autoload=True)
 ##urls_table = Table('urls', metadata, autoload=True)
 
-id = int(sys.argv[1])
+try:
+    id = int(sys.argv[1])
+except:
+    id = 1
 s = text("""select distinct url from urls inner join landings on urls.id=landings.url_id where landings.ad_domain_id=:x""")
 rows = db.execute(s,x=id).fetchall()
 for row in rows:

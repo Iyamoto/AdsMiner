@@ -9,6 +9,7 @@
 import os
 import adsminer
 import configparser
+import sys
 from sqlalchemy import *
 
 def run(stmt):
@@ -37,6 +38,11 @@ if encode == 'True':
 else:
     def encoding(val):
         return val
+
+try:
+    lim = int(sys.argv[1])
+except:
+    lim = 20    
         
 #Connect to db
 db = create_engine(driver+'://'+user+':'+password+'@'+host+'/'+database)
@@ -53,7 +59,7 @@ from_obj=[addomains_table.join(landings_table,\
 landings_table.c.ad_domain_id == addomains_table.c.id)]).\
 group_by(landings_table.c.ad_domain_id).\
 order_by(func.count(landings_table.c.ad_domain_id).desc()).\
-limit(20)
+limit(lim)
 
 run(s)
 
