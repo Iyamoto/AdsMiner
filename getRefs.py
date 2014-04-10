@@ -52,10 +52,10 @@ reflinks = []
 
 for filter in filters:
     s = text("""SELECT src_url FROM landings WHERE src_url LIKE '%:x%'""")
-        rows = db.execute(s,x=filter).fetchall()
-        for row in rows:
-             print(row[0])
-             reflinks.append(row[0])
+    rows = db.execute(s,x=filter).fetchall()
+    for row in rows:
+         print(row[0])
+         reflinks.append(row[0])
 
 reflinks = sorted(adsminer.uniqList(reflinks))
 for reflink in reflinks:
