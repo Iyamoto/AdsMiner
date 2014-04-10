@@ -441,8 +441,8 @@ def parseBlocksV(text, url='', block_complexity=2, minBlockSize=10, maxBlockSize
             DomainsList = sorted(uniqList(DomainsList))
             if len(DomainsList)>0:
                 #print(DomainsList)
-                for domain in DomainsList:
-                    if domain in blacklist:
+                for domain in blacklist:
+                    if domain in DomainsList:
                         Ves-=5
                         #print(domain)
                         break
