@@ -9,3 +9,4 @@ MinBlockSize = 15
 MaxLinks = 8
 Timeout = 5000
 LogFile = log.txt
+FindLandings = False

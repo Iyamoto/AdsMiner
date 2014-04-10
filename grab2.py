@@ -46,6 +46,7 @@ maxBlockSize = int(config['GRABBER']['MaxBlockSize'])
 minBlockSize = int(config['GRABBER']['MinBlockSize'])
 maxLinks = int(config['GRABBER']['MaxLinks'])
 Timeout = int(config['GRABBER']['Timeout'])
+FindLandings = int(config['GRABBER']['FindLandings'])
 blacklist_file = os.path.join(infodir, 'blacklist.txt')
 
 # Looking for tasks
@@ -101,8 +102,11 @@ for url in urls:
             json_block = adsminer.Block2List(url, id, ads[id])
             for target_url in json_block[2]:
                 try:
-                    r = requests.get(target_url, timeout=1)
-                    landing = r.url
+                    if FindLandings=='True':
+                        r = requests.get(target_url, timeout=1)
+                        landing = r.url
+                    else:
+                        landing = ''
                 except:
                     landing = ''
                 redir_urls.append(landing)
