@@ -319,7 +319,7 @@ def getDomainfromUrl(url):
     BaseUrl = urlparse(url).netloc
     BaseUrl = BaseUrl.lower()
     tmp = BaseUrl.split('.')
-    if len(tmp)>=2:
+    if len(tmp)>2:
         if len(tmp[-2])>2:
             #if tmp[-2] not in tld:
             BaseUrl = tmp[-2]+'.'+tmp[-1]
