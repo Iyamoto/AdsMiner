@@ -49,7 +49,7 @@ addomains_table = Table('addomains', metadata, autoload=True)
 landings_table = Table('landings', metadata, autoload=True)
 
 filters = ('ref','partner','id')
-blacklist = ('yandex.ru',)
+blacklist = ('yandex.ru','begun.ru','adriver.ru')
 reflinks = []
 
 for filter in filters:
@@ -75,6 +75,7 @@ for reflink in reflinks:
         if not blacklisted:
             for filter in filters:
                 if query.find(filter)!=-1:
+                    print(base)
                     print(reflink)
                     break
 
