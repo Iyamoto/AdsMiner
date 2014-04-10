@@ -38,6 +38,7 @@ maxBlockSize = int(config['GRABBER']['MaxBlockSize'])
 minBlockSize = int(config['GRABBER']['MinBlockSize'])
 maxLinks = int(config['GRABBER']['MaxLinks'])
 Timeout = int(config['GRABBER']['Timeout'])
+FindLandings = config['GRABBER']['FindLandings']
 
 isLogFile = adsminer.initLog(log_file,'Grabber started\n')
 
@@ -86,8 +87,11 @@ for url in urls:
             for target_url in json_block[2]:
                 adsminer.writeLog(log_file, 'Redirecting: '+target_url+'\n', isLogFile)
                 try:
-                    r = requests.get(target_url, timeout=1)
-                    landing = r.url
+                    if FindLandings=='True':
+                        r = requests.get(target_url, timeout=1)
+                        landing = r.url
+                    else:
+                        landing = ''
                 except:
                     adsminer.writeLog(log_file, 'Connection failed? \n', isLogFile)
                     landing = ''

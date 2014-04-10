@@ -458,6 +458,7 @@ def parseBlocksV(text, url='', block_complexity=2, minBlockSize=10, maxBlockSize
                     #print(DomainsList)
                     Ves=0
                     SkipBlocks = 1
+                    continue
                            
             # Filter by Links and amount of tags (block complexity)
             if hasLink and LinkCounter<=maxLinks and InnerLinkCounter==0:
@@ -467,10 +468,8 @@ def parseBlocksV(text, url='', block_complexity=2, minBlockSize=10, maxBlockSize
                         textSize = len(element.text_content().strip())                        
                         # Filter blocks without text and large blocks
                         if textSize>=minBlockSize and textSize<=maxBlockSize:
-                            # How to filter counters? Block size?          
-                            # How to get rid of small blocks with only one link? No way
-
                             # Finaly, block is good
+                            #print(domain, DomainsList)
                             items[id] = element
                             id+=1
                             SkipBlocks = len(pool)-1 # Skip checking for inner blocks, they are already in the ad block
