@@ -61,5 +61,6 @@ group_by(landings_table.c.ad_domain_id).\
 order_by(func.count(landings_table.c.ad_domain_id).desc()).\
 limit(lim)
 
+print('id, domain, counter')
 run(s)
 
