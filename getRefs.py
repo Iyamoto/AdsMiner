@@ -5,6 +5,7 @@ import adsminer
 import configparser
 import sys
 from sqlalchemy import *
+from urllib.parse import urlparse
 
 def run(stmt):
     rs = stmt.execute()
@@ -60,4 +61,9 @@ for filter in filters:
 
 reflinks = sorted(adsminer.uniqList(reflinks))
 for reflink in reflinks:
-    print(reflink)
+    for filter in filters:
+        if urlparse(reflink).query.lower().find(filter)!=-1:
+            print(reflink)
+            break
+
+        
