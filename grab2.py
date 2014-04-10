@@ -46,7 +46,7 @@ maxBlockSize = int(config['GRABBER']['MaxBlockSize'])
 minBlockSize = int(config['GRABBER']['MinBlockSize'])
 maxLinks = int(config['GRABBER']['MaxLinks'])
 Timeout = int(config['GRABBER']['Timeout'])
-FindLandings = int(config['GRABBER']['FindLandings'])
+FindLandings = config['GRABBER']['FindLandings']
 blacklist_file = os.path.join(infodir, 'blacklist.txt')
 
 # Looking for tasks
