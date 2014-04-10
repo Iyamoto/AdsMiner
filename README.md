@@ -18,6 +18,8 @@ INSTALL
 
 TODO
 ====
+grab.js - get many URLs from list
+grab.js list_in folder_out timeout_ms
 
 write php wrapper(and web interface) for top ad domains and info
 gather blacklist, adnets and partners
