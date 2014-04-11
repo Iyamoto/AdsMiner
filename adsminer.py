@@ -259,26 +259,6 @@ def get_test_data(path):
         print('File not found: ',path)
         assert False
 
-def showBlock(id, items):
-    """ Block print
-    No more in use
-    Delete? """
-    print('Start of:',id)
-    for child in items[id].getchildren():
-        #print(child.attrib)
-        if child.tag=='a':
-            if child.attrib.has_key('href'):
-                print(child.attrib['href'])
-            if child.attrib.has_key('title'):
-                print(child.attrib['title'])
-        if child.text!=None:
-            print(child.text.strip())
-        if child.tag=='img':
-            print(child.attrib['src'])
-    print('End of:',id)
-    print()
-    return None
-
 def Block2List(url, id, item):
     """ Convert an ad block to a list
     [url, id, [href1, hrefN], [imgsrc1, imgsrcN], text]"""
@@ -315,13 +295,11 @@ def getBlock(id, items):
     return out
 
 def getDomainfromUrl(url):
-    #tld = ('com','net','org','ucoz','narod','livejournal','blogspot')
     BaseUrl = urlparse(url).netloc
     BaseUrl = BaseUrl.lower()
     tmp = BaseUrl.split('.')
     if len(tmp)>2:
         if len(tmp[-2])>3:
-            #if tmp[-2] not in tld:
             BaseUrl = tmp[-2]+'.'+tmp[-1]
     return BaseUrl
 

@@ -12,11 +12,6 @@ import configparser
 import sys
 from sqlalchemy import *
 
-def run(stmt):
-    rs = stmt.execute()
-    for row in rs:
-        print(row)
-
 # Read config
 config = configparser.ConfigParser()
 try:
@@ -43,7 +38,11 @@ try:
     lim = int(sys.argv[1])
 except:
     lim = 20    
-        
+
+infodir = 'info'
+adnets_file = os.path.join(infodir, 'adnets.txt')
+adnets = sorted(adsminer.uniqList(adsminer.file2list(adnets_file)))
+
 #Connect to db
 db = create_engine(driver+'://'+user+':'+password+'@'+host+'/'+database)
 db.echo = False
@@ -62,5 +61,16 @@ order_by(func.count(landings_table.c.ad_domain_id).desc()).\
 limit(lim)
 
 print('id, domain, counter')
-run(s)
+rows = s.execute()
+for row in rows:
+    print(row)
+
+print()
+print('New domains:')
+for row in rows:
+    for domain in adnets:
+        if row[1].find(domain)!=-1:
+            print(row[1])
+
+            
 
