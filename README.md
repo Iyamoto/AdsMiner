@@ -18,10 +18,7 @@ INSTALL
 
 TODO
 ====
-grab.js - get many URLs from list
-grab.js list_in folder_out timeout_ms
-http://stackoverflow.com/questions/10865849/phantomjs-javascript-read-a-local-file-line-by-line
-http://stackoverflow.com/questions/17298516/simple-md5-hash-of-a-string
+grab.js - fix stuck on bad pages
 
 gather blacklist, adnets and partners
 	fill db
