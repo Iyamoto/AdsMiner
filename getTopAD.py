@@ -60,17 +60,20 @@ group_by(landings_table.c.ad_domain_id).\
 order_by(func.count(landings_table.c.ad_domain_id).desc()).\
 limit(lim)
 
+new_domains = []
 print('id, domain, counter')
 rows = s.execute()
 for row in rows:
     print(row)
+    for domain in adnets:
+        if row[1].find(domain)!=-1:
+            new_domains.append(row[1])
 
 print()
 print('New domains:')
-for row in rows:
-    for domain in adnets:
-        if row[1].find(domain)!=-1:
-            print(row[1])
+for domain in new_domains:
+    print(domain)
+    
 
             
 
