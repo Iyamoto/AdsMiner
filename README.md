@@ -23,14 +23,15 @@ grab.js list_in folder_out timeout_ms
 http://stackoverflow.com/questions/10865849/phantomjs-javascript-read-a-local-file-line-by-line
 http://stackoverflow.com/questions/17298516/simple-md5-hash-of-a-string
 
-write php wrapper(and web interface) for top ad domains and info
 gather blacklist, adnets and partners
+	fill db
+	run getTopAd.py 30
+	check domains
+	analyze (run getAdIdinfo.py ad_domain_id)
+	fill info/blacklist, adnets and partners
 
 add graber to cron
 add bot master to cron
-
-
-replace urllib with requests?
 
 Get yandex landing domain from ad text?
 
@@ -44,6 +45,7 @@ INFO
 ====
 
 <h2>Grabber output structure</h2>
+AdBlock elements:
 0 url
 1 block_id
 2 links[]
