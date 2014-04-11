@@ -65,10 +65,13 @@ print('id, domain, counter')
 rows = s.execute()
 for row in rows:
     print(row)
+    good_domain = True
     for domain in adnets:
-        if row[1].find(domain)==-1:
-            new_domains.append(row[1])
+        if row[1].find(domain)!=-1:
+            good_domain = False
             break
+    if good_domain:
+        new_domains.append(row[1])
 
 print()
 print('New domains:')
