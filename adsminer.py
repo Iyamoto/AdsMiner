@@ -320,7 +320,7 @@ def getDomainfromUrl(url):
     BaseUrl = BaseUrl.lower()
     tmp = BaseUrl.split('.')
     if len(tmp)>2:
-        if len(tmp[-2])>2:
+        if len(tmp[-2])>3:
             #if tmp[-2] not in tld:
             BaseUrl = tmp[-2]+'.'+tmp[-1]
     return BaseUrl

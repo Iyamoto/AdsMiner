@@ -6,6 +6,8 @@ informers.ukr.net
 24smi.org
 ukr.net
 nnn.net
+nnn.ru
+www.nnn.ru
 bigmir.net
 tastysite.ru
 subscribe.ru
@@ -26,8 +28,11 @@ om1.ru
 calend.ru
 meta.ua
 aif.ru
+www.aif.ru
 news.google.com
 vodka.com.ua
 exler.ru
 youtube.com
 gvozd.by
+blogger.com
+www.partner.join.com.ua
