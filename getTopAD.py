@@ -66,7 +66,7 @@ rows = s.execute()
 for row in rows:
     print(row)
     for domain in adnets:
-        if row[1].find(domain)!=-1:
+        if row[1].find(domain)==-1:
             new_domains.append(row[1])
 
 print()
