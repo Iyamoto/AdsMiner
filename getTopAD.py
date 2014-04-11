@@ -68,6 +68,7 @@ for row in rows:
     for domain in adnets:
         if row[1].find(domain)==-1:
             new_domains.append(row[1])
+            break
 
 print()
 print('New domains:')
