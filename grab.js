@@ -30,7 +30,7 @@ var nextStep = function(index) {
     }
 }
 var savePage = function(index) {
-    address = url[index];
+    var address = url[index];
     var page = webpage.create();
     page.settings.resourceTimeout = system.args[3];
     page.settings.userAgent = 'Mozilla/5.0 (Windows NT 5.1; rv:27.0) Gecko/20100101 Firefox/27.0';
@@ -45,6 +45,7 @@ var savePage = function(index) {
     if (fs.exists(file_name)) {
         console.log("file " + file_name + " exist, not retrieving");
         nextStep(index);
+	page.close();
     } else {
         //console.log("not exist, retrieving");
         page.open(address, function(status) {
@@ -58,6 +59,7 @@ var savePage = function(index) {
 
             }
             nextStep(index);
+	    page.close();
 
             //phantom.exit();
         });
