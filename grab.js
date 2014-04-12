@@ -44,8 +44,8 @@ var savePage = function(index) {
     var file_name = folder + "/" + CryptoJS.MD5(address) + ".html";
     if (fs.exists(file_name)) {
         console.log("file " + file_name + " exist, not retrieving");
-        nextStep(index);
 	page.close();
+        nextStep(index);
     } else {
         //console.log("not exist, retrieving");
         page.open(address, function(status) {
@@ -58,8 +58,8 @@ var savePage = function(index) {
                 fs.write(file_name, page.content, 'w');
 
             }
-            nextStep(index);
 	    page.close();
+            nextStep(index);
 
             //phantom.exit();
         });
