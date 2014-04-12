@@ -18,7 +18,7 @@ INSTALL
 
 TODO
 ====
-grab.js - fix stuck on bad pages - if any
+grab.js - real queue
 
 gather blacklist, adnets and partners
 	fill db
