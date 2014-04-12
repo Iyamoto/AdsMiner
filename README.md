@@ -18,7 +18,7 @@ INSTALL
 
 TODO
 ====
-grab.js - fix stuck on bad pages
+grab.js - fix stuck on bad pages - if any
 
 gather blacklist, adnets and partners
 	fill db
@@ -37,7 +37,6 @@ http://direct.yandex.ru/search?text=%27%D0%B3%D0%BE%D1%80%D0%BE%D1%81%D0%BA%D0%B
 
 IDEAS
 =====
-grab.js - many threads?
 
 INFO
 ====

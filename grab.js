@@ -2,29 +2,33 @@ var webpage = require('webpage'),
     fs = require('fs'),
     system = require('system'),
     file,
-    n,
+    nThreads=2,
+    finishedThreads,
     url;
 
-if (system.args.length !== 4) {
-	console.log('Usage: save.js <file with URLs> <out folder name> <Timeout>');
+if (system.args.length !== 5) {
+	console.log('Usage: save.js <file with URLs> <out folder name> <Timeout> <nThreads>');
 	phantom.exit();
 }	
 
 list_urls = system.args[1];
 folder = system.args[2];
+nThreads = parseInt(system.args[4]);
 
 phantom.injectJs("md5.js");
-var savePage = function (address) {
+var savePage = function (index) {
+	address=url[index];
 	var page = webpage.create();
 	page.settings.resourceTimeout = system.args[3];
 	page.settings.userAgent = 'Mozilla/5.0 (Windows NT 5.1; rv:27.0) Gecko/20100101 Firefox/27.0';
 	page.settings.loadImages = false;
 	page.viewportSize = { width: 1280, height: 1024 };
-	console.log("pre-open url: " + address );
+	page.onError = undefined;
+	console.log("pre-open url: " + address + " index: " + index);
 	page.open(address, function (status) {
 			//console.log("loaded? url: " + address);
 			if (status !== 'success') {
-			console.log('FAIL to load the address');
+			console.log('FAIL to load the address. status: ' + statuis);
 			} else {
 
 			var file_name = folder + "/" + CryptoJS.MD5(address) + ".html";
@@ -32,18 +36,21 @@ var savePage = function (address) {
 			fs.write(file_name, page.content, 'w');
 
 			}
-			n++;
-			if( n < url.length) {
-			savePage(url[n]);
+			index+=nThreads;
+			if( index < url.length ) {
+			savePage(index);
 			}
 			else {
-			console.log("end");
+			console.log("end of thread");
+			finishedThreads+=1;
+			if(finishedThreads == nThreads) {
+			console.log("end.");
 			phantom.exit();
-
+			}
 			}
 
 			//phantom.exit();
-			});
+	});
 
 }
 
@@ -67,11 +74,13 @@ if (f) {
 
 if (urls) {
 	url = urls.split(eol);
-/*	for (var i = 0, len = url.length; i < len; i++) {
+	/*	for (var i = 0, len = url.length; i < len; i++) {
 		console.log(url[i]);
-	}*/
+		}*/
 }
+finishedThreads=0;
+for (var i = 0; i<nThreads; i++) {
 
-n=0;
-savePage(url[n]);
+	savePage(i);
+}
 
