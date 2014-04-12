@@ -10,7 +10,6 @@ if (system.args.length !== 5) {
     console.log('Usage: save.js <file with URLs> <out folder name> <Timeout> <nThreads>');
     phantom.exit();
 }
-
 list_urls = system.args[1];
 folder = system.args[2];
 nThreads = parseInt(system.args[4]);
@@ -23,6 +22,7 @@ var nextStep = function(index) {
     } else {
         console.log("end of thread");
         finishedThreads += 1;
+	console.log("finished threads " + finishedThreads);
         if (finishedThreads == nThreads) {
             console.log("end.");
             phantom.exit();
@@ -51,7 +51,7 @@ var savePage = function(index) {
         page.open(address, function(status) {
             //console.log("loaded? url: " + address);
             if (status !== 'success') {
-                console.log('FAIL to load the address. status: ' + statuis);
+                console.log('FAIL to load the address ' + address + '. status: ' + status);
             } else {
 
                 console.log(file_name);
@@ -64,7 +64,6 @@ var savePage = function(index) {
             //phantom.exit();
         });
     }
-
 
 }
 
