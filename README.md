@@ -18,8 +18,6 @@ INSTALL
 
 TODO
 ====
-grab.js - real queue
-
 gather blacklist, adnets and partners
 	fill db
 	run getTopAd.py 30

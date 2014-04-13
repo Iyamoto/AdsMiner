@@ -4,6 +4,7 @@ var webpage = require('webpage'),
     file,
     nThreads = 2,
     finishedThreads,
+    ind,
     url;
 
 if (system.args.length !== 5) {
@@ -15,20 +16,22 @@ folder = system.args[2];
 nThreads = parseInt(system.args[4]);
 
 phantom.injectJs("md5.js");
-var nextStep = function(index) {
-    index += nThreads;
-    if (index < url.length) {
-        savePage(index);
+ind = nThreads - 1;
+var nextStep = function() {
+    ind++;
+    if (ind < (url.length - 1)) {
+        savePage(ind);
     } else {
         console.log("end of thread");
         finishedThreads += 1;
-	console.log("finished threads " + finishedThreads);
+        console.log("finished threads " + finishedThreads);
         if (finishedThreads == nThreads) {
             console.log("end.");
             phantom.exit();
         }
     }
 }
+
 var savePage = function(index) {
     var address = url[index];
     var page = webpage.create();
@@ -40,16 +43,16 @@ var savePage = function(index) {
         height: 1024
     };
     page.onError = undefined;
-    console.log("pre-open url: " + address + " index: " + index);
+    //console.log("pre-open url: " + address + " index: " + index);
     var file_name = folder + "/" + CryptoJS.MD5(address) + ".html";
     if (fs.exists(file_name)) {
-        console.log("file " + file_name + " exist, not retrieving");
-	page.close();
-        nextStep(index);
+        //console.log("file " + file_name + " exist, not retrieving");
+        page.close();
+        nextStep();
     } else {
-        //console.log("not exist, retrieving");
+        console.log("not exist, retrieving");
         page.open(address, function(status) {
-            //console.log("loaded? url: " + address);
+            console.log("loaded? url: " + address);
             if (status !== 'success') {
                 console.log('FAIL to load the address ' + address + '. status: ' + status);
             } else {
@@ -58,8 +61,8 @@ var savePage = function(index) {
                 fs.write(file_name, page.content, 'w');
 
             }
-	    page.close();
-            nextStep(index);
+            page.close();
+            nextStep();
 
             //phantom.exit();
         });
@@ -80,7 +83,7 @@ if (urls) {
 		}*/
 }
 finishedThreads = 0;
-for (var i = 0; i < nThreads; i++) {
+for (i = 0; i < nThreads; i++) {
 
     savePage(i);
 }
