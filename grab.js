@@ -71,6 +71,14 @@ var savePage = function(index) {
 }
 
 
+if( !fs.exists(list_urls) ) {
+   console.log("input file does not exist!");
+   phantom.exit();
+}
+if( !fs.exists(folder) ) {
+   console.log("out folder does not exist!");
+   phantom.exit();
+}
 
 var urls = '',
     eol = system.os.name == 'windows' ? "\r\n" : "\n";
@@ -82,6 +90,7 @@ if (urls) {
 		console.log(url[i]);
 		}*/
 }
+
 finishedThreads = 0;
 for (i = 0; i < nThreads; i++) {
 
