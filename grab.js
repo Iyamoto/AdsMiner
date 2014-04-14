@@ -90,7 +90,10 @@ if (urls) {
 		console.log(url[i]);
 		}*/
 }
-
+if(!url) {
+   console.log("url list not defined");
+   phantom.exit(-4);
+}
 finishedThreads = 0;
 for (i = 0; i < nThreads; i++) {
 
