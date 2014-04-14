@@ -73,11 +73,11 @@ var savePage = function(index) {
 
 if( !fs.exists(list_urls) ) {
    console.log("input file does not exist!");
-   phantom.exit();
+   phantom.exit(-2);
 }
 if( !fs.exists(folder) ) {
    console.log("out folder does not exist!");
-   phantom.exit();
+   phantom.exit(-3);
 }
 
 var urls = '',
