@@ -44,20 +44,20 @@ var savePage = function(index) {
     };
     page.onError = undefined;
     //console.log("pre-open url: " + address + " index: " + index);
-    var file_name = folder + "/" + CryptoJS.MD5(address) + ".html";
+    var file_name = folder + separator + CryptoJS.MD5(address) + ".html";
     if (fs.exists(file_name)) {
-        //console.log("file " + file_name + " exist, not retrieving");
+        console.log("url: " + address +" already loaded, file name:  " + file_name );
         page.close();
         nextStep();
     } else {
-        console.log("not exist, retrieving");
+        //console.log("not exist, retrieving");
         page.open(address, function(status) {
-            console.log("loaded? url: " + address);
+            //console.log("loaded? url: " + address);
             if (status !== 'success') {
                 console.log('FAIL to load the address ' + address + '. status: ' + status);
             } else {
 
-                console.log(file_name);
+                console.log("url " + address + " loaded file name: " +file_name);
                 fs.write(file_name, page.content, 'w');
 
             }
@@ -82,6 +82,7 @@ if( !fs.exists(folder) ) {
 
 var urls = '',
     eol = system.os.name == 'windows' ? "\r\n" : "\n";
+    separator = system.os.name == 'windows' ? "\\" : "/";
 urls = fs.read(list_urls);
 
 if (urls) {
