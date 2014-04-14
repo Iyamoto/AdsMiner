@@ -34,9 +34,9 @@ run = config['GRABBER']['Run']
 ##urlkey = quote_plus(key)
 ##starturl = 'http://yaca.yandex.ru/yca/cat/?text='
 ##url = starturl+urlkey
-url = 'http://yaca.yandex.ru/yca/cat/Private_Life/Family/Parents/'
+url = 'http://yaca.yandex.ru/yca/cat/Rest/Hobby/Needlework/'
 
-task_name = 'parents'
+task_name = 'needlework'
 
 pagi_list_path = os.path.join(tasksdir, task_name+'.txt')
 isLogFile = adsminer.initLog(pagi_list_path)
@@ -50,7 +50,7 @@ while True:
     url_id = hashlib.md5(url.encode('utf-8')).hexdigest()    
     path = os.path.join(datadir, url_id + '.html')
 
-    html = adsminer.url2html(run, url, path)
+    html = adsminer.url2htmlW(run, url, path)
     # Get links
     matches = re.findall(r'<a[^>]+>.+</a>', html)  
     for match in matches:

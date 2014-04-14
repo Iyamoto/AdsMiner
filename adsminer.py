@@ -138,13 +138,21 @@ def url2file(run, url, path, timeout=5000):
     return True
 
 def url2html(run, url, path, timeout=5000):
-##    if os.path.isfile(path) == False:
-##        code = url2file(run, url, path, timeout)
-##        assert code==True
     try:
         html = file2text(path)
         #html, errors = tidy_document(html, options={'hide-comments':1, 'new-inline-tags':'yatag'})
         #print(errors)
+    except:
+        print('Cant read file: '+path)
+        assert False
+    return html
+
+def url2htmlW(run, url, path, timeout=5000):
+    if os.path.isfile(path) == False:
+        code = url2file(run, url, path, timeout)
+        assert code==True
+    try:
+        html = file2text(path)
     except:
         print('Cant read file: '+path)
         assert False
