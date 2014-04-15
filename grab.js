@@ -20,7 +20,7 @@ ind = nThreads - 1;
 var nextStep = function() {
     ind++;
     if (ind < (url.length - 1)) {
-        savePage(ind);
+        savePage(ind, 0);
     } else {
         console.log("end of thread");
         finishedThreads += 1;
@@ -32,7 +32,7 @@ var nextStep = function() {
     }
 }
 
-var savePage = function(index) {
+var savePage = function(index, attempt) {
     var address = url[index];
     var page = webpage.create();
     page.settings.resourceTimeout = system.args[3];
@@ -46,7 +46,7 @@ var savePage = function(index) {
     //console.log("pre-open url: " + address + " index: " + index);
     var file_name = folder + separator + CryptoJS.MD5(address) + ".html";
     if (fs.exists(file_name)) {
-        console.log("url: " + address +" already loaded, file name:  " + file_name );
+        console.log("url: " + address +" already loaded, file name: \t" + file_name );
         page.close();
         nextStep();
     } else {
@@ -55,13 +55,19 @@ var savePage = function(index) {
             //console.log("loaded? url: " + address);
             if (status !== 'success') {
                 console.log('FAIL to load the address ' + address + '. status: ' + status);
+		page.close();
+		if ( attempt < 3 ) {
+		attempt++;
+		console.log("retrying url " + address);
+		savePage(index, attempt);
+
+		}
             } else {
 
                 console.log("url " + address + " loaded file name: " +file_name);
                 fs.write(file_name, page.content, 'w');
-
+                page.close();
             }
-            page.close();
             nextStep();
 
             //phantom.exit();
