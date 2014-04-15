@@ -38,6 +38,7 @@ categories_table = Table('categories', metadata,
 categories_table.create()
 ins = categories_table.insert()
 ins.execute(name='women')
+ins.execute(name='medic')
 
 # 2.Sites (site_id, domain)
 sites_table = Table('sites', metadata,

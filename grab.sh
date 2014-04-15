@@ -1,7 +1,7 @@
 #!/bin/bash
 #grab html from urls list with phantom.js
 phantom='/usr/local/phantomjs/bin/phantomjs'
-param='--cookies-file=cookies.txt --disk-cache=false --proxy-type=none'
+param='--local-storage-path=/tmp/qws --cookies-file=cookies.txt --disk-cache=false --proxy-type=none'
 outdir='/tmp/phantom/'
 timeout='3000'
 threads='3'

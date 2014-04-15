@@ -1,0 +1,16 @@
+needlework;http://yaca.yandex.ru/yca/cat/Rest/Hobby/Needlework/
+games-fashion;http://yaca.yandex.ru/yca/cat/Entertainment/Games/Fashion/
+psy-tests;http://yaca.yandex.ru/yca/cat/Entertainment/Psychological_tests/
+romance;http://yaca.yandex.ru/yca/cat/Entertainment/Erotica/Romance/
+occultism;http://yaca.yandex.ru/yca/cat/Entertainment/Occultism/
+going_out;http://yaca.yandex.ru/yca/cat/Rest/Going_out/
+travel_reports;http://yaca.yandex.ru/yca/cat/Rest/Travels/Travel_reports/
+vacation;http://yaca.yandex.ru/yca/cat/Rest/Vacation/
+gardening;http://yaca.yandex.ru/yca/cat/Rest/Hobby/Gardening/
+movies;http://yaca.yandex.ru/yca/cat/Culture/Movies/
+theaters;http://yaca.yandex.ru/yca/cat/Culture/Theaters/
+organizations;http://yaca.yandex.ru/yca/cat/Culture/Organizations/
+art;http://yaca.yandex.ru/yca/cat/Culture/Art/
+dance;http://yaca.yandex.ru/yca/cat/Culture/Dance/
+female;http://yaca.yandex.ru/yca/cat/Media/Periodicals/Female/
+poster;http://yaca.yandex.ru/yca/cat/Reference/Poster/
